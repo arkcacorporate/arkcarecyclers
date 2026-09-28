@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, useReducedMotion } from 'framer-motion';
 import {
   Trash2,
   Cpu,
@@ -9,14 +10,25 @@ import {
   Cog,
   CheckCircle,
   Truck,
-  Scale,
-  FileText,
-  ShieldCheck,
-  ArrowRight,
-  Clock,
-  Calendar,
-  PhoneCall
+  PhoneCall,
+  ArrowRight
 } from 'lucide-react';
+import '../inner-pages.css';
+
+function Reveal({ children, delay = 0, y = 28, className = '' }) {
+  const reduce = useReducedMotion();
+  return (
+    <motion.div
+      className={className}
+      initial={reduce ? false : { opacity: 0, y }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 const wasteStreams = [
   {
@@ -120,6 +132,8 @@ export default function WasteCollection() {
     specialNotes: ''
   });
 
+  const reduce = useReducedMotion();
+
   const handleInputChange = (e) => {
     setPickupData({ ...pickupData, [e.target.name]: e.target.value });
   };
@@ -151,20 +165,34 @@ export default function WasteCollection() {
           className="inner-hero-bg"
           style={{ backgroundImage: 'url(/images/hero/tyre.jpg)' }}
         />
+        <div className="inner-hero-shade" />
         <div className="container">
           <div className="inner-hero-content">
-            <div className="breadcrumb">
-              <Link to="/">Home</Link>
-              <span className="breadcrumb-separator">/</span>
-              <span>Waste Collection</span>
-            </div>
-            <span className="badge-tag light-theme">TRACEABLE & COMPLIANT PICKUPS</span>
-            <h1 className="inner-hero-title">
-              Industrial & Commercial Waste Collection Services
-            </h1>
-            <p className="inner-hero-desc">
-              End-to-end collection, safe transport, certified weighing, and closed-loop recycling across all major hazardous and non-hazardous industrial waste categories.
-            </p>
+            <motion.div
+              initial={reduce ? false : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div className="breadcrumb">
+                <Link to="/">Home</Link>
+                <span className="breadcrumb-separator">/</span>
+                <span>Waste Collection</span>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={reduce ? false : { opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <span className="badge-tag light-theme">TRACEABLE & COMPLIANT PICKUPS</span>
+              <h1 className="ip-h1">
+                Industrial & Commercial Waste Collection Services
+              </h1>
+              <p className="inner-hero-desc">
+                End-to-end collection, safe transport, certified weighing, and closed-loop recycling across all major hazardous and non-hazardous industrial waste categories.
+              </p>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -172,157 +200,137 @@ export default function WasteCollection() {
       {/* 2. OUR WASTE STREAMS (INTERACTIVE EXPLORER) */}
       <section className="section section-white">
         <div className="container">
-          <div style={{ textAlign: 'center', maxWidth: '760px', margin: '0 auto 50px' }}>
+          <Reveal style={{ textAlign: 'center', maxWidth: '760px', margin: '0 auto 48px' }}>
             <span className="badge-tag">COMPLETE WASTE SPECTRUM</span>
-            <h2 className="section-heading-dark">What We Collect & Process</h2>
-            <p style={{ color: '#526b64', marginTop: '12px', fontSize: '1.05rem' }}>
+            <h2 className="ip-h2 ip-h2-dark">What We Collect & Process</h2>
+            <p className="ip-body ip-body-dark" style={{ marginTop: '12px' }}>
               Select a waste stream below to learn more about our collection protocols, recycling technology, and environmental compliance deliverables.
             </p>
-          </div>
+          </Reveal>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px', marginBottom: '50px' }}>
-            {wasteStreams.map((stream) => {
+          <div className="ip-stream-grid">
+            {wasteStreams.map((stream, idx) => {
               const Icon = stream.icon;
               const isSelected = selectedStream.id === stream.id;
               return (
-                <div
-                  key={stream.id}
-                  onClick={() => setSelectedStream(stream)}
-                  style={{
-                    background: isSelected ? '#EAF4EE' : '#fff',
-                    border: isSelected ? '2px solid #148C4A' : '1px solid #dce8e1',
-                    borderRadius: '14px',
-                    padding: '24px',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease',
-                    boxShadow: isSelected ? '0 8px 24px rgba(20, 140, 74, 0.15)' : 'none'
-                  }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '12px' }}>
-                    <div style={{
-                      width: '46px',
-                      height: '46px',
-                      borderRadius: '10px',
-                      background: isSelected ? '#148C4A' : '#f0f6f2',
-                      color: isSelected ? '#fff' : '#148C4A',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}>
-                      <Icon size={22} />
+                <Reveal key={stream.id} delay={idx * 0.08}>
+                  <div
+                    onClick={() => setSelectedStream(stream)}
+                    className={`ip-stream-card ${isSelected ? 'active' : ''}`}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '12px' }}>
+                      <div className="ip-icon-circle" style={{
+                        width: '46px',
+                        height: '46px',
+                        marginBottom: 0,
+                        background: isSelected ? 'var(--ip-accent)' : 'rgba(20, 140, 74, 0.1)',
+                        color: isSelected ? '#ffffff' : 'var(--ip-accent)'
+                      }}>
+                        <Icon size={22} />
+                      </div>
+                      <div>
+                        <h4 className="ip-h3" style={{ fontSize: '1.15rem', color: '#071C19' }}>
+                          {stream.title}
+                        </h4>
+                        <span style={{ fontSize: '0.8rem', color: 'var(--ip-accent)', fontWeight: 700 }}>
+                          {stream.category}
+                        </span>
+                      </div>
                     </div>
-                    <div>
-                      <h4 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#071C19' }}>
-                        {stream.title}
-                      </h4>
-                      <span style={{ fontSize: '0.8rem', color: '#148C4A', fontWeight: 600 }}>
-                        {stream.category}
-                      </span>
-                    </div>
+                    <p className="ip-body ip-body-dark" style={{ fontSize: '0.92rem', lineHeight: '1.6' }}>
+                      {stream.desc.slice(0, 95)}...
+                    </p>
                   </div>
-                  <p style={{ color: '#526b64', fontSize: '0.9rem', lineHeight: '1.6' }}>
-                    {stream.desc.slice(0, 95)}...
-                  </p>
-                </div>
+                </Reveal>
               );
             })}
           </div>
 
           {/* Selected Stream Deep Dive Card */}
-          <div style={{
-            background: '#F5F9F5',
-            borderRadius: '20px',
-            border: '1px solid #cce4d6',
-            padding: '40px',
-            display: 'grid',
-            gridTemplateColumns: '1.2fr 1fr',
-            gap: '40px',
-            alignItems: 'center'
-          }}>
+          <Reveal delay={0.2} className="ip-stream-detail-box">
             <div>
               <span className="badge-tag">{selectedStream.category}</span>
-              <h3 style={{ fontSize: '2rem', fontWeight: 800, color: '#071C19', marginBottom: '16px' }}>
+              <h3 className="ip-h2 ip-h2-dark" style={{ fontSize: '2rem', marginBottom: '16px' }}>
                 {selectedStream.title}
               </h3>
-              <p style={{ color: '#4a635b', fontSize: '1rem', lineHeight: '1.7', marginBottom: '24px' }}>
+              <p className="ip-body ip-body-dark" style={{ marginBottom: '24px' }}>
                 {selectedStream.desc}
               </p>
 
               <h4 style={{ fontSize: '1rem', fontWeight: 700, color: '#071C19', marginBottom: '14px' }}>
                 Key Operational Highlights:
               </h4>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '30px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '32px' }}>
                 {selectedStream.details.map((point, idx) => (
-                  <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                     <CheckCircle size={18} color="#148C4A" />
-                    <span style={{ fontSize: '0.95rem', color: '#2d433e' }}>{point}</span>
+                    <span style={{ fontSize: '0.95rem', color: '#2d433e', fontWeight: 500 }}>{point}</span>
                   </div>
                 ))}
               </div>
 
-              <a href="#pickup-booking-section" className="btn-primary">
+              <a href="#pickup-booking-section" className="btn-primary ax-btn-solid">
                 Schedule {selectedStream.title.split(' ')[0]} Pickup <ArrowRight size={16} />
               </a>
             </div>
 
-            <div style={{ borderRadius: '16px', overflow: 'hidden', height: '340px', boxShadow: '0 12px 30px rgba(0,0,0,0.1)' }}>
+            <div className="ip-stream-img-wrap">
               <img
                 src={selectedStream.image}
                 alt={selectedStream.title}
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* 3. STEP-BY-STEP COLLECTION WORKFLOW */}
       <section className="section section-light">
         <div className="container">
-          <div style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto 40px' }}>
+          <Reveal style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto 44px' }}>
             <span className="badge-tag">END-TO-END ASSURANCE</span>
-            <h2 className="section-heading-dark">How Our Waste Collection Works</h2>
-            <p style={{ color: '#526b64', marginTop: '10px' }}>
+            <h2 className="ip-h2 ip-h2-dark">How Our Waste Collection Works</h2>
+            <p className="ip-body ip-body-dark" style={{ marginTop: '10px' }}>
               Standardized, transparent, and hassle-free pickup protocol engineered for audit readiness.
             </p>
-          </div>
+          </Reveal>
 
-          <div className="process-grid">
+          <div className="ip-process-grid">
             {/* Step 1 */}
-            <div className="process-card">
-              <div className="process-step-num">01</div>
-              <h3 className="process-card-title">Audit & Scheduling</h3>
-              <p className="process-card-desc">
+            <Reveal delay={0.1} className="ip-process-card">
+              <div className="ip-process-num">01</div>
+              <h3 className="ip-h3" style={{ color: '#071C19', marginBottom: '8px' }}>Audit & Scheduling</h3>
+              <p className="ip-body ip-body-dark" style={{ fontSize: '0.92rem' }}>
                 Submit waste specifications online or request an on-site waste assessment by our field compliance officer.
               </p>
-            </div>
+            </Reveal>
 
             {/* Step 2 */}
-            <div className="process-card">
-              <div className="process-step-num">02</div>
-              <h3 className="process-card-title">Certified Weighing</h3>
-              <p className="process-card-desc">
+            <Reveal delay={0.2} className="ip-process-card">
+              <div className="ip-process-num">02</div>
+              <h3 className="ip-h3" style={{ color: '#071C19', marginBottom: '8px' }}>Certified Weighing</h3>
+              <p className="ip-body ip-body-dark" style={{ fontSize: '0.92rem' }}>
                 Pickup vehicles equipped with calibrated scales arrive at your doorstep for transparent on-site tare weighing.
               </p>
-            </div>
+            </Reveal>
 
             {/* Step 3 */}
-            <div className="process-card">
-              <div className="process-step-num">03</div>
-              <h3 className="process-card-title">GPS-Tracked Transit</h3>
-              <p className="process-card-desc">
+            <Reveal delay={0.3} className="ip-process-card">
+              <div className="ip-process-num">03</div>
+              <h3 className="ip-h3" style={{ color: '#071C19', marginBottom: '8px' }}>GPS-Tracked Transit</h3>
+              <p className="ip-body ip-body-dark" style={{ fontSize: '0.92rem' }}>
                 Materials are transported to authorized recycling hubs under strict digital surveillance and Form 6 manifests.
               </p>
-            </div>
+            </Reveal>
 
             {/* Step 4 */}
-            <div className="process-card">
-              <div className="process-step-num">04</div>
-              <h3 className="process-card-title">Green Certification</h3>
-              <p className="process-card-desc">
+            <Reveal delay={0.4} className="ip-process-card">
+              <div className="ip-process-num">04</div>
+              <h3 className="ip-h3" style={{ color: '#071C19', marginBottom: '8px' }}>Green Certification</h3>
+              <p className="ip-body ip-body-dark" style={{ fontSize: '0.92rem' }}>
                 Receive government-valid Recycling and Destruction Certificates with corresponding EPR compliance credits.
               </p>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -330,187 +338,189 @@ export default function WasteCollection() {
       {/* 4. SCHEDULE PICKUP BOOKING FORM */}
       <section id="pickup-booking-section" className="section section-dark">
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: '60px', alignItems: 'center' }}>
-            <div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: 'clamp(36px, 5vw, 60px)', alignItems: 'center' }}>
+            <Reveal>
               <span className="badge-tag light-theme">DOORSTEP DISPOSAL</span>
-              <h2 className="section-heading-light" style={{ marginBottom: '20px' }}>
+              <h2 className="ip-h2 ip-h2-light" style={{ marginBottom: '20px' }}>
                 Schedule a Commercial Waste Pickup
               </h2>
-              <p style={{ color: '#b9cfc7', fontSize: '1.05rem', lineHeight: '1.7', marginBottom: '32px' }}>
+              <p className="ip-body ip-body-light" style={{ marginBottom: '32px' }}>
                 Whether you have one-time factory clearance scrap or require recurring collection agreements, our authorized team will coordinate seamless logistics.
               </p>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                  <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(43, 168, 74, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#3cd070' }}>
+                  <div className="ip-icon-circle" style={{ marginBottom: 0, background: 'rgba(43, 168, 74, 0.2)', color: '#3cd070' }}>
                     <Truck size={24} />
                   </div>
                   <div>
-                    <h4 style={{ color: '#fff', fontSize: '1.05rem' }}>Pan-India Logistics Fleet</h4>
-                    <p style={{ color: '#8daaa0', fontSize: '0.85rem' }}>Prompt pickups across Kolkata, West Bengal, and eastern industrial belts.</p>
+                    <h4 style={{ color: '#fff', fontSize: '1.05rem', fontWeight: 700 }}>Pan-India Logistics Fleet</h4>
+                    <p style={{ color: '#8daaa0', fontSize: '0.88rem' }}>Prompt pickups across Kolkata, West Bengal, and eastern industrial belts.</p>
                   </div>
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                  <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(43, 168, 74, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#3cd070' }}>
+                  <div className="ip-icon-circle" style={{ marginBottom: 0, background: 'rgba(43, 168, 74, 0.2)', color: '#3cd070' }}>
                     <PhoneCall size={24} />
                   </div>
                   <div>
-                    <h4 style={{ color: '#fff', fontSize: '1.05rem' }}>Immediate Support Helpline</h4>
-                    <p style={{ color: '#8daaa0', fontSize: '0.85rem' }}>Call +91-9316-631-170 for emergency hazardous waste transport.</p>
+                    <h4 style={{ color: '#fff', fontSize: '1.05rem', fontWeight: 700 }}>Immediate Support Helpline</h4>
+                    <p style={{ color: '#8daaa0', fontSize: '0.88rem' }}>Call +91-9316-631-170 for emergency hazardous waste transport.</p>
                   </div>
                 </div>
               </div>
-            </div>
+            </Reveal>
 
             {/* Form */}
-            <div className="disposal-form-card">
-              <div className="disposal-form-header">
-                <h3 className="disposal-form-title">Pickup Booking Request</h3>
-                <p className="disposal-form-sub">Provide your location & waste volume for instant vehicle dispatch.</p>
-              </div>
-
-              {pickupFormSubmitted ? (
-                <div style={{ textAlign: 'center', padding: '30px 10px', color: '#48cf73' }}>
-                  <CheckCircle size={48} style={{ margin: '0 auto 12px' }} />
-                  <h4 style={{ color: '#fff', fontSize: '1.25rem', marginBottom: '8px' }}>
-                    Pickup Request Confirmed!
-                  </h4>
-                  <p style={{ color: '#a6c5ba', fontSize: '0.95rem' }}>
-                    A logistics supervisor has been assigned to schedule vehicle allocation.
-                  </p>
+            <Reveal delay={0.15}>
+              <div className="disposal-form-card" style={{ background: '#0B2521', border: '1px solid rgba(72,207,115,0.25)', borderRadius: '24px' }}>
+                <div className="disposal-form-header">
+                  <h3 className="disposal-form-title">Pickup Booking Request</h3>
+                  <p className="disposal-form-sub">Provide your location & waste volume for instant vehicle dispatch.</p>
                 </div>
-              ) : (
-                <form onSubmit={handlePickupSubmit}>
-                  <div className="disposal-form-grid">
-                    <div className="form-group">
-                      <label className="form-label">Business / Industry Name</label>
-                      <input
-                        type="text"
-                        name="businessName"
-                        placeholder="Company name"
-                        value={pickupData.businessName}
-                        onChange={handleInputChange}
-                        className="form-input"
-                        required
-                      />
-                    </div>
 
-                    <div className="form-group">
-                      <label className="form-label">Contact Person</label>
-                      <input
-                        type="text"
-                        name="contactPerson"
-                        placeholder="Your full name"
-                        value={pickupData.contactPerson}
-                        onChange={handleInputChange}
-                        className="form-input"
-                        required
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label className="form-label">Phone Number</label>
-                      <input
-                        type="tel"
-                        name="phone"
-                        placeholder="+91-0000000000"
-                        value={pickupData.phone}
-                        onChange={handleInputChange}
-                        className="form-input"
-                        required
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label className="form-label">Email Address</label>
-                      <input
-                        type="email"
-                        name="email"
-                        placeholder="name@company.com"
-                        value={pickupData.email}
-                        onChange={handleInputChange}
-                        className="form-input"
-                        required
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label className="form-label">Primary Waste Type</label>
-                      <select
-                        name="wasteType"
-                        value={pickupData.wasteType}
-                        onChange={handleInputChange}
-                        className="form-select"
-                      >
-                        <option value="Plastic Waste">Plastic Waste</option>
-                        <option value="Electronic E-Waste">Electronic E-Waste</option>
-                        <option value="Battery Waste">Battery Waste</option>
-                        <option value="Tyre Waste">Tyre Waste</option>
-                        <option value="Used Lubricant Oil">Used Lubricant Oil</option>
-                        <option value="Industrial Metal Scrap">Industrial Metal Scrap</option>
-                      </select>
-                    </div>
-
-                    <div className="form-group">
-                      <label className="form-label">Approximate Quantity</label>
-                      <select
-                        name="approxWeight"
-                        value={pickupData.approxWeight}
-                        onChange={handleInputChange}
-                        className="form-select"
-                      >
-                        <option value="Under 500 Kg">Under 500 Kg</option>
-                        <option value="500 Kg - 2 Tonnes">500 Kg - 2 Tonnes</option>
-                        <option value="2 - 10 Tonnes">2 - 10 Tonnes</option>
-                        <option value="Bulk 10+ Tonnes">Bulk 10+ Tonnes</option>
-                      </select>
-                    </div>
-
-                    <div className="form-group">
-                      <label className="form-label">Pickup City / Area</label>
-                      <input
-                        type="text"
-                        name="city"
-                        placeholder="e.g. Kolkata / Howrah"
-                        value={pickupData.city}
-                        onChange={handleInputChange}
-                        className="form-input"
-                        required
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label className="form-label">Preferred Date</label>
-                      <input
-                        type="date"
-                        name="preferredDate"
-                        value={pickupData.preferredDate}
-                        onChange={handleInputChange}
-                        className="form-input"
-                        required
-                      />
-                    </div>
-
-                    <div className="form-group full-width">
-                      <label className="form-label">Special Handling Notes</label>
-                      <textarea
-                        name="specialNotes"
-                        placeholder="Any hazardous requirements, loading dock details, or timing preferences"
-                        value={pickupData.specialNotes}
-                        onChange={handleInputChange}
-                        className="form-textarea"
-                        rows={2}
-                      />
-                    </div>
+                {pickupFormSubmitted ? (
+                  <div style={{ textAlign: 'center', padding: '30px 10px', color: '#48cf73' }}>
+                    <CheckCircle size={48} style={{ margin: '0 auto 12px' }} />
+                    <h4 style={{ color: '#fff', fontSize: '1.25rem', marginBottom: '8px' }}>
+                      Pickup Request Confirmed!
+                    </h4>
+                    <p style={{ color: '#a6c5ba', fontSize: '0.95rem' }}>
+                      A logistics supervisor has been assigned to schedule vehicle allocation.
+                    </p>
                   </div>
+                ) : (
+                  <form onSubmit={handlePickupSubmit}>
+                    <div className="disposal-form-grid">
+                      <div className="form-group">
+                        <label className="form-label">Business / Industry Name</label>
+                        <input
+                          type="text"
+                          name="businessName"
+                          placeholder="Company name"
+                          value={pickupData.businessName}
+                          onChange={handleInputChange}
+                          className="form-input"
+                          required
+                        />
+                      </div>
 
-                  <button type="submit" className="form-submit-btn">
-                    Confirm Pickup Request
-                  </button>
-                </form>
-              )}
-            </div>
+                      <div className="form-group">
+                        <label className="form-label">Contact Person</label>
+                        <input
+                          type="text"
+                          name="contactPerson"
+                          placeholder="Your full name"
+                          value={pickupData.contactPerson}
+                          onChange={handleInputChange}
+                          className="form-input"
+                          required
+                        />
+                      </div>
+
+                      <div className="form-group">
+                        <label className="form-label">Phone Number</label>
+                        <input
+                          type="tel"
+                          name="phone"
+                          placeholder="+91-0000000000"
+                          value={pickupData.phone}
+                          onChange={handleInputChange}
+                          className="form-input"
+                          required
+                        />
+                      </div>
+
+                      <div className="form-group">
+                        <label className="form-label">Email Address</label>
+                        <input
+                          type="email"
+                          name="email"
+                          placeholder="name@company.com"
+                          value={pickupData.email}
+                          onChange={handleInputChange}
+                          className="form-input"
+                          required
+                        />
+                      </div>
+
+                      <div className="form-group">
+                        <label className="form-label">Primary Waste Type</label>
+                        <select
+                          name="wasteType"
+                          value={pickupData.wasteType}
+                          onChange={handleInputChange}
+                          className="form-select"
+                        >
+                          <option value="Plastic Waste">Plastic Waste</option>
+                          <option value="Electronic E-Waste">Electronic E-Waste</option>
+                          <option value="Battery Waste">Battery Waste</option>
+                          <option value="Tyre Waste">Tyre Waste</option>
+                          <option value="Used Lubricant Oil">Used Lubricant Oil</option>
+                          <option value="Industrial Metal Scrap">Industrial Metal Scrap</option>
+                        </select>
+                      </div>
+
+                      <div className="form-group">
+                        <label className="form-label">Approximate Quantity</label>
+                        <select
+                          name="approxWeight"
+                          value={pickupData.approxWeight}
+                          onChange={handleInputChange}
+                          className="form-select"
+                        >
+                          <option value="Under 500 Kg">Under 500 Kg</option>
+                          <option value="500 Kg - 2 Tonnes">500 Kg - 2 Tonnes</option>
+                          <option value="2 - 10 Tonnes">2 - 10 Tonnes</option>
+                          <option value="Bulk 10+ Tonnes">Bulk 10+ Tonnes</option>
+                        </select>
+                      </div>
+
+                      <div className="form-group">
+                        <label className="form-label">Pickup City / Area</label>
+                        <input
+                          type="text"
+                          name="city"
+                          placeholder="e.g. Kolkata / Howrah"
+                          value={pickupData.city}
+                          onChange={handleInputChange}
+                          className="form-input"
+                          required
+                        />
+                      </div>
+
+                      <div className="form-group">
+                        <label className="form-label">Preferred Date</label>
+                        <input
+                          type="date"
+                          name="preferredDate"
+                          value={pickupData.preferredDate}
+                          onChange={handleInputChange}
+                          className="form-input"
+                          required
+                        />
+                      </div>
+
+                      <div className="form-group full-width">
+                        <label className="form-label">Special Handling Notes</label>
+                        <textarea
+                          name="specialNotes"
+                          placeholder="Any hazardous requirements, loading dock details, or timing preferences"
+                          value={pickupData.specialNotes}
+                          onChange={handleInputChange}
+                          className="form-textarea"
+                          rows={2}
+                        />
+                      </div>
+                    </div>
+
+                    <button type="submit" className="form-submit-btn">
+                      Confirm Pickup Request
+                    </button>
+                  </form>
+                )}
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>

@@ -1,19 +1,30 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, useReducedMotion } from 'framer-motion';
 import {
-  FileCheck,
   ShieldCheck,
   Calculator,
   Layers,
   CheckCircle,
-  FileSpreadsheet,
-  Building,
-  HelpCircle,
-  ArrowRight,
-  TrendingUp,
-  Award,
-  AlertCircle
+  FileCheck2,
+  ArrowRight
 } from 'lucide-react';
+import '../inner-pages.css';
+
+function Reveal({ children, delay = 0, y = 28, className = '' }) {
+  const reduce = useReducedMotion();
+  return (
+    <motion.div
+      className={className}
+      initial={reduce ? false : { opacity: 0, y }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 const eprCategories = [
   {
@@ -64,6 +75,8 @@ export default function EPRConsultancy() {
     annualTurnover: '',
     notes: ''
   });
+
+  const reduce = useReducedMotion();
 
   const handleCalculate = (e) => {
     e.preventDefault();
@@ -116,20 +129,34 @@ export default function EPRConsultancy() {
           className="inner-hero-bg"
           style={{ backgroundImage: 'url(/images/services/epr-consultancy.jpg)' }}
         />
+        <div className="inner-hero-shade" />
         <div className="container">
           <div className="inner-hero-content">
-            <div className="breadcrumb">
-              <Link to="/">Home</Link>
-              <span className="breadcrumb-separator">/</span>
-              <span>EPR Consultancy</span>
-            </div>
-            <span className="badge-tag light-theme">CPCB AUTHORIZED COMPLIANCE PARTNER</span>
-            <h1 className="inner-hero-title">
-              Complete Extended Producer Responsibility (EPR) Solutions
-            </h1>
-            <p className="inner-hero-desc">
-              Navigating Central Pollution Control Board (CPCB) compliance with guaranteed credits, audit representation, and zero-liability assurance for Producers, Importers, and Brand Owners (PIBOs).
-            </p>
+            <motion.div
+              initial={reduce ? false : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div className="breadcrumb">
+                <Link to="/">Home</Link>
+                <span className="breadcrumb-separator">/</span>
+                <span>EPR Consultancy</span>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={reduce ? false : { opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <span className="badge-tag light-theme">CPCB AUTHORIZED COMPLIANCE PARTNER</span>
+              <h1 className="ip-h1">
+                Complete Extended Producer Responsibility (EPR) Solutions
+              </h1>
+              <p className="inner-hero-desc">
+                Navigating Central Pollution Control Board (CPCB) compliance with guaranteed credits, audit representation, and zero-liability assurance for Producers, Importers, and Brand Owners (PIBOs).
+              </p>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -137,17 +164,17 @@ export default function EPRConsultancy() {
       {/* 2. OVERVIEW & WHY EPR MATTERS */}
       <section className="section section-white">
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: '60px', alignItems: 'center' }}>
-            <div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: 'clamp(36px, 5vw, 60px)', alignItems: 'center' }}>
+            <Reveal>
               <span className="badge-tag">MANDATORY REGULATORY COMPLIANCE</span>
-              <h2 className="section-heading-dark" style={{ marginBottom: '22px' }}>
+              <h2 className="ip-h2 ip-h2-dark" style={{ marginBottom: '22px' }}>
                 Seamless Fulfillment of <br />
                 <span className="text-highlight">CPCB Mandates & Audits</span>
               </h2>
-              <p style={{ color: '#4a635b', fontSize: '1.05rem', lineHeight: '1.75', marginBottom: '20px' }}>
+              <p className="ip-body ip-body-dark" style={{ marginBottom: '20px' }}>
                 Extended Producer Responsibility (EPR) is legally enforced in India under the Environment (Protection) Act. Any enterprise manufacturing, importing, or selling products packaged in plastic, electronic goods, automotive batteries, or tyres must register on the Central CPCB portal and achieve strictly audited annual recycling quotas.
               </p>
-              <p style={{ color: '#4a635b', fontSize: '1rem', lineHeight: '1.75', marginBottom: '30px' }}>
+              <p className="ip-body ip-body-dark" style={{ marginBottom: '30px' }}>
                 At ARKCA Recyclers, our team of over 200 environmental consultants, chartered engineers, and legal compliance specialists manage your entire EPR lifecycle—from initial portal filing to certificate exchange and annual return defense.
               </p>
 
@@ -169,39 +196,34 @@ export default function EPRConsultancy() {
                   <span style={{ fontWeight: 600, color: '#071C19' }}>Zero Penalty Guarantee</span>
                 </div>
               </div>
-            </div>
+            </Reveal>
 
-            <div style={{
-              background: '#071C19',
-              borderRadius: '20px',
-              padding: '40px 36px',
-              color: '#fff',
-              border: '1px solid rgba(43, 168, 74, 0.3)',
-              boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
-                <ShieldCheck size={32} color="#3cd070" />
-                <h3 style={{ fontSize: '1.5rem', fontWeight: 700 }}>Who Needs EPR in India?</h3>
+            <Reveal delay={0.15}>
+              <div className="ip-card ip-card-dark" style={{ borderRadius: '24px', padding: '38px 34px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
+                  <ShieldCheck size={32} color="#3cd070" />
+                  <h3 className="ip-h3" style={{ color: '#fff' }}>Who Needs EPR in India?</h3>
+                </div>
+                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '16px', color: '#c7ded5', fontSize: '0.95rem' }}>
+                  <li style={{ display: 'flex', gap: '10px' }}>
+                    <span style={{ color: '#3cd070', fontWeight: 800 }}>•</span>
+                    <span><strong>Producers:</strong> Entities manufacturing packaging material, electrical devices, batteries, or tyres.</span>
+                  </li>
+                  <li style={{ display: 'flex', gap: '10px' }}>
+                    <span style={{ color: '#3cd070', fontWeight: 800 }}>•</span>
+                    <span><strong>Importers:</strong> Companies importing finished packaged goods, electronic hardware, or machinery into India.</span>
+                  </li>
+                  <li style={{ display: 'flex', gap: '10px' }}>
+                    <span style={{ color: '#3cd070', fontWeight: 800 }}>•</span>
+                    <span><strong>Brand Owners:</strong> Brands selling products in consumer packaging, retail goods, e-commerce, or industrial logistics.</span>
+                  </li>
+                  <li style={{ display: 'flex', gap: '10px' }}>
+                    <span style={{ color: '#3cd070', fontWeight: 800 }}>•</span>
+                    <span><strong>Waste Processors & Recyclers:</strong> Entities converting scrap into secondary raw material.</span>
+                  </li>
+                </ul>
               </div>
-              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '16px', color: '#c7ded5', fontSize: '0.95rem' }}>
-                <li style={{ display: 'flex', gap: '10px' }}>
-                  <span style={{ color: '#3cd070', fontWeight: 800 }}>•</span>
-                  <span><strong>Producers:</strong> Entities manufacturing packaging material, electrical devices, batteries, or tyres.</span>
-                </li>
-                <li style={{ display: 'flex', gap: '10px' }}>
-                  <span style={{ color: '#3cd070', fontWeight: 800 }}>•</span>
-                  <span><strong>Importers:</strong> Companies importing finished packaged goods, electronic hardware, or machinery into India.</span>
-                </li>
-                <li style={{ display: 'flex', gap: '10px' }}>
-                  <span style={{ color: '#3cd070', fontWeight: 800 }}>•</span>
-                  <span><strong>Brand Owners:</strong> Brands selling products in consumer packaging, retail goods, e-commerce, or industrial logistics.</span>
-                </li>
-                <li style={{ display: 'flex', gap: '10px' }}>
-                  <span style={{ color: '#3cd070', fontWeight: 800 }}>•</span>
-                  <span><strong>Waste Processors & Recyclers:</strong> Entities converting scrap into secondary raw material.</span>
-                </li>
-              </ul>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -209,37 +231,26 @@ export default function EPRConsultancy() {
       {/* 3. DETAILED RULES COVERAGE */}
       <section className="section section-light">
         <div className="container">
-          <div style={{ textAlign: 'center', maxWidth: '750px', margin: '0 auto 48px' }}>
+          <Reveal style={{ textAlign: 'center', maxWidth: '750px', margin: '0 auto 48px' }}>
             <span className="badge-tag">STATUTORY REGIMES</span>
-            <h2 className="section-heading-dark">EPR Categories We Cover</h2>
-            <p style={{ color: '#526b64', marginTop: '10px' }}>
+            <h2 className="ip-h2 ip-h2-dark">EPR Categories We Cover</h2>
+            <p className="ip-body ip-body-dark" style={{ marginTop: '10px' }}>
               We provide comprehensive advisory, credit generation, and return filing across all central waste notifications.
             </p>
-          </div>
+          </Reveal>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '28px' }}>
             {eprCategories.map((cat, idx) => (
-              <div
-                key={idx}
-                style={{
-                  background: '#fff',
-                  borderRadius: '16px',
-                  padding: '32px 28px',
-                  border: '1px solid #dce8e1',
-                  boxShadow: '0 4px 16px rgba(7, 28, 25, 0.04)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between'
-                }}
-              >
+              <Reveal key={idx} delay={idx * 0.1} className="ip-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <div className="ip-card-motif" />
                 <div>
-                  <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#148C4A', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                  <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--ip-accent)', textTransform: 'uppercase', letterSpacing: '1px' }}>
                     {cat.rule}
                   </span>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#071C19', margin: '10px 0 14px' }}>
+                  <h3 className="ip-h3" style={{ color: '#071C19', margin: '10px 0 14px' }}>
                     {cat.title}
                   </h3>
-                  <p style={{ color: '#526b64', fontSize: '0.92rem', lineHeight: '1.65', marginBottom: '20px' }}>
+                  <p className="ip-body ip-body-dark" style={{ fontSize: '0.92rem', lineHeight: '1.65', marginBottom: '20px' }}>
                     {cat.desc}
                   </p>
                 </div>
@@ -247,15 +258,15 @@ export default function EPRConsultancy() {
                 <div style={{
                   background: '#F5F9F5',
                   padding: '12px 16px',
-                  borderRadius: '8px',
-                  borderLeft: '3px solid #148C4A',
+                  borderRadius: '10px',
+                  borderLeft: '3px solid var(--ip-accent)',
                   fontSize: '0.85rem',
                   color: '#2d433e',
-                  fontWeight: 500
+                  fontWeight: 600
                 }}>
                   {cat.obligation}
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -264,22 +275,13 @@ export default function EPRConsultancy() {
       {/* 4. INTERACTIVE EPR TARGET ESTIMATOR */}
       <section className="section section-white">
         <div className="container">
-          <div style={{
-            background: 'linear-gradient(135deg, #071C19 0%, #0d302a 100%)',
-            borderRadius: '24px',
-            padding: '48px 40px',
-            color: '#fff',
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '50px',
-            alignItems: 'center'
-          }}>
+          <Reveal className="ip-calc-container">
             <div>
               <span className="badge-tag light-theme">QUICK CALCULATOR</span>
-              <h2 style={{ fontSize: '2.2rem', fontFamily: 'var(--font-heading)', fontWeight: 800, marginBottom: '16px' }}>
+              <h2 className="ip-h2 ip-h2-light" style={{ fontSize: '2.2rem', marginBottom: '16px' }}>
                 Estimate Your EPR Obligation
               </h2>
-              <p style={{ color: '#c7ded5', fontSize: '0.98rem', lineHeight: '1.7', marginBottom: '28px' }}>
+              <p className="ip-body ip-body-light" style={{ marginBottom: '28px' }}>
                 Select your regulated waste category and enter your estimated annual procurement or sales weight (in metric tonnes) to see your approximate annual recycling credit target.
               </p>
 
@@ -313,19 +315,13 @@ export default function EPRConsultancy() {
                   />
                 </div>
 
-                <button type="submit" className="btn-primary" style={{ marginTop: '8px' }}>
+                <button type="submit" className="btn-primary ax-btn-solid" style={{ marginTop: '8px' }}>
                   <Calculator size={18} /> Calculate EPR Requirement
                 </button>
               </form>
             </div>
 
-            <div style={{
-              background: '#0B2521',
-              borderRadius: '16px',
-              border: '1px solid rgba(43, 168, 74, 0.3)',
-              padding: '36px',
-              textAlign: 'center'
-            }}>
+            <div className="ip-calc-result-box">
               {calcResult ? (
                 <div>
                   <span style={{ fontSize: '0.85rem', color: '#8daaa0', textTransform: 'uppercase', letterSpacing: '1px' }}>
@@ -337,14 +333,14 @@ export default function EPRConsultancy() {
                   <p style={{ color: '#b9cfc7', fontSize: '0.95rem', marginBottom: '24px' }}>
                     Based on an applicable statutory obligation of <strong>{calcResult.targetPercent}%</strong> for your selected category.
                   </p>
-                  <a href="#epr-inquiry-form" className="btn-primary" style={{ width: '100%' }}>
+                  <a href="#epr-inquiry-form" className="btn-primary ax-btn-solid" style={{ width: '100%' }}>
                     Procure Traceable EPR Credits
                   </a>
                 </div>
               ) : (
                 <div style={{ padding: '20px' }}>
                   <Layers size={52} color="#148C4A" style={{ margin: '0 auto 16px' }} />
-                  <h4 style={{ color: '#fff', fontSize: '1.25rem', marginBottom: '8px' }}>
+                  <h4 style={{ color: '#fff', fontSize: '1.25rem', marginBottom: '8px', fontWeight: 700 }}>
                     Instant Target Projection
                   </h4>
                   <p style={{ color: '#8daaa0', fontSize: '0.9rem', lineHeight: '1.6' }}>
@@ -353,20 +349,20 @@ export default function EPRConsultancy() {
                 </div>
               )}
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* 5. CONSULTATION INQUIRY FORM */}
       <section id="epr-inquiry-form" className="section section-light">
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: '60px', alignItems: 'center' }}>
-            <div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: 'clamp(36px, 5vw, 60px)', alignItems: 'center' }}>
+            <Reveal>
               <span className="badge-tag">GET COMPLIANCE EXPERTS ON YOUR SIDE</span>
-              <h2 className="section-heading-dark" style={{ marginBottom: '20px' }}>
+              <h2 className="ip-h2 ip-h2-dark" style={{ marginBottom: '20px' }}>
                 Request an EPR Compliance Audit
               </h2>
-              <p style={{ color: '#526b64', fontSize: '1.05rem', lineHeight: '1.75', marginBottom: '30px' }}>
+              <p className="ip-body ip-body-dark" style={{ marginBottom: '30px' }}>
                 Whether you need fresh CPCB registration, credit procurement to close annual deficits, or defense during state audit notices, our certified consultants are ready to assist.
               </p>
 
@@ -384,130 +380,132 @@ export default function EPRConsultancy() {
                   <span style={{ color: '#2d433e', fontWeight: 600 }}>Timely filing of quarterly & annual Form returns</span>
                 </div>
               </div>
-            </div>
+            </Reveal>
 
             {/* Form */}
-            <div className="disposal-form-card">
-              <div className="disposal-form-header">
-                <h3 className="disposal-form-title">EPR Advisory Consultation</h3>
-                <p className="disposal-form-sub">Fill in your corporate details for an assessment report.</p>
-              </div>
-
-              {eprFormSubmitted ? (
-                <div style={{ textAlign: 'center', padding: '30px 10px', color: '#48cf73' }}>
-                  <CheckCircle size={48} style={{ margin: '0 auto 12px' }} />
-                  <h4 style={{ color: '#fff', fontSize: '1.25rem', marginBottom: '8px' }}>
-                    Audit Request Received!
-                  </h4>
-                  <p style={{ color: '#a6c5ba', fontSize: '0.95rem' }}>
-                    A Senior EPR Consultant will reach out with a detailed compliance roadmap within 4 business hours.
-                  </p>
+            <Reveal delay={0.15}>
+              <div className="disposal-form-card" style={{ background: '#0B2521', border: '1px solid rgba(72,207,115,0.25)', borderRadius: '24px' }}>
+                <div className="disposal-form-header">
+                  <h3 className="disposal-form-title">EPR Advisory Consultation</h3>
+                  <p className="disposal-form-sub">Fill in your corporate details for an assessment report.</p>
                 </div>
-              ) : (
-                <form onSubmit={handleFormSubmit}>
-                  <div className="disposal-form-grid">
-                    <div className="form-group">
-                      <label className="form-label">Enterprise / Company Name</label>
-                      <input
-                        type="text"
-                        name="companyName"
-                        placeholder="e.g. Acme Consumer Goods Ltd"
-                        value={eprForm.companyName}
-                        onChange={handleFormChange}
-                        className="form-input"
-                        required
-                      />
-                    </div>
 
-                    <div className="form-group">
-                      <label className="form-label">PIBO Entity Type</label>
-                      <select
-                        name="piboType"
-                        value={eprForm.piboType}
-                        onChange={handleFormChange}
-                        className="form-select"
-                      >
-                        <option value="Brand Owner">Brand Owner</option>
-                        <option value="Producer / Manufacturer">Producer / Manufacturer</option>
-                        <option value="Importer">Importer</option>
-                        <option value="Recycler / Processor">Recycler / Processor</option>
-                      </select>
-                    </div>
-
-                    <div className="form-group">
-                      <label className="form-label">Primary Regulated Stream</label>
-                      <select
-                        name="wasteStream"
-                        value={eprForm.wasteStream}
-                        onChange={handleFormChange}
-                        className="form-select"
-                      >
-                        <option value="Plastic Packaging">Plastic Packaging</option>
-                        <option value="E-Waste Equipment">E-Waste Equipment</option>
-                        <option value="Batteries">Batteries</option>
-                        <option value="Tyres">Tyres</option>
-                        <option value="Used Lubricating Oil">Used Lubricating Oil</option>
-                      </select>
-                    </div>
-
-                    <div className="form-group">
-                      <label className="form-label">Contact Person</label>
-                      <input
-                        type="text"
-                        name="contactName"
-                        placeholder="Your Name"
-                        value={eprForm.contactName}
-                        onChange={handleFormChange}
-                        className="form-input"
-                        required
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label className="form-label">Official Work Email</label>
-                      <input
-                        type="email"
-                        name="email"
-                        placeholder="compliance@acme.com"
-                        value={eprForm.email}
-                        onChange={handleFormChange}
-                        className="form-input"
-                        required
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label className="form-label">Direct Phone</label>
-                      <input
-                        type="tel"
-                        name="phone"
-                        placeholder="+91 98765 43210"
-                        value={eprForm.phone}
-                        onChange={handleFormChange}
-                        className="form-input"
-                        required
-                      />
-                    </div>
-
-                    <div className="form-group full-width">
-                      <label className="form-label">Specific Compliance Goals or Deadlines</label>
-                      <textarea
-                        name="notes"
-                        placeholder="Mention whether you need CPCB registration, target fulfillment credits, or annual return audit defense."
-                        value={eprForm.notes}
-                        onChange={handleFormChange}
-                        className="form-textarea"
-                        rows={2}
-                      />
-                    </div>
+                {eprFormSubmitted ? (
+                  <div style={{ textAlign: 'center', padding: '30px 10px', color: '#48cf73' }}>
+                    <CheckCircle size={48} style={{ margin: '0 auto 12px' }} />
+                    <h4 style={{ color: '#fff', fontSize: '1.25rem', marginBottom: '8px' }}>
+                      Audit Request Received!
+                    </h4>
+                    <p style={{ color: '#a6c5ba', fontSize: '0.95rem' }}>
+                      A Senior EPR Consultant will reach out with a detailed compliance roadmap within 4 business hours.
+                    </p>
                   </div>
+                ) : (
+                  <form onSubmit={handleFormSubmit}>
+                    <div className="disposal-form-grid">
+                      <div className="form-group">
+                        <label className="form-label">Enterprise / Company Name</label>
+                        <input
+                          type="text"
+                          name="companyName"
+                          placeholder="e.g. Acme Consumer Goods Ltd"
+                          value={eprForm.companyName}
+                          onChange={handleFormChange}
+                          className="form-input"
+                          required
+                        />
+                      </div>
 
-                  <button type="submit" className="form-submit-btn">
-                    Schedule Free EPR Assessment
-                  </button>
-                </form>
-              )}
-            </div>
+                      <div className="form-group">
+                        <label className="form-label">PIBO Entity Type</label>
+                        <select
+                          name="piboType"
+                          value={eprForm.piboType}
+                          onChange={handleFormChange}
+                          className="form-select"
+                        >
+                          <option value="Brand Owner">Brand Owner</option>
+                          <option value="Producer / Manufacturer">Producer / Manufacturer</option>
+                          <option value="Importer">Importer</option>
+                          <option value="Recycler / Processor">Recycler / Processor</option>
+                        </select>
+                      </div>
+
+                      <div className="form-group">
+                        <label className="form-label">Primary Regulated Stream</label>
+                        <select
+                          name="wasteStream"
+                          value={eprForm.wasteStream}
+                          onChange={handleFormChange}
+                          className="form-select"
+                        >
+                          <option value="Plastic Packaging">Plastic Packaging</option>
+                          <option value="E-Waste Equipment">E-Waste Equipment</option>
+                          <option value="Batteries">Batteries</option>
+                          <option value="Tyres">Tyres</option>
+                          <option value="Used Lubricating Oil">Used Lubricating Oil</option>
+                        </select>
+                      </div>
+
+                      <div className="form-group">
+                        <label className="form-label">Contact Person</label>
+                        <input
+                          type="text"
+                          name="contactName"
+                          placeholder="Your Name"
+                          value={eprForm.contactName}
+                          onChange={handleFormChange}
+                          className="form-input"
+                          required
+                        />
+                      </div>
+
+                      <div className="form-group">
+                        <label className="form-label">Official Work Email</label>
+                        <input
+                          type="email"
+                          name="email"
+                          placeholder="compliance@acme.com"
+                          value={eprForm.email}
+                          onChange={handleFormChange}
+                          className="form-input"
+                          required
+                        />
+                      </div>
+
+                      <div className="form-group">
+                        <label className="form-label">Direct Phone</label>
+                        <input
+                          type="tel"
+                          name="phone"
+                          placeholder="+91 98765 43210"
+                          value={eprForm.phone}
+                          onChange={handleFormChange}
+                          className="form-input"
+                          required
+                        />
+                      </div>
+
+                      <div className="form-group full-width">
+                        <label className="form-label">Specific Compliance Goals or Deadlines</label>
+                        <textarea
+                          name="notes"
+                          placeholder="Mention whether you need CPCB registration, target fulfillment credits, or annual return audit defense."
+                          value={eprForm.notes}
+                          onChange={handleFormChange}
+                          className="form-textarea"
+                          rows={2}
+                        />
+                      </div>
+                    </div>
+
+                    <button type="submit" className="form-submit-btn">
+                      Schedule Free EPR Assessment
+                    </button>
+                  </form>
+                )}
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>
