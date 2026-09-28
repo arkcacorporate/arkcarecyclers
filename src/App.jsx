@@ -70,9 +70,11 @@ function Navigation() {
           {/* Brand Logo */}
           <Link to="/" className="nav-brand" onClick={() => setMobileMenuOpen(false)}>
             <img
-              src="/images/logo/arkcarecyclerslogo.png"
+              src="/images/logo/arkcarecyclerslogo.webp"
               alt="ARKCA Recyclers"
               className="nav-logo-img"
+              width="220"
+              height="60"
             />
           </Link>
 
@@ -91,9 +93,11 @@ function Navigation() {
           <nav className={`nav-menu ${mobileMenuOpen ? 'open' : ''}`} aria-label="Main Navigation">
             <div className="mobile-nav-header">
               <img
-                src="/images/logo/arkcarecyclerslogo.png"
+                src="/images/logo/arkcarecyclerslogo.webp"
                 alt="ARKCA Recyclers"
                 className="nav-logo-img-mobile"
+                width="180"
+                height="50"
               />
               <button
                 type="button"
@@ -186,9 +190,13 @@ function SiteFooter() {
           <div className="footer-col-about">
             <Link to="/" style={{ display: 'inline-block' }}>
               <img
-                src="/images/logo/arkcarecyclerslogo.png"
+                src="/images/logo/arkcarecyclerslogo.webp"
                 alt="ARKCA Recyclers"
                 className="footer-logo-img"
+                loading="lazy"
+                decoding="async"
+                width="200"
+                height="54"
               />
             </Link>
             <p>

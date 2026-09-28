@@ -34,6 +34,9 @@ html {
   scroll-behavior: smooth;
   font-size: 16px;
   box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 body {
@@ -45,10 +48,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
   padding: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  position: relative;
 }
 
 #root, .app-layout {
   width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
   position: relative;
 }
 
@@ -92,6 +101,14 @@ input, select, textarea {
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 24px;
+}
+
+@media (max-width: 767px) {
+  .container,
+  .container-wide {
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
 }
 
 /* Navigation Bar */
@@ -248,8 +265,33 @@ input, select, textarea {
 
 /* Mobile Nav Overlay */
 @media (max-width: 960px) {
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    z-index: 1000;
+    padding: 14px 0;
+    background: rgba(7, 28, 25, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .nav-container {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
   .nav-toggle-btn {
     display: flex;
+    position: relative;
+    z-index: 1002;
   }
 
   .mobile-nav-header {
@@ -279,6 +321,9 @@ input, select, textarea {
     color: #fff;
     border: none;
     cursor: pointer;
+    position: relative;
+    z-index: 2;
+    pointer-events: auto;
   }
 
   .nav-menu {
@@ -296,13 +341,17 @@ input, select, textarea {
     gap: 10px;
     box-shadow: -10px 0 35px rgba(0, 0, 0, 0.6);
     transform: translateX(100%);
-    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    z-index: 999;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.35s;
+    z-index: 1001;
     overflow-y: auto;
+    pointer-events: none;
+    visibility: hidden;
   }
 
   .nav-menu.open {
     transform: translateX(0);
+    pointer-events: auto;
+    visibility: visible;
   }
 
   .nav-link {
@@ -314,6 +363,11 @@ input, select, textarea {
     background: rgba(255, 255, 255, 0.03);
     color: #e5ece9;
     transition: all 0.25s ease;
+    pointer-events: auto;
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .nav-link:hover, .nav-link.active {
@@ -327,6 +381,11 @@ input, select, textarea {
     margin-top: 14px;
     padding: 14px 20px;
     border-radius: 10px;
+    pointer-events: auto;
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
   }
 }
 

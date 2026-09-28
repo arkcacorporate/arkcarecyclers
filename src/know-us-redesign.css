@@ -1,11 +1,11 @@
 /* Layout / spacing / motion only. No font sizes or brand colours are changed here.
    Import after inner-pages.css. */
-.ku { --ku-ease:cubic-bezier(.22,1,.36,1); --ku-accent:#48cf73; overflow-x:clip; }
+.ku { --ku-ease:cubic-bezier(.22,1,.36,1); --ku-accent:#48cf73; overflow-x:clip; width:100%; max-width:100%; }
 .ku * { box-sizing:border-box; }
 .ku :focus-visible { outline:2px solid var(--ku-accent); outline-offset:3px; }
 
 /* tighter vertical rhythm (was the "too large" part) */
-.know-us-page .section.ku-sec { padding-top:clamp(44px,5.5vw,80px); padding-bottom:clamp(44px,5.5vw,80px); }
+.know-us-page .section.ku-sec { padding-top:clamp(44px,5.5vw,80px); padding-bottom:clamp(44px,5.5vw,80px); position:relative; overflow-x:clip; width:100%; max-width:100%; }
 .ku .inner-hero.ku-hero { min-height:0; height:auto; padding:clamp(56px,9vw,112px) 0 clamp(48px,7vw,88px); }
 .ku .ku-hero-content { max-width:760px; }
 .ku .ku-hero-content .ip-h1 { margin-bottom:16px; }

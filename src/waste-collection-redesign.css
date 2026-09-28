@@ -1,10 +1,10 @@
 /* Layout / spacing / motion only. No font sizes or brand colours changed. Import after inner-pages.css. */
-.wc { --wc-ease:cubic-bezier(.22,1,.36,1); --wc-accent:#48cf73; overflow-x:clip; }
+.wc { --wc-ease:cubic-bezier(.22,1,.36,1); --wc-accent:#48cf73; overflow-x:clip; width:100%; max-width:100%; }
 .wc * { box-sizing:border-box; }
 .wc :focus-visible { outline:2px solid var(--wc-accent); outline-offset:3px; }
 
 /* tighter rhythm */
-.waste-collection-page .section.wc-sec { padding-top:clamp(44px,5.5vw,80px); padding-bottom:clamp(44px,5.5vw,80px); }
+.waste-collection-page .section.wc-sec { padding-top:clamp(44px,5.5vw,80px); padding-bottom:clamp(44px,5.5vw,80px); position:relative; overflow-x:clip; width:100%; max-width:100%; }
 .wc .inner-hero.wc-hero { min-height:0; height:auto; padding:clamp(56px,9vw,112px) 0 clamp(48px,7vw,88px); }
 .wc .wc-hero-content { max-width:760px; }
 .wc .wc-hero-content .ip-h1 { margin-bottom:16px; }

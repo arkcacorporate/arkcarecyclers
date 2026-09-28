@@ -90,7 +90,7 @@ export default function EPRConsultancy() {
     <div className="epr-consultancy-page ec">
       {/* 1. HERO */}
       <section className="inner-hero ec-hero">
-        <div className="inner-hero-bg ec-hero-bg" style={{ backgroundImage: 'url(/images/services/epr-consultancy.jpg)' }} />
+        <div className="inner-hero-bg ec-hero-bg" style={{ backgroundImage: 'url(/images/services/epr-consultancy.webp)' }} />
         <div className="inner-hero-shade" />
         <div className="container">
           <div className="inner-hero-content ec-hero-content">

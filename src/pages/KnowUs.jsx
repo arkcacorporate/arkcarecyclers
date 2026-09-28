@@ -10,11 +10,13 @@ import '../know-us-redesign.css';
 // Now forwards style, so the centred header and mosaic grid actually apply.
 function Reveal({ children, delay = 0, y = 28, x = 0, className = '', style }) {
   const reduce = useReducedMotion();
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const initialX = isMobile ? 0 : x;
   return (
     <motion.div
       className={className}
       style={style}
-      initial={reduce ? false : { opacity: 0, y, x }}
+      initial={reduce ? false : { opacity: 0, y, x: initialX }}
       whileInView={{ opacity: 1, y: 0, x: 0 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
@@ -38,9 +40,9 @@ const features = [
 ];
 
 const mosaic = [
-  { src: '/images/recycling/facility.jpg', alt: 'ARKCA material recovery plant' },
-  { src: '/images/services/metal.jpg', alt: 'Metal recycling processing' },
-  { src: '/images/services/waste-collection.jpg', alt: 'Waste collection channelisation' },
+  { src: '/images/recycling/facility.webp', alt: 'ARKCA material recovery plant' },
+  { src: '/images/services/metal.webp', alt: 'Metal recycling processing' },
+  { src: '/images/services/waste-collection.webp', alt: 'Waste collection channelisation' },
   { src: '/images/hero/oil.webp', alt: 'Oil distillation facility' },
 ];
 
@@ -51,7 +53,7 @@ export default function KnowUs() {
     <div className="know-us-page ku">
       {/* 1. HERO */}
       <section className="inner-hero ku-hero">
-        <div className="inner-hero-bg ku-hero-bg" style={{ backgroundImage: 'url(/images/recycling/facility.jpg)' }} />
+        <div className="inner-hero-bg ku-hero-bg" style={{ backgroundImage: 'url(/images/recycling/facility.webp)' }} />
         <div className="inner-hero-shade" />
         <div className="container">
           <div className="inner-hero-content ku-hero-content">
@@ -109,7 +111,7 @@ export default function KnowUs() {
             <Reveal delay={0.15} x={30} y={0} className="ku-about-media">
               <span className="ku-frame" aria-hidden="true" />
               <div className="ku-photo ku-zoom">
-                <img src="/images/recycling/waste-pickers.jpg" alt="ARKCA Recyclers community impact" loading="lazy" />
+                <img src="/images/recycling/waste-pickers.webp" alt="ARKCA Recyclers community impact" loading="lazy" decoding="async" />
               </div>
               <div className="ku-stat">
                 <TrendingUp size={36} color="#3cd070" />
@@ -176,7 +178,7 @@ export default function KnowUs() {
             <Reveal delay={0.15} className="ku-mosaic">
               {mosaic.map((m, i) => (
                 <figure key={m.alt} className={`ku-tile ku-zoom ku-tile-${i}`}>
-                  <img src={m.src} alt={m.alt} loading="lazy" />
+                  <img src={m.src} alt={m.alt} loading="lazy" decoding="async" />
                 </figure>
               ))}
             </Reveal>

@@ -1,9 +1,9 @@
 /* Redesign layer for Home.jsx. Import AFTER your existing global CSS.
    Palette taken from the existing code: #48cf73 accent, #a6c5ba / #b9cfc7 tints, #526b64 muted.
    Adjust --ax-dark / --ax-light to match your existing dark-green and light background tokens. */
-.ax { --ax-accent:#48cf73; --ax-dark:#0b2a21; --ax-light:#f3f8f5; --ax-muted:#526b64; --ax-ease:cubic-bezier(.22,1,.36,1); overflow-x:clip; }
+.ax { --ax-accent:#48cf73; --ax-dark:#0b2a21; --ax-light:#f3f8f5; --ax-muted:#526b64; --ax-ease:cubic-bezier(.22,1,.36,1); overflow-x:clip; width:100%; max-width:100%; }
 .ax * { box-sizing:border-box; }
-.ax .ax-sec { padding:clamp(72px,10vw,140px) 0; }
+.ax .ax-sec { padding:clamp(72px,10vw,140px) 0; position:relative; overflow-x:clip; width:100%; max-width:100%; }
 .ax .ax-h2 { font-size:clamp(2.1rem,5vw,4rem); line-height:1.05; letter-spacing:-.02em; font-weight:700; }
 .ax .ax-head { display:grid; grid-template-columns:1.3fr 1fr; gap:clamp(24px,5vw,80px); align-items:end; margin-bottom:clamp(40px,6vw,80px); }
 .ax .ax-head-right { text-align:right; justify-self:end; }
@@ -51,9 +51,9 @@
   .ax-hero-nav button.on { transform:none; }
   .ax-hero-nav button::after { display:none; }
   .ax-hero-nav-n { display:none; }
-  .ax-hero-copy { left:20px; right:20px; bottom:36px; max-width:none; }
-  .ax-hero-title { font-size:clamp(2.2rem,10.5vw,4.5rem); white-space:nowrap; word-break:keep-all; overflow-wrap:normal; letter-spacing:0.02em; width:max-content; max-width:none; }
-  .ax-hero-desc { font-size:.9rem; line-height:1.55; display:-webkit-box; -webkit-line-clamp:7; -webkit-box-orient:vertical; overflow:hidden; }
+  .ax-hero-copy { left:20px; right:20px; bottom:36px; max-width:calc(100% - 40px); width:calc(100% - 40px); box-sizing:border-box; }
+  .ax-hero-title { font-size:clamp(1.9rem,8.5vw,3.2rem); line-height:1.05; letter-spacing:0.02em; font-weight:800; margin:0 0 16px; color:#fff; white-space:normal; word-break:break-word; overflow-wrap:break-word; width:100%; max-width:100%; }
+  .ax-hero-desc { font-size:.9rem; line-height:1.55; display:-webkit-box; -webkit-line-clamp:7; -webkit-box-orient:vertical; overflow:hidden; max-width:100%; }
   .ax-btn-glow { width:100%; justify-content:center; }
 }
 
@@ -112,7 +112,7 @@
 .ax-faq-item.open .ax-faq-plus { background:var(--ax-accent); border-color:var(--ax-accent); color:var(--ax-dark); }
 .ax-faq-a { overflow:hidden; }
 .ax-faq-a .faq-accordion-body { padding:0 28px 26px 68px; line-height:1.75; max-width:62ch; color:#526b64; }
-@media (max-width:900px) { .ax-faq { grid-template-columns:1fr; } .ax-faq-intro { position:static; } .ax-faq-a .faq-accordion-body { padding:0 20px 22px 20px; } .ax-faq-q { padding:20px!important; } }
+@media (max-width:900px) { .ax-faq { grid-template-columns:1fr; } .ax-faq-intro { position:relative; overflow:hidden; } .ax-faq-a .faq-accordion-body { padding:0 20px 22px 20px; } .ax-faq-q { padding:20px!important; } }
 
 /* ---------- IMPACT COUNTER (COMPACT & ELEGANT) ---------- */
 .ax-impact-sec { position:relative; overflow:hidden; padding:clamp(44px,5.5vw,72px) 0; }

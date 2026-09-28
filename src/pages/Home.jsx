@@ -12,10 +12,10 @@ import '../home-redesign.css';
 
 /* ---------------- DATA (unchanged) ---------------- */
 const heroTabs = [
-  { id: 'plastic', name: 'PLASTIC', title: 'PLASTIC', desc: 'ARKCA Recyclers champions circular polymer economics. We provide certified collection, decontamination, shredding, and pelletizing of industrial and post-consumer plastics under CPCB Category I, II & III EPR guidelines.', bg: '/images/hero/plastic.jpg' },
-  { id: 'electronic', name: 'ELECTRONIC', title: 'ELECTRONIC', desc: 'Comprehensive authorized e-waste asset disposition and recycling. We recover precious rare metals and safely neutralize hazardous heavy materials in strict accordance with the E-Waste Management Rules 2022.', bg: '/images/hero/electronic.jpg' },
+  { id: 'plastic', name: 'PLASTIC', title: 'PLASTIC', desc: 'ARKCA Recyclers champions circular polymer economics. We provide certified collection, decontamination, shredding, and pelletizing of industrial and post-consumer plastics under CPCB Category I, II & III EPR guidelines.', bg: '/images/hero/plastic.webp' },
+  { id: 'electronic', name: 'ELECTRONIC', title: 'ELECTRONIC', desc: 'Comprehensive authorized e-waste asset disposition and recycling. We recover precious rare metals and safely neutralize hazardous heavy materials in strict accordance with the E-Waste Management Rules 2022.', bg: '/images/hero/electronic.webp' },
   { id: 'battery', name: 'BATTERY', title: 'BATTERY', desc: 'Environmentally sound disposal and recycling of industrial lead-acid, lithium-ion, and EV batteries. We empower battery manufacturers and importers to fulfill their annual mandatory recycling obligations.', bg: '/images/hero/battery.webp' },
-  { id: 'tyre', name: 'TYRE', title: 'TYRE', desc: 'Sustainable end-of-life tyre management. We turn waste rubber into valuable crumb rubber, reclaim rubber, and pyrolytic fuel oil, eliminating open dumping and burning while meeting EPR quotas.', bg: '/images/hero/tyre.jpg' },
+  { id: 'tyre', name: 'TYRE', title: 'TYRE', desc: 'Sustainable end-of-life tyre management. We turn waste rubber into valuable crumb rubber, reclaim rubber, and pyrolytic fuel oil, eliminating open dumping and burning while meeting EPR quotas.', bg: '/images/hero/tyre.webp' },
   { id: 'oil', name: 'OIL', title: 'OIL', desc: "ARKCA Recyclers is dedicated to adhere to the Hazardous and Waste Management Rule for simplifying the process of used Base/lubrication oil collection, transportation and recovery of useful materials. Our professional EPR consultants are equipped for offering diverse assistance in fulfilment of yearly EPR for used oil Recycling target for each year, based on last year's import and sales data.", bg: '/images/hero/oil.webp' },
 ];
 
@@ -66,10 +66,12 @@ const emptyForm = { wasteCategory: '', wasteSubCategory: '', weight: '', date: '
 function Reveal({ children, delay = 0, x = 0, y = 32, className = '', as = 'div' }) {
   const reduce = useReducedMotion();
   const M = motion[as];
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const initialX = isMobile ? 0 : x;
   return (
     <M
       className={className}
-      initial={reduce ? false : { opacity: 0, x, y }}
+      initial={reduce ? false : { opacity: 0, x: initialX, y }}
       whileInView={{ opacity: 1, x: 0, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
@@ -463,10 +465,11 @@ export default function Home() {
                     <div className="ax-testi-divider" aria-hidden="true" />
                     <figcaption className="testimonial-author ax-testi-author">
                       <img
-                        src="/images/recycling/team.jpg"
+                        src="/images/recycling/team.webp"
                         alt={testimonials[tIdx].name}
                         className="testimonial-avatar ax-testi-avatar"
                         loading="lazy"
+                        decoding="async"
                         draggable="false"
                       />
                       <div>
@@ -512,7 +515,7 @@ export default function Home() {
             <Reveal className="ax-blog-feat">
               <article className="featured-blog-card ax-lift">
                 <div className="featured-blog-img-wrap ax-zoom">
-                  <img src="/images/recycling/circular-economy.jpg" alt="From Waste to Wealth" className="featured-blog-img" loading="lazy" />
+                  <img src="/images/recycling/circular-economy.webp" alt="From Waste to Wealth" className="featured-blog-img" loading="lazy" decoding="async" />
                 </div>
                 <div className="featured-blog-content">
                   <h3 className="featured-blog-title">From Waste to Wealth: How Recycling Is Creating Value in the Circular Economy</h3>
@@ -523,13 +526,13 @@ export default function Home() {
             </Reveal>
             <div className="side-blog-list">
               {[
-                { src: '/images/recycling/waste-pickers.jpg', alt: 'EPR and Livelihoods', t: 'EPR and Livelihoods: How EPR Plastic Rules Can Create Opportunities for Waste Pickers' },
-                { src: '/images/recycling/facility.jpg', alt: 'Circular Economy Technology', t: 'From Waste to Wealth: How Recycling Is Creating Value in the Circular Economy' },
+                { src: '/images/recycling/waste-pickers.webp', alt: 'EPR and Livelihoods', t: 'EPR and Livelihoods: How EPR Plastic Rules Can Create Opportunities for Waste Pickers' },
+                { src: '/images/recycling/facility.webp', alt: 'Circular Economy Technology', t: 'From Waste to Wealth: How Recycling Is Creating Value in the Circular Economy' },
               ].map((b, i) => (
                 <Reveal key={b.alt} delay={0.12 * (i + 1)} x={30} y={0}>
                   <article className="side-blog-card ax-lift">
                     <div className="ax-zoom ax-side-img">
-                      <img src={b.src} alt={b.alt} className="side-blog-img" loading="lazy" />
+                      <img src={b.src} alt={b.alt} className="side-blog-img" loading="lazy" decoding="async" />
                     </div>
                     <div className="side-blog-content">
                       <h4 className="side-blog-title">{b.t}</h4>

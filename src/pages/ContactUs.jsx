@@ -68,7 +68,7 @@ export default function ContactUs() {
       <section className="inner-hero">
         <div
           className="inner-hero-bg"
-          style={{ backgroundImage: 'url(/images/recycling/facility.jpg)' }}
+          style={{ backgroundImage: 'url(/images/recycling/facility.webp)' }}
         />
         <div className="inner-hero-shade" />
         <div className="container">
