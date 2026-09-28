@@ -23,14 +23,14 @@
 .ax-link:hover::after, .ax-lift:hover .ax-link::after { transform:scaleX(1); }
 
 /* ---------- HERO ---------- */
-.ax-hero { position:relative; height:500vh; background:var(--ax-dark); width:100%; max-width:none; margin:0; padding:0; }
-.ax-hero-stick { position:sticky; top:0; height:100vh; height:100svh; width:100%; max-width:none; overflow:hidden; padding:0; margin:0; }
+.ax-hero { position:relative; height:500vh; background:var(--ax-dark); width:100%; max-width:100%; margin:0; padding:0; overflow-x:clip; }
+.ax-hero-stick { position:sticky; top:0; height:100vh; height:100svh; width:100%; max-width:100%; overflow:hidden; padding:0; margin:0; }
 .ax-hero-stage { position:relative; width:100%; height:100%; border-radius:0; overflow:hidden; background:#000; margin:0; padding:0; }
 .ax-hero-panel { position:absolute; inset:0; will-change:clip-path,opacity; width:100%; height:100%; }
 .ax-hero-img { position:absolute; inset:0; background-size:cover; background-position:center; object-fit:cover; width:100%; height:100%; will-change:transform; }
 .ax-hero-shade { position:absolute; inset:0; pointer-events:none; background:linear-gradient(90deg,rgba(11,42,33,.88) 0%,rgba(11,42,33,.35) 55%,rgba(11,42,33,.1) 100%),linear-gradient(0deg,rgba(11,42,33,.9) 0%,transparent 55%); }
 .ax-hero-copy { position:absolute; left:clamp(28px,6vw,96px); bottom:clamp(40px,8vh,96px); max-width:calc(100% - 240px); color:#fff; z-index:2; }
-.ax-hero-title { font-size:clamp(3.2rem,7vw,7.5rem); line-height:.95; letter-spacing:0.02em; font-weight:800; margin:0 0 20px; color:#fff; white-space:nowrap; word-break:keep-all; overflow-wrap:normal; width:max-content; max-width:none; }
+.ax-hero-title { font-size:clamp(3.2rem,7vw,7.5rem); line-height:.95; letter-spacing:0.02em; font-weight:800; margin:0 0 20px; color:#fff; white-space:nowrap; word-break:keep-all; overflow-wrap:normal; width:max-content; max-width:100%; }
 .ax-hero-desc { font-size:clamp(.95rem,1.25vw,1.1rem); line-height:1.65; color:#dbe9e3; margin:0 0 28px; max-width:56ch; }
 .ax-hero-nav { position:absolute; right:clamp(24px,4vw,64px); top:50%; transform:translateY(-50%); list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:clamp(20px,2.8vh,30px); z-index:3; text-align:right; }
 .ax-hero-nav button { display:flex; gap:12px; justify-content:flex-end; align-items:center; background:none; border:0; color:rgba(255,255,255,.55); padding:8px 4px; cursor:pointer; font-size:.8rem; letter-spacing:.18em; transition:color .3s, transform .4s var(--ax-ease); min-height:44px; }
@@ -43,18 +43,22 @@
 .ax-hero-progress i { display:block; height:100%; background:var(--ax-accent); transform-origin:left; }
 
 @media (max-width:767px) {
-  .ax-hero-stage { border-radius:0; }
-  .ax-hero-shade { background:linear-gradient(0deg,rgba(11,42,33,.95) 0%,rgba(11,42,33,.55) 55%,rgba(11,42,33,.15) 100%); }
-  .ax-hero-nav { top:clamp(20px,4vh,32px); right:auto; left:20px; transform:none; flex-direction:row; gap:0; text-align:left; width:calc(100% - 40px); overflow-x:auto; scrollbar-width:none; }
+  .ax-hero { height:auto; min-height:84svh; width:100%; }
+  .ax-hero-stick { position:relative; height:84svh; min-height:540px; max-height:720px; width:100%; }
+  .ax-hero-stage { border-radius:0; width:100%; height:100%; }
+  .ax-hero-img { background-position:center center; object-position:center center; }
+  .ax-hero-shade { background:linear-gradient(0deg,rgba(7,28,25,.96) 0%,rgba(7,28,25,.65) 45%,rgba(7,28,25,.25) 100%); }
+  .ax-hero-nav { position:absolute; top:68px; right:0; left:0; transform:none; flex-direction:row; gap:8px; padding:6px 16px; width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; z-index:10; }
   .ax-hero-nav::-webkit-scrollbar { display:none; }
-  .ax-hero-nav button { flex-direction:column; gap:4px; padding:8px 10px; font-size:.68rem; letter-spacing:.1em; }
-  .ax-hero-nav button.on { transform:none; }
+  .ax-hero-nav li { flex:0 0 auto; }
+  .ax-hero-nav button { flex-direction:row; align-items:center; gap:6px; padding:6px 14px; border-radius:999px; background:rgba(7,28,25,.65); border:1px solid rgba(72,207,115,.25); color:#c7ded5; font-size:.75rem; font-weight:600; letter-spacing:.05em; min-height:36px; backdrop-filter:blur(8px); }
+  .ax-hero-nav button.on { background:var(--ax-accent); color:var(--ax-dark); border-color:var(--ax-accent); transform:none; }
   .ax-hero-nav button::after { display:none; }
-  .ax-hero-nav-n { display:none; }
-  .ax-hero-copy { left:20px; right:20px; bottom:36px; max-width:none; }
-  .ax-hero-title { font-size:clamp(2.2rem,10.5vw,4.5rem); white-space:nowrap; word-break:keep-all; overflow-wrap:normal; letter-spacing:0.02em; width:max-content; max-width:none; }
-  .ax-hero-desc { font-size:.9rem; line-height:1.55; display:-webkit-box; -webkit-line-clamp:7; -webkit-box-orient:vertical; overflow:hidden; }
-  .ax-btn-glow { width:100%; justify-content:center; }
+  .ax-hero-nav-n { font-size:.7rem; opacity:.8; display:inline-block; }
+  .ax-hero-copy { left:18px; right:18px; bottom:24px; width:calc(100% - 36px); max-width:100%; }
+  .ax-hero-title { font-size:clamp(1.9rem,8vw,2.8rem); line-height:1; margin:0 0 10px; letter-spacing:.01em; white-space:nowrap; width:auto; max-width:100%; overflow:hidden; text-overflow:ellipsis; }
+  .ax-hero-desc { font-size:.88rem; line-height:1.5; margin:0 0 18px; color:#dbe9e3; display:-webkit-box; -webkit-line-clamp:4; -webkit-box-orient:vertical; overflow:hidden; max-width:100%; }
+  .ax-btn-glow { width:100%; justify-content:center; padding:13px 20px; font-size:.92rem; }
 }
 
 /* ---------- ECOSYSTEM ---------- */
@@ -77,10 +81,11 @@
 .ax-eco-card article:hover .ax-eco-text, .ax-eco-card article:focus-visible .ax-eco-text { max-height:160px; opacity:1; transform:none; }
 @media (hover:none) { .ax-eco-text { max-height:none; opacity:1; transform:none; } }
 @media (max-width:900px) {
-  .ax-eco { display:flex; overflow-x:auto; scroll-snap-type:x mandatory; gap:16px; padding:8px 4px 24px; margin:0 -20px; padding-inline:20px; scrollbar-width:none; }
-  .ax-eco::-webkit-scrollbar { display:none; }
-  .ax-eco-card, .ax-eco-1, .ax-eco-2 { margin:0; flex:0 0 82%; scroll-snap-align:center; }
-  .ax-eco-card article { min-height:300px; }
+  .ax-eco { display:flex; flex-direction:column; gap:16px; margin:0; padding:0; width:100%; }
+  .ax-eco-card, .ax-eco-1, .ax-eco-2 { margin:0; flex:1 1 auto; width:100%; }
+  .ax-eco-card article { min-height:auto; padding:28px 22px; }
+  .ax-eco-num { font-size:4rem; top:12px; right:18px; }
+  .ax-eco-icon { margin-bottom:24px; }
 }
 
 /* ---------- DISPOSAL ---------- */

@@ -39,88 +39,126 @@ function Navigation() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 40) {
+      if (window.scrollY > 30) {
         setScrolled(true);
       } else {
         setScrolled(false);
       }
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
 
   const isHome = location.pathname === '/';
   const navClass = `navbar ${!isHome || scrolled ? 'navbar-scrolled' : ''}`;
 
   return (
-    <header className={navClass}>
-      <div className="container nav-container">
-        {/* Brand Logo */}
-        <Link to="/" className="nav-brand" onClick={() => setMobileMenuOpen(false)}>
-          <img
-            src="/images/logo/arkcarecyclerslogo.png"
-            alt="ARKCA Recyclers"
-            className="nav-logo-img"
-          />
-        </Link>
-
-        {/* Mobile Hamburger Toggle */}
-        <button
-          className="nav-toggle-btn"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle Navigation"
-        >
-          {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
-
-        {/* Nav Links */}
-        <nav className={`nav-menu ${mobileMenuOpen ? 'open' : ''}`}>
-          <Link
-            to="/"
-            className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            arkca recyclers
-          </Link>
-          <Link
-            to="/know-us"
-            className={`nav-link ${location.pathname === '/know-us' ? 'active' : ''}`}
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Know Us
-          </Link>
-          <Link
-            to="/waste-collection"
-            className={`nav-link ${location.pathname === '/waste-collection' ? 'active' : ''}`}
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Waste Collection
-          </Link>
-          <Link
-            to="/epr-consultancy"
-            className={`nav-link ${location.pathname === '/epr-consultancy' ? 'active' : ''}`}
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            EPR Consultancy
-          </Link>
-          <Link
-            to="/contact-us"
-            className={`nav-link ${location.pathname === '/contact-us' ? 'active' : ''}`}
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Contact Us
+    <>
+      <header className={navClass}>
+        <div className="container nav-container">
+          {/* Brand Logo */}
+          <Link to="/" className="nav-brand" onClick={() => setMobileMenuOpen(false)}>
+            <img
+              src="/images/logo/arkcarecyclerslogo.png"
+              alt="ARKCA Recyclers"
+              className="nav-logo-img"
+            />
           </Link>
 
-          <Link
-            to="/contact-us"
-            className="nav-cta-btn"
-            onClick={() => setMobileMenuOpen(false)}
+          {/* Mobile Hamburger Toggle */}
+          <button
+            type="button"
+            className="nav-toggle-btn"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label={mobileMenuOpen ? 'Close Navigation' : 'Open Navigation'}
+            aria-expanded={mobileMenuOpen}
           >
-            Get in Touch <ArrowRight size={14} />
-          </Link>
-        </nav>
-      </div>
-    </header>
+            {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
+          </button>
+
+          {/* Nav Links (Desktop & Mobile Drawer) */}
+          <nav className={`nav-menu ${mobileMenuOpen ? 'open' : ''}`} aria-label="Main Navigation">
+            <div className="mobile-nav-header">
+              <img
+                src="/images/logo/arkcarecyclerslogo.png"
+                alt="ARKCA Recyclers"
+                className="nav-logo-img-mobile"
+              />
+              <button
+                type="button"
+                className="mobile-nav-close"
+                onClick={() => setMobileMenuOpen(false)}
+                aria-label="Close Navigation"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            <Link
+              to="/"
+              className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              arkca recyclers
+            </Link>
+            <Link
+              to="/know-us"
+              className={`nav-link ${location.pathname === '/know-us' ? 'active' : ''}`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Know Us
+            </Link>
+            <Link
+              to="/waste-collection"
+              className={`nav-link ${location.pathname === '/waste-collection' ? 'active' : ''}`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Waste Collection
+            </Link>
+            <Link
+              to="/epr-consultancy"
+              className={`nav-link ${location.pathname === '/epr-consultancy' ? 'active' : ''}`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              EPR Consultancy
+            </Link>
+            <Link
+              to="/contact-us"
+              className={`nav-link ${location.pathname === '/contact-us' ? 'active' : ''}`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Contact Us
+            </Link>
+
+            <Link
+              to="/contact-us"
+              className="nav-cta-btn"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Get in Touch <ArrowRight size={14} />
+            </Link>
+          </nav>
+        </div>
+      </header>
+
+      {/* Mobile Drawer Backdrop */}
+      <div
+        className={`nav-backdrop ${mobileMenuOpen ? 'open' : ''}`}
+        onClick={() => setMobileMenuOpen(false)}
+        aria-hidden="true"
+      />
+    </>
   );
 }
 
