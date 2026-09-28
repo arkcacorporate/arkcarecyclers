@@ -21,9 +21,9 @@ const heroTabs = [
 
 const faqs = [
   { q: 'WHAT TYPES OF WASTE DO YOU COLLECT?', a: "We are into collecting all types of Plastic waste, E waste, Battery, and Tyre waste, by complying with EPR for waste collection guidelines. We're soon planning to initiate used oil collection followed by recycling services as well." },
-  { q: 'HOW DO I SCHEDULE A WASTE PICKUP?', a: 'You can submit a disposal request right here on our portal, call our helpline at +91-9316-631-170, or email us. Our logistics team will inspect your location, coordinate an authorized vehicle, and issue digital Form 6 manifests upon pickup.' },
-  { q: 'WHAT ITEMS CAN BE RECYCLED?', a: 'We process industrial polymers (rigid & flexible), electronic appliances and printed circuit boards, automotive and UPS batteries, commercial and heavy vehicle tyres, base lube oils, and metal scrap from manufacturing plants.' },
-  { q: 'HOW SHOULD I PREPARE MY RECYCLABLES?', a: 'Keep recyclables segregated into distinct dry lots. Ensure battery terminals are taped or insulated, and oil is secured in leak-proof drums. Our field engineers provide specialized collection bins and safety instructions.' },
+  { q: 'HOW DO I SCHEDULE A WASTE PICKUP?', a: 'We have a robust waste pick up mechanism to segregate the type of waste depending upon its category. We have a dedicated team to identify and collect the waste type in dedicated containers and vehicles and transport those to our recycling facility.' },
+  { q: 'WHAT ITEMS CAN BE RECYCLED?', a: 'All types of waste including plastic waste, e waste, battery and tyre waste. We have further plans to initiate a used oil recycling process soon.' },
+  { q: 'HOW SHOULD I PREPARE MY RECYCLABLES?', a: 'Reach our professional EPR consultants and they will guide you through the entire process of preparing recyclable waste categories.' },
 ];
 
 const testimonials = [
