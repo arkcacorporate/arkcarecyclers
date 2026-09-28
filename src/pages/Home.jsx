@@ -45,10 +45,10 @@ const metrics = [
 ];
 
 const impact = [
-  { Icon: Recycle, val: '16+', label: 'Tones of Waste Recycled' },
-  { Icon: Users, val: '349+', label: 'Households Reached' },
-  { Icon: Megaphone, val: '41+', label: 'Awareness Campaign' },
-  { Icon: Briefcase, val: '59+', label: 'Customers' },
+  { Icon: Recycle, val: '16+', label: 'Tons of Waste Recycled', num: '01' },
+  { Icon: Users, val: '349+', label: 'Households Reached', num: '02' },
+  { Icon: Megaphone, val: '41+', label: 'Awareness Campaign', num: '03' },
+  { Icon: Briefcase, val: '59+', label: 'Customers', num: '04' },
 ];
 
 const services = [
@@ -366,23 +366,34 @@ export default function Home() {
       </section>
 
       {/* 5. IMPACT */}
-      <section className="section section-dark ax-sec">
+      <section className="section section-dark ax-sec ax-impact-sec">
         <div className="container">
-          <div className="impact-header ax-head">
-            <Reveal>
+          <div className="impact-header ax-head ax-impact-head">
+            <Reveal className="ax-impact-head-left">
               <span className="badge-tag light-theme">OUR IMPACT IN NUMBERS</span>
-              <h2 className="section-heading-light ax-h2">Real change. Measurable results.</h2>
+              <h2 className="section-heading-light ax-h2">Real change. <br />Measurable results.</h2>
             </Reveal>
-            <Reveal delay={0.15}>
+            <Reveal delay={0.15} className="ax-impact-head-right">
               <p className="impact-desc">Quantifying sustainable resource recovery through transparent audit trails, certified recycling processes, and direct community empowerment across our regional hubs.</p>
             </Reveal>
           </div>
-          <div className="ax-impact">
-            {impact.map(({ Icon, val, label }, i) => (
-              <Reveal key={label} delay={i * 0.12} className="ax-impact-item">
-                <div className="ax-impact-icon"><Icon size={22} /></div>
-                <div className="ax-impact-val"><CountUp value={val} /></div>
-                <div className="ax-impact-label">{label}</div>
+          <div className="ax-impact-dashboard">
+            {impact.map(({ Icon, val, label, num }, i) => (
+              <Reveal key={label} delay={i * 0.1} className={`ax-impact-card ax-impact-card-${i}`}>
+                <article className="ax-impact-card-inner" tabIndex={0}>
+                  <span className="ax-impact-orbit" aria-hidden="true" />
+                  <span className="ax-impact-glow" aria-hidden="true" />
+                  <div className="ax-impact-top">
+                    <div className="ax-impact-icon-wrap">
+                      <Icon size={24} />
+                    </div>
+                    <span className="ax-impact-chip">{num}</span>
+                  </div>
+                  <div className="ax-impact-body">
+                    <div className="ax-impact-val"><CountUp value={val} /></div>
+                    <div className="ax-impact-label">{label}</div>
+                  </div>
+                </article>
               </Reveal>
             ))}
           </div>
