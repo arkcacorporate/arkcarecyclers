@@ -99,60 +99,32 @@ function CountUp({ value }) {
   return <span ref={ref}>{text}</span>;
 }
 
-/* ---------------- HERO (scroll-driven, sticky & mobile touch) ---------------- */
+/* ---------------- HERO (scroll-driven, sticky) ---------------- */
 function Hero({ onCta }) {
   const wrap = useRef(null);
-  const touchStartX = useRef(null);
   const reduce = useReducedMotion();
   const [active, setActive] = useState(0);
   const { scrollYProgress } = useScroll({ target: wrap, offset: ['start start', 'end end'] });
   const barScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   useMotionValueEvent(scrollYProgress, 'change', (p) => {
-    if (typeof window !== 'undefined' && window.innerWidth >= 768) {
-      const i = Math.min(heroTabs.length - 1, Math.max(0, Math.floor(p * heroTabs.length)));
-      setActive((prev) => (prev === i ? prev : i));
-    }
+    const i = Math.min(heroTabs.length - 1, Math.max(0, Math.floor(p * heroTabs.length)));
+    setActive((prev) => (prev === i ? prev : i));
   });
 
   const goTo = (i) => {
-    setActive(i);
     const el = wrap.current;
     if (!el) return;
-    if (typeof window !== 'undefined' && window.innerWidth >= 768) {
-      const top = el.getBoundingClientRect().top + window.scrollY;
-      const range = el.offsetHeight - window.innerHeight;
-      if (range > 0) {
-        window.scrollTo({ top: top + ((i + 0.5) / heroTabs.length) * range, behavior: reduce ? 'auto' : 'smooth' });
-      }
-    }
-  };
-
-  const handleSwipe = (direction) => {
-    if (direction === 'left') {
-      setActive((prev) => (prev + 1) % heroTabs.length);
-    } else if (direction === 'right') {
-      setActive((prev) => (prev - 1 + heroTabs.length) % heroTabs.length);
-    }
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    const range = el.offsetHeight - window.innerHeight;
+    window.scrollTo({ top: top + ((i + 0.5) / heroTabs.length) * range, behavior: reduce ? 'auto' : 'smooth' });
   };
 
   const tab = heroTabs[active];
   return (
     <section className="ax-hero" ref={wrap} aria-label="Waste streams">
       <div className="ax-hero-stick">
-        <div
-          className="ax-hero-stage"
-          onTouchStart={(e) => {
-            touchStartX.current = e.touches[0].clientX;
-          }}
-          onTouchEnd={(e) => {
-            if (touchStartX.current === null) return;
-            const diff = touchStartX.current - e.changedTouches[0].clientX;
-            if (diff > 45) handleSwipe('left');
-            else if (diff < -45) handleSwipe('right');
-            touchStartX.current = null;
-          }}
-        >
+        <div className="ax-hero-stage">
           {heroTabs.map((t, i) => {
             const on = i === active;
             const past = i < active;
