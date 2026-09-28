@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 64" fill="none">
+  <defs>
+    <linearGradient id="arkca-g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2BA84A" />
+      <stop offset="100%" stop-color="#148C4A" />
+    </linearGradient>
+    <linearGradient id="arkca-g2" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#148C4A" />
+      <stop offset="100%" stop-color="#0E5E32" />
+    </linearGradient>
+    <linearGradient id="arkca-g3" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#3CD070" />
+      <stop offset="100%" stop-color="#148C4A" />
+    </linearGradient>
+  </defs>
+
+  <!-- Recycling Geometric Icon -->
+  <g transform="translate(6, 4)">
+    <!-- Top Leaf/Arrow segment -->
+    <path d="M 28 4 L 38 21 L 28 21 L 28 28 L 22 28 L 22 17 L 31 17 Z" fill="url(#arkca-g3)" />
+    <!-- Top curved loop ribbon -->
+    <path d="M 26 5 C 31 5, 45 10, 48 24 C 50 34, 43 45, 34 50 L 30 43 C 36 39, 41 31, 39 23 C 37 14, 28 11, 24 11 Z" fill="url(#arkca-g1)" />
+    <!-- Bottom Right loop ribbon -->
+    <path d="M 48 26 L 43 37 L 37 32 L 32 36 L 28 32 L 38 23 L 42 27 Z" fill="url(#arkca-g2)" opacity="0.9" />
+    <!-- Bottom Left leaf -->
+    <path d="M 12 48 C 6 42, 4 30, 9 20 C 13 11, 23 7, 28 6 L 28 12 C 24 13, 17 16, 14 23 C 11 31, 13 39, 18 43 Z" fill="url(#arkca-g2)" />
+    <!-- Base ribbon fold -->
+    <path d="M 10 42 L 23 48 L 19 54 L 24 55 L 22 60 L 11 58 L 13 52 Z" fill="url(#arkca-g1)" />
+    <path d="M 16 52 C 22 57, 34 58, 42 51 L 46 56 C 35 65, 19 64, 11 57 Z" fill="url(#arkca-g3)" />
+  </g>
+
+  <!-- Typography -->
+  <g transform="translate(74, 10)">
+    <!-- ARKCA -->
+    <text x="0" y="27" font-family="'Outfit', 'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="28" letter-spacing="1.5" fill="#148C4A">
+      ARKCA
+    </text>
+    <!-- RECYCLERS -->
+    <text x="1" y="44" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="12" letter-spacing="4.5" fill="#2BA84A">
+      RECYCLERS
+    </text>
+  </g>
+</svg>
