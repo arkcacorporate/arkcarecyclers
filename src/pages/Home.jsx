@@ -373,19 +373,18 @@ export default function Home() {
               <span className="badge-tag light-theme">OUR IMPACT IN NUMBERS</span>
               <h2 className="section-heading-light ax-h2">Real change. <br />Measurable results.</h2>
             </Reveal>
-            <Reveal delay={0.15} className="ax-impact-head-right">
+            <Reveal delay={0.12} className="ax-impact-head-right">
               <p className="impact-desc">Quantifying sustainable resource recovery through transparent audit trails, certified recycling processes, and direct community empowerment across our regional hubs.</p>
             </Reveal>
           </div>
-          <div className="ax-impact-dashboard">
+          <div className="ax-impact-grid">
             {impact.map(({ Icon, val, label, num }, i) => (
-              <Reveal key={label} delay={i * 0.1} className={`ax-impact-card ax-impact-card-${i}`}>
-                <article className="ax-impact-card-inner" tabIndex={0}>
+              <Reveal key={label} delay={i * 0.08} className="ax-impact-col">
+                <article className="ax-impact-item" tabIndex={0}>
                   <span className="ax-impact-orbit" aria-hidden="true" />
-                  <span className="ax-impact-glow" aria-hidden="true" />
                   <div className="ax-impact-top">
                     <div className="ax-impact-icon-wrap">
-                      <Icon size={24} />
+                      <Icon size={18} />
                     </div>
                     <span className="ax-impact-chip">{num}</span>
                   </div>
