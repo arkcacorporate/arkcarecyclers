@@ -2,27 +2,20 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import {
-  Target,
-  Eye,
-  HeartHandshake,
-  CheckCircle2,
-  Building2,
-  ShieldCheck,
-  TrendingUp,
-  ArrowRight,
-  Sparkles,
-  Recycle,
-  Factory
+  Target, Eye, HeartHandshake, CheckCircle2, ShieldCheck, TrendingUp, ArrowRight, Factory,
 } from 'lucide-react';
 import '../inner-pages.css';
+import '../know-us-redesign.css';
 
-function Reveal({ children, delay = 0, y = 28, className = '' }) {
+// Now forwards style, so the centred header and mosaic grid actually apply.
+function Reveal({ children, delay = 0, y = 28, x = 0, className = '', style }) {
   const reduce = useReducedMotion();
   return (
     <motion.div
       className={className}
-      initial={reduce ? false : { opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
+      style={style}
+      initial={reduce ? false : { opacity: 0, y, x }}
+      whileInView={{ opacity: 1, y: 0, x: 0 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
     >
@@ -31,20 +24,37 @@ function Reveal({ children, delay = 0, y = 28, className = '' }) {
   );
 }
 
+const checks = ['CPCB & SPCB Registered', 'ISO 14001:2015 Certified', 'Traceable GPS Logistics', 'Waste Picker Inclusion'];
+
+const pillars = [
+  { Icon: Target, t: 'Our Mission', d: "To lead India's transition to a closed-loop economy by delivering compliant, scientific waste recovery solutions that divert valuable materials away from landfills and into sustainable reuse." },
+  { Icon: Eye, t: 'Our Vision', d: 'To become the most reliable pan-India environmental partner for enterprises, municipal councils, and grassroots waste pickers, setting gold standards for traceable EPR compliance.' },
+  { Icon: HeartHandshake, t: 'Inclusivity & CSR', d: 'Empowering frontline waste aggregators with fair wages, occupational health safety equipment, and integration into the formal digital recycling ecosystem.' },
+];
+
+const features = [
+  { Icon: Factory, t: 'Zero Liquid Discharge (ZLD)', d: '100% wastewater recycling within closed wash-lines.' },
+  { Icon: ShieldCheck, t: 'Tamper-Proof Manifest Records', d: 'Form 6 and Form 10 certified end-to-end audit paperwork.' },
+];
+
+const mosaic = [
+  { src: '/images/recycling/facility.jpg', alt: 'ARKCA material recovery plant' },
+  { src: '/images/services/metal.jpg', alt: 'Metal recycling processing' },
+  { src: '/images/services/waste-collection.jpg', alt: 'Waste collection channelisation' },
+  { src: '/images/hero/oil.webp', alt: 'Oil distillation facility' },
+];
+
 export default function KnowUs() {
   const reduce = useReducedMotion();
 
   return (
-    <div className="know-us-page">
-      {/* 1. HERO SECTION */}
-      <section className="inner-hero">
-        <div
-          className="inner-hero-bg"
-          style={{ backgroundImage: 'url(/images/recycling/facility.jpg)' }}
-        />
+    <div className="know-us-page ku">
+      {/* 1. HERO */}
+      <section className="inner-hero ku-hero">
+        <div className="inner-hero-bg ku-hero-bg" style={{ backgroundImage: 'url(/images/recycling/facility.jpg)' }} />
         <div className="inner-hero-shade" />
         <div className="container">
-          <div className="inner-hero-content">
+          <div className="inner-hero-content ku-hero-content">
             <motion.div
               initial={reduce ? false : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -56,16 +66,13 @@ export default function KnowUs() {
                 <span>Know Us</span>
               </div>
             </motion.div>
-
             <motion.div
               initial={reduce ? false : { opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             >
               <span className="badge-tag light-theme">PIONEERING CIRCULAR EXCELLENCE</span>
-              <h1 className="ip-h1">
-                Transforming Waste into Resourceful Value
-              </h1>
+              <h1 className="ip-h1">Transforming Waste into Resourceful Value</h1>
               <p className="inner-hero-desc">
                 ARKCA Recyclers is an authorized sustainability enabler, delivering compliant waste channelisation, certified recycling infrastructure, and EPR advisory across India.
               </p>
@@ -74,75 +81,41 @@ export default function KnowUs() {
         </div>
       </section>
 
-      {/* 2. ABOUT ARKCA & OUR PURPOSE */}
-      <section className="section section-white">
+      {/* 2. ABOUT */}
+      <section className="section section-white ku-sec">
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: 'clamp(36px, 5vw, 60px)', alignItems: 'center' }}>
-            <Reveal>
+          <div className="ku-about">
+            <Reveal className="ku-about-copy">
               <span className="badge-tag">ABOUT OUR FOUNDATION</span>
-              <h2 className="ip-h2 ip-h2-dark" style={{ marginBottom: '24px' }}>
+              <h2 className="ip-h2 ip-h2-dark">
                 Dedicated to a <span className="text-highlight">Greener, Zero-Waste</span> Future
               </h2>
-              <p className="ip-body ip-body-dark" style={{ marginBottom: '20px' }}>
+              <p className="ip-body ip-body-dark">
                 Established with a clear vision to bridge India's formal and informal waste ecosystems, ARKCA Recyclers has grown into one of the country's most dependable environmental stewardship organizations.
               </p>
-              <p className="ip-body ip-body-dark" style={{ marginBottom: '32px' }}>
+              <p className="ip-body ip-body-dark">
                 We work in close compliance with Central Pollution Control Board (CPCB) norms and State Pollution Control Boards (SPCBs) to streamline the lifecycle of hazardous and non-hazardous materials. From door-to-door industrial pickups to end-of-life material recovery, we ensure full traceability, regulatory audit readiness, and authentic circular outcomes.
               </p>
-
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '18px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <CheckCircle2 color="#148C4A" size={22} />
-                  <span style={{ fontWeight: 600, color: '#071C19' }}>CPCB & SPCB Registered</span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <CheckCircle2 color="#148C4A" size={22} />
-                  <span style={{ fontWeight: 600, color: '#071C19' }}>ISO 14001:2015 Certified</span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <CheckCircle2 color="#148C4A" size={22} />
-                  <span style={{ fontWeight: 600, color: '#071C19' }}>Traceable GPS Logistics</span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <CheckCircle2 color="#148C4A" size={22} />
-                  <span style={{ fontWeight: 600, color: '#071C19' }}>Waste Picker Inclusion</span>
-                </div>
-              </div>
+              <ul className="ku-checks">
+                {checks.map((c) => (
+                  <li key={c}>
+                    <CheckCircle2 color="#148C4A" size={22} />
+                    <span style={{ fontWeight: 600, color: '#071C19' }}>{c}</span>
+                  </li>
+                ))}
+              </ul>
             </Reveal>
 
-            <Reveal delay={0.15}>
-              <div style={{ position: 'relative' }}>
-                <div style={{
-                  borderRadius: '24px',
-                  overflow: 'hidden',
-                  boxShadow: '0 20px 50px -10px rgba(7, 28, 25, 0.2)',
-                  border: '4px solid #EAF4EE'
-                }}>
-                  <img
-                    src="/images/recycling/waste-pickers.jpg"
-                    alt="ARKCA Recyclers community impact"
-                    style={{ width: '100%', height: '420px', objectFit: 'cover' }}
-                  />
-                </div>
-                <div style={{
-                  position: 'absolute',
-                  bottom: '-20px',
-                  left: '-20px',
-                  background: 'linear-gradient(135deg, #071C19 0%, #0d3228 100%)',
-                  color: '#fff',
-                  padding: '22px 28px',
-                  borderRadius: '16px',
-                  border: '1px solid rgba(72, 207, 115, 0.3)',
-                  boxShadow: '0 16px 36px rgba(0,0,0,0.4)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '16px'
-                }}>
-                  <TrendingUp size={36} color="#3cd070" />
-                  <div>
-                    <div style={{ fontSize: '1.6rem', fontWeight: 800 }}>10+ Years</div>
-                    <div style={{ fontSize: '0.85rem', color: '#9cb5ab' }}>Environmental Dedication</div>
-                  </div>
+            <Reveal delay={0.15} x={30} y={0} className="ku-about-media">
+              <span className="ku-frame" aria-hidden="true" />
+              <div className="ku-photo ku-zoom">
+                <img src="/images/recycling/waste-pickers.jpg" alt="ARKCA Recyclers community impact" loading="lazy" />
+              </div>
+              <div className="ku-stat">
+                <TrendingUp size={36} color="#3cd070" />
+                <div>
+                  <div style={{ fontSize: '1.6rem', fontWeight: 800 }}>10+ Years</div>
+                  <div style={{ fontSize: '0.85rem', color: '#9cb5ab' }}>Environmental Dedication</div>
                 </div>
               </div>
             </Reveal>
@@ -150,152 +123,82 @@ export default function KnowUs() {
         </div>
       </section>
 
-      {/* 3. MISSION, VISION & ETHOS (PREMIUM RECYCLING CARDS) */}
-      <section className="section section-light">
+      {/* 3. PURPOSE */}
+      <section className="section section-light ku-sec">
         <div className="container">
-          <Reveal style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto 48px' }}>
+          <Reveal className="ku-center-head">
             <span className="badge-tag">OUR CORE PURPOSE</span>
             <h2 className="ip-h2 ip-h2-dark">Built on Purpose and Principles</h2>
-            <p className="ip-body ip-body-dark" style={{ marginTop: '12px' }}>
+            <p className="ip-body ip-body-dark">
               Every decision at ARKCA is driven by our commitment to ecological balance, transparency, and socioeconomic upliftment.
             </p>
           </Reveal>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '28px' }}>
-            {/* Card 1 */}
-            <Reveal delay={0.1} className="ip-card">
-              <div className="ip-card-motif" />
-              <div className="ip-icon-circle">
-                <Target size={28} />
-              </div>
-              <h3 className="ip-h3" style={{ color: '#071C19', marginBottom: '14px' }}>
-                Our Mission
-              </h3>
-              <p className="ip-body ip-body-dark">
-                To lead India's transition to a closed-loop economy by delivering compliant, scientific waste recovery solutions that divert valuable materials away from landfills and into sustainable reuse.
-              </p>
-            </Reveal>
-
-            {/* Card 2 */}
-            <Reveal delay={0.2} className="ip-card">
-              <div className="ip-card-motif" />
-              <div className="ip-icon-circle">
-                <Eye size={28} />
-              </div>
-              <h3 className="ip-h3" style={{ color: '#071C19', marginBottom: '14px' }}>
-                Our Vision
-              </h3>
-              <p className="ip-body ip-body-dark">
-                To become the most reliable pan-India environmental partner for enterprises, municipal councils, and grassroots waste pickers, setting gold standards for traceable EPR compliance.
-              </p>
-            </Reveal>
-
-            {/* Card 3 */}
-            <Reveal delay={0.3} className="ip-card">
-              <div className="ip-card-motif" />
-              <div className="ip-icon-circle">
-                <HeartHandshake size={28} />
-              </div>
-              <h3 className="ip-h3" style={{ color: '#071C19', marginBottom: '14px' }}>
-                Inclusivity & CSR
-              </h3>
-              <p className="ip-body ip-body-dark">
-                Empowering frontline waste aggregators with fair wages, occupational health safety equipment, and integration into the formal digital recycling ecosystem.
-              </p>
-            </Reveal>
+          <div className="ku-pillars">
+            {pillars.map(({ Icon, t, d }, i) => (
+              <Reveal key={t} delay={0.1 * (i + 1)} className={`ku-pillar ku-pillar-${i}`}>
+                <article tabIndex={0}>
+                  <span className="ku-pillar-num" aria-hidden="true">0{i + 1}</span>
+                  <span className="ku-pillar-ring" aria-hidden="true" />
+                  <div className="ku-pillar-icon"><Icon size={26} /></div>
+                  <h3 className="ip-h3" style={{ color: '#071C19' }}>{t}</h3>
+                  <p className="ip-body ip-body-dark">{d}</p>
+                </article>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* 4. RECYCLING INFRASTRUCTURE (REALISTIC RECYCLING IMAGERY ONLY) */}
-      <section className="section section-dark">
+      {/* 4. INFRASTRUCTURE */}
+      <section className="section section-dark ku-sec">
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: '50px', alignItems: 'center' }}>
+          <div className="ku-infra">
             <Reveal>
               <span className="badge-tag light-theme">ADVANCED RECYCLING HUBS</span>
-              <h2 className="ip-h2 ip-h2-light" style={{ marginBottom: '20px' }}>
-                State-of-the-Art Processing Facilities
-              </h2>
-              <p className="ip-body ip-body-light" style={{ marginBottom: '32px' }}>
+              <h2 className="ip-h2 ip-h2-light">State-of-the-Art Processing Facilities</h2>
+              <p className="ip-body ip-body-light">
                 Our processing plants operate with advanced emission control systems, high-capacity granulators, pyrolysis processors, and electronic shredders to maximize secondary raw material purity.
               </p>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                <div className="ip-card ip-card-dark" style={{ padding: '22px 26px', display: 'flex', alignItems: 'center', gap: '16px' }}>
-                  <div className="ip-icon-circle" style={{ marginBottom: 0, flexShrink: 0 }}>
-                    <Factory size={26} />
+              <div className="ku-features">
+                {features.map(({ Icon, t, d }) => (
+                  <div className="ku-feature" key={t}>
+                    <div className="ku-feature-icon"><Icon size={24} /></div>
+                    <div>
+                      <h4 style={{ color: '#fff', fontSize: '1.1rem', fontWeight: 700, marginBottom: '4px' }}>{t}</h4>
+                      <p style={{ color: '#9cb5ab', fontSize: '0.9rem' }}>{d}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 style={{ color: '#fff', fontSize: '1.1rem', fontWeight: 700, marginBottom: '4px' }}>Zero Liquid Discharge (ZLD)</h4>
-                    <p style={{ color: '#9cb5ab', fontSize: '0.9rem' }}>100% wastewater recycling within closed wash-lines.</p>
-                  </div>
-                </div>
-
-                <div className="ip-card ip-card-dark" style={{ padding: '22px 26px', display: 'flex', alignItems: 'center', gap: '16px' }}>
-                  <div className="ip-icon-circle" style={{ marginBottom: 0, flexShrink: 0 }}>
-                    <ShieldCheck size={26} />
-                  </div>
-                  <div>
-                    <h4 style={{ color: '#fff', fontSize: '1.1rem', fontWeight: 700, marginBottom: '4px' }}>Tamper-Proof Manifest Records</h4>
-                    <p style={{ color: '#9cb5ab', fontSize: '0.9rem' }}>Form 6 and Form 10 certified end-to-end audit paperwork.</p>
-                  </div>
-                </div>
+                ))}
               </div>
             </Reveal>
 
-            {/* Realistic Recycling Imagery Grid (No Building Images) */}
-            <Reveal delay={0.15} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-              <div style={{ borderRadius: '16px', overflow: 'hidden', height: '220px', border: '1px solid rgba(72,207,115,0.25)' }}>
-                <img
-                  src="/images/recycling/facility.jpg"
-                  alt="ARKCA material recovery plant"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                />
-              </div>
-              <div style={{ borderRadius: '16px', overflow: 'hidden', height: '220px', border: '1px solid rgba(72,207,115,0.25)' }}>
-                <img
-                  src="/images/services/metal.jpg"
-                  alt="Metal recycling processing"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                />
-              </div>
-              <div style={{ borderRadius: '16px', overflow: 'hidden', height: '220px', border: '1px solid rgba(72,207,115,0.25)' }}>
-                <img
-                  src="/images/services/waste-collection.jpg"
-                  alt="Waste collection channelisation"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                />
-              </div>
-              <div style={{ borderRadius: '16px', overflow: 'hidden', height: '220px', border: '1px solid rgba(72,207,115,0.25)' }}>
-                <img
-                  src="/images/hero/oil.webp"
-                  alt="Oil distillation facility"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                />
-              </div>
+            <Reveal delay={0.15} className="ku-mosaic">
+              {mosaic.map((m, i) => (
+                <figure key={m.alt} className={`ku-tile ku-zoom ku-tile-${i}`}>
+                  <img src={m.src} alt={m.alt} loading="lazy" />
+                </figure>
+              ))}
             </Reveal>
           </div>
         </div>
       </section>
 
-      {/* 5. CALL TO ACTION */}
-      <section className="section section-light" style={{ textAlign: 'center' }}>
-        <div className="container" style={{ maxWidth: '800px' }}>
-          <Reveal>
+      {/* 5. CTA */}
+      <section className="section section-light ku-sec" style={{ textAlign: 'center' }}>
+        <div className="container">
+          <Reveal className="ku-cta">
+            <span className="ku-cta-blob" aria-hidden="true" />
             <span className="badge-tag">PARTNER WITH US</span>
-            <h2 className="ip-h2 ip-h2-dark" style={{ marginBottom: '16px' }}>
-              Ready to Accelerate Your Sustainability Goals?
-            </h2>
-            <p className="ip-body ip-body-dark" style={{ marginBottom: '36px' }}>
+            <h2 className="ip-h2 ip-h2-dark">Ready to Accelerate Your Sustainability Goals?</h2>
+            <p className="ip-body ip-body-dark">
               Speak with our senior environmental consultants to assess your industrial waste streams, calculate your EPR credits, and set up compliant collection operations today.
             </p>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
-              <Link to="/contact-us" className="btn-primary ax-btn-solid">
+            <div className="ku-cta-btns">
+              <Link to="/contact-us" className="btn-primary ku-btn">
                 Contact Our Consultants <ArrowRight size={18} />
               </Link>
-              <Link to="/waste-collection" className="btn-outline">
-                Explore Waste Services
-              </Link>
+              <Link to="/waste-collection" className="btn-outline ku-btn">Explore Waste Services</Link>
             </div>
           </Reveal>
         </div>
