@@ -112,7 +112,7 @@
 .ax-faq-item.open .ax-faq-plus { background:var(--ax-accent); border-color:var(--ax-accent); color:var(--ax-dark); }
 .ax-faq-a { overflow:hidden; }
 .ax-faq-a .faq-accordion-body { padding:0 28px 26px 68px; line-height:1.75; max-width:62ch; color:#526b64; }
-@media (max-width:900px) { .ax-faq { grid-template-columns:1fr; } .ax-faq-intro { position:relative; overflow:hidden; } .ax-faq-a .faq-accordion-body { padding:0 20px 22px 20px; } .ax-faq-q { padding:20px!important; } }
+@media (max-width:900px) { .ax-faq { grid-template-columns:1fr; } .ax-faq-intro { position:relative; top:auto; overflow:hidden; } .ax-faq-a .faq-accordion-body { padding:0 20px 22px 20px; } .ax-faq-q { padding:20px!important; } }
 
 /* ---------- IMPACT COUNTER (COMPACT & ELEGANT) ---------- */
 .ax-impact-sec { position:relative; overflow:hidden; padding:clamp(44px,5.5vw,72px) 0; }
