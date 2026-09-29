@@ -73,9 +73,8 @@
 .ax-eco-card article:hover .ax-eco-icon { transform:rotate(-12deg) translateY(-4px); }
 .ax-eco-title { font-size:1.6rem; letter-spacing:.04em; margin:0 0 4px; }
 .ax-eco-sub { color:var(--ax-muted); margin:0 0 16px; }
-.ax-eco-text { position:relative; margin:0; line-height:1.6; max-height:0; opacity:0; transform:translateY(10px); transition:max-height .6s var(--ax-ease), opacity .5s, transform .5s var(--ax-ease); }
-.ax-eco-card article:hover .ax-eco-text, .ax-eco-card article:focus-visible .ax-eco-text { max-height:160px; opacity:1; transform:none; }
-@media (hover:none) { .ax-eco-text { max-height:none; opacity:1; transform:none; } }
+.ax-eco-text { position:relative; margin:0; line-height:1.65; max-height:none; opacity:1; transform:none; color:var(--ax-text-dark); font-size:0.95rem; transition:color .3s; }
+.ax-eco-card article:hover .ax-eco-text, .ax-eco-card article:focus-visible .ax-eco-text { max-height:none; opacity:1; transform:none; }
 @media (max-width:900px) {
   .ax-eco { display:flex; flex-direction:column; gap:16px; margin:0; padding:0; width:100%; }
   .ax-eco-card, .ax-eco-1, .ax-eco-2 { margin:0; flex:1 1 auto; width:100%; }

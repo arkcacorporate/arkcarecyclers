@@ -111,6 +111,13 @@ export default function Navigation() {
               EPR Consultancy
             </Link>
             <Link
+              href="/blog"
+              className={`nav-link ${pathname.startsWith('/blog') ? 'active' : ''}`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Blog
+            </Link>
+            <Link
               href="/contact-us"
               className={`nav-link ${pathname === '/contact-us' ? 'active' : ''}`}
               onClick={() => setMobileMenuOpen(false)}

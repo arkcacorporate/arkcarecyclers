@@ -8,14 +8,17 @@ import { ShieldCheck, Calculator, Layers, CheckCircle, ArrowRight } from 'lucide
 // Forwards style so inline layout passed to it applies.
 function Reveal({ children, delay = 0, y = 28, x = 0, className = '', style }) {
   const reduce = useReducedMotion();
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const initialX = isMobile ? 0 : x;
+  const initialY = isMobile ? (y ? 14 : 0) : y;
   return (
     <motion.div
       className={className}
       style={style}
-      initial={reduce ? false : { opacity: 0, y, x }}
+      initial={reduce ? false : { opacity: 0, y: initialY, x: initialX }}
       whileInView={{ opacity: 1, y: 0, x: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, margin: '-40px', amount: 0.12 }}
+      transition={{ duration: 0.65, delay: isMobile ? 0 : delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
@@ -114,7 +117,7 @@ export default function EPRConsultancyClient() {
       <section className="section section-white ec-sec">
         <div className="container">
           <div className="ec-overview">
-            <Reveal>
+            <Reveal x={-35} y={0}>
               <span className="badge-tag">MANDATORY REGULATORY COMPLIANCE</span>
               <h2 className="ip-h2 ip-h2-dark">
                 Seamless Fulfillment of <br />
@@ -132,7 +135,7 @@ export default function EPRConsultancyClient() {
               </ul>
             </Reveal>
 
-            <Reveal delay={0.15} x={30} y={0}>
+            <Reveal delay={0.15} x={35} y={0}>
               <div className="ip-card ip-card-dark ec-who" style={{ borderRadius: '24px' }}>
                 <span className="ec-who-ring" aria-hidden="true" />
                 <div className="ec-who-head">

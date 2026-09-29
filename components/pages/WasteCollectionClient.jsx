@@ -10,14 +10,17 @@ import {
 // Forwards style so any inline layout passed to it applies.
 function Reveal({ children, delay = 0, y = 28, x = 0, className = '', style }) {
   const reduce = useReducedMotion();
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const initialX = isMobile ? 0 : x;
+  const initialY = isMobile ? (y ? 14 : 0) : y;
   return (
     <motion.div
       className={className}
       style={style}
-      initial={reduce ? false : { opacity: 0, y, x }}
+      initial={reduce ? false : { opacity: 0, y: initialY, x: initialX }}
       whileInView={{ opacity: 1, y: 0, x: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, margin: '-40px', amount: 0.12 }}
+      transition={{ duration: 0.65, delay: isMobile ? 0 : delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>

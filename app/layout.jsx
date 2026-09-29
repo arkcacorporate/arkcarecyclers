@@ -7,6 +7,7 @@ import '@/styles/inner-pages.css';
 import '@/styles/know-us-redesign.css';
 import '@/styles/waste-collection-redesign.css';
 import '@/styles/epr-consultancy-redesign.css';
+import '@/styles/blog.css';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],

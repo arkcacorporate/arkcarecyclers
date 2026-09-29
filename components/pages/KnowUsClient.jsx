@@ -12,14 +12,15 @@ function Reveal({ children, delay = 0, y = 28, x = 0, className = '', style }) {
   const reduce = useReducedMotion();
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   const initialX = isMobile ? 0 : x;
+  const initialY = isMobile ? (y ? 14 : 0) : y;
   return (
     <motion.div
       className={className}
       style={style}
-      initial={reduce ? false : { opacity: 0, y, x: initialX }}
+      initial={reduce ? false : { opacity: 0, y: initialY, x: initialX }}
       whileInView={{ opacity: 1, y: 0, x: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, margin: '-40px', amount: 0.12 }}
+      transition={{ duration: 0.65, delay: isMobile ? 0 : delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
@@ -86,7 +87,7 @@ export default function KnowUsClient() {
       <section className="section section-white ku-sec">
         <div className="container">
           <div className="ku-about">
-            <Reveal className="ku-about-copy">
+            <Reveal x={-35} y={0} className="ku-about-copy">
               <span className="badge-tag">ABOUT OUR FOUNDATION</span>
               <h2 className="ip-h2 ip-h2-dark">
                 Dedicated to a <span className="text-highlight">Greener, Zero-Waste</span> Future
@@ -107,7 +108,7 @@ export default function KnowUsClient() {
               </ul>
             </Reveal>
 
-            <Reveal delay={0.15} x={30} y={0} className="ku-about-media">
+            <Reveal delay={0.15} x={35} y={0} className="ku-about-media">
               <span className="ku-frame" aria-hidden="true" />
               <div className="ku-photo ku-zoom">
                 <img src="/images/recycling/waste-pickers.webp" alt="ARKCA Recyclers community impact" loading="lazy" decoding="async" />
@@ -127,7 +128,7 @@ export default function KnowUsClient() {
       {/* 3. PURPOSE */}
       <section className="section section-light ku-sec">
         <div className="container">
-          <Reveal className="ku-center-head">
+          <Reveal y={24} className="ku-center-head">
             <span className="badge-tag">OUR CORE PURPOSE</span>
             <h2 className="ip-h2 ip-h2-dark">Built on Purpose and Principles</h2>
             <p className="ip-body ip-body-dark">
@@ -137,7 +138,7 @@ export default function KnowUsClient() {
 
           <div className="ku-pillars">
             {pillars.map(({ Icon, t, d }, i) => (
-              <Reveal key={t} delay={0.1 * (i + 1)} className={`ku-pillar ku-pillar-${i}`}>
+              <Reveal key={t} delay={0.12 * (i + 1)} y={28} className={`ku-pillar ku-pillar-${i}`}>
                 <article tabIndex={0}>
                   <span className="ku-pillar-num" aria-hidden="true">0{i + 1}</span>
                   <span className="ku-pillar-ring" aria-hidden="true" />
@@ -155,7 +156,7 @@ export default function KnowUsClient() {
       <section className="section section-dark ku-sec">
         <div className="container">
           <div className="ku-infra">
-            <Reveal>
+            <Reveal x={-35} y={0}>
               <span className="badge-tag light-theme">ADVANCED RECYCLING HUBS</span>
               <h2 className="ip-h2 ip-h2-light">State-of-the-Art Processing Facilities</h2>
               <p className="ip-body ip-body-light">
@@ -174,7 +175,7 @@ export default function KnowUsClient() {
               </div>
             </Reveal>
 
-            <Reveal delay={0.15} className="ku-mosaic">
+            <Reveal delay={0.15} x={35} y={0} className="ku-mosaic">
               {mosaic.map((m, i) => (
                 <figure key={m.alt} className={`ku-tile ku-zoom ku-tile-${i}`}>
                   <img src={m.src} alt={m.alt} loading="lazy" decoding="async" />

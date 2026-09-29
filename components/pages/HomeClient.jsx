@@ -64,18 +64,20 @@ const services = [
 const emptyForm = { wasteCategory: '', wasteSubCategory: '', weight: '', date: '', name: '', company: '', email: '', phone: '', pincode: '', message: '' };
 
 /* ---------------- HELPERS ---------------- */
-function Reveal({ children, delay = 0, x = 0, y = 32, className = '', as = 'div' }) {
+function Reveal({ children, delay = 0, x = 0, y = 28, className = '', as = 'div', style }) {
   const reduce = useReducedMotion();
   const M = motion[as];
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   const initialX = isMobile ? 0 : x;
+  const initialY = isMobile ? (y ? 14 : 0) : y;
   return (
     <M
       className={className}
-      initial={reduce ? false : { opacity: 0, x: initialX, y }}
+      style={style}
+      initial={reduce ? false : { opacity: 0, x: initialX, y: initialY }}
       whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, margin: '-40px', amount: 0.12 }}
+      transition={{ duration: 0.65, delay: isMobile ? 0 : delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </M>
@@ -257,7 +259,7 @@ export default function HomeClient() {
           </div>
           <div className="ax-eco">
             {ecoCards.map(({ Icon, n, t, s, d }, i) => (
-              <Reveal key={n} delay={i * 0.12} className={`ax-eco-card ax-eco-${i}`}>
+              <Reveal key={n} delay={i * 0.15} x={-45} y={0} className={`ax-eco-card ax-eco-${i}`}>
                 <article tabIndex={0}>
                   <span className="ax-eco-num" aria-hidden="true">{n}</span>
                   <div className="ax-eco-icon"><Icon size={26} /></div>
@@ -341,26 +343,28 @@ export default function HomeClient() {
               {faqs.map((faq, index) => {
                 const isOpen = faqOpen === index;
                 return (
-                  <div key={index} className={`faq-accordion-item ax-faq-item ${isOpen ? 'open' : ''}`}>
-                    <h3>
-                      <button type="button" className="faq-accordion-header ax-faq-q" aria-expanded={isOpen} aria-controls={`faq-${index}`} onClick={() => setFaqOpen(isOpen ? -1 : index)}>
-                        <span className="ax-faq-q-left">
-                          <span className="ax-faq-num">0{index + 1}</span>
-                          <span>{faq.q}</span>
-                        </span>
-                        <motion.span className="ax-faq-plus" aria-hidden="true" animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.4 }}>
-                          {isOpen ? '—' : '+'}
-                        </motion.span>
-                      </button>
-                    </h3>
-                    <AnimatePresence initial={false}>
-                      {isOpen && (
-                        <motion.div id={`faq-${index}`} className="ax-faq-a" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}>
-                          <div className="faq-accordion-body">{faq.a}</div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
+                  <Reveal key={index} delay={index * 0.08} x={30} y={0}>
+                    <div className={`faq-accordion-item ax-faq-item ${isOpen ? 'open' : ''}`}>
+                      <h3>
+                        <button type="button" className="faq-accordion-header ax-faq-q" aria-expanded={isOpen} aria-controls={`faq-${index}`} onClick={() => setFaqOpen(isOpen ? -1 : index)}>
+                          <span className="ax-faq-q-left">
+                            <span className="ax-faq-num">0{index + 1}</span>
+                            <span>{faq.q}</span>
+                          </span>
+                          <motion.span className="ax-faq-plus" aria-hidden="true" animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.4 }}>
+                            {isOpen ? '—' : '+'}
+                          </motion.span>
+                        </button>
+                      </h3>
+                      <AnimatePresence initial={false}>
+                        {isOpen && (
+                          <motion.div id={`faq-${index}`} className="ax-faq-a" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}>
+                            <div className="faq-accordion-body">{faq.a}</div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  </Reveal>
                 );
               })}
             </div>
@@ -509,7 +513,7 @@ export default function HomeClient() {
             </Reveal>
             <Reveal delay={0.15} className="ax-head-right">
               <p style={{ color: '#526b64', marginBottom: '12px', maxWidth: '440px' }}>Glide Through our Blog section to know more about sustainable waste recycling mechanisms around us.</p>
-              <Link href="/know-us" className="btn-primary ax-btn-solid" style={{ padding: '8px 20px', fontSize: '0.88rem' }}>READ MORE <ArrowRight size={14} /></Link>
+              <Link href="/blog" className="btn-primary ax-btn-solid" style={{ padding: '8px 20px', fontSize: '0.88rem' }}>READ MORE <ArrowRight size={14} /></Link>
             </Reveal>
           </div>
           <div className="blog-grid ax-blog">
@@ -521,14 +525,14 @@ export default function HomeClient() {
                 <div className="featured-blog-content">
                   <h3 className="featured-blog-title">From Waste to Wealth: How Recycling Is Creating Value in the Circular Economy</h3>
                   <p className="featured-blog-snippet">1980s - Waste is the end of this product; it can't be reused. 2026 - This is not waste; we can regenerate value through technical disassembly and clean reprocessing...</p>
-                  <Link href="/know-us" className="blog-read-more-link ax-link">Read More »</Link>
+                  <Link href="/blog/from-waste-to-wealth-circular-economy" className="blog-read-more-link ax-link">Read More »</Link>
                 </div>
               </article>
             </Reveal>
             <div className="side-blog-list">
               {[
-                { src: '/images/recycling/waste-pickers.webp', alt: 'EPR and Livelihoods', t: 'EPR and Livelihoods: How EPR Plastic Rules Can Create Opportunities for Waste Pickers' },
-                { src: '/images/recycling/facility.webp', alt: 'Circular Economy Technology', t: 'From Waste to Wealth: How Recycling Is Creating Value in the Circular Economy' },
+                { src: '/images/recycling/waste-pickers.webp', alt: 'EPR and Livelihoods', t: 'EPR and Livelihoods: How EPR Plastic Rules Can Create Opportunities for Waste Pickers', slug: '/blog/epr-and-livelihoods-plastic-rules-waste-pickers' },
+                { src: '/images/recycling/facility.webp', alt: 'Industrial E-Waste Management', t: 'Industrial E-Waste Management: Navigating CPCB 2022 & 2026 Compliance Standards', slug: '/blog/industrial-e-waste-management-cpcb-guidelines' },
               ].map((b, i) => (
                 <Reveal key={b.alt} delay={0.12 * (i + 1)} x={30} y={0}>
                   <article className="side-blog-card ax-lift">
@@ -538,7 +542,7 @@ export default function HomeClient() {
                     <div className="side-blog-content">
                       <h4 className="side-blog-title">{b.t}</h4>
                       <span className="side-blog-date">September 24, 2026</span>
-                      <Link href="/know-us" className="blog-read-more-link ax-link">Read More »</Link>
+                      <Link href={b.slug} className="blog-read-more-link ax-link">Read More »</Link>
                     </div>
                   </article>
                 </Reveal>

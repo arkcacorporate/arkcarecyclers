@@ -12,15 +12,19 @@ import {
   ArrowRight
 } from 'lucide-react';
 
-function Reveal({ children, delay = 0, y = 28, className = '' }) {
+function Reveal({ children, delay = 0, y = 28, x = 0, className = '', style }) {
   const reduce = useReducedMotion();
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const initialX = isMobile ? 0 : x;
+  const initialY = isMobile ? (y ? 14 : 0) : y;
   return (
     <motion.div
       className={className}
-      initial={reduce ? false : { opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+      style={style}
+      initial={reduce ? false : { opacity: 0, y: initialY, x: initialX }}
+      whileInView={{ opacity: 1, y: 0, x: 0 }}
+      viewport={{ once: true, margin: '-40px', amount: 0.12 }}
+      transition={{ duration: 0.65, delay: isMobile ? 0 : delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
@@ -107,7 +111,7 @@ export default function ContactUsClient() {
         <div className="container">
           <div className="ip-contact-grid">
             {/* Left: Contact Info */}
-            <Reveal>
+            <Reveal x={-35} y={0}>
               <span className="badge-tag">OFFICE & COMMUNICATIONS</span>
               <h2 className="ip-h2 ip-h2-dark" style={{ marginBottom: '20px' }}>
                 Let's Build a <span className="text-highlight">Sustainable Future</span> Together
@@ -167,7 +171,7 @@ export default function ContactUsClient() {
             </Reveal>
 
             {/* Right: Message Form */}
-            <Reveal delay={0.15}>
+            <Reveal delay={0.12} x={35} y={0}>
               <div className="disposal-form-card" style={{ background: '#071C19', borderRadius: '24px', border: '1px solid rgba(72,207,115,0.25)' }}>
                 <div className="disposal-form-header">
                   <span className="badge-tag light-theme">DIRECT MESSAGE</span>
