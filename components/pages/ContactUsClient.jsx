@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
 import {
   MapPin,
@@ -10,7 +12,6 @@ import {
   CheckCircle,
   ArrowRight
 } from 'lucide-react';
-import '../inner-pages.css';
 
 function Reveal({ children, delay = 0, y = 28, className = '' }) {
   const reduce = useReducedMotion();
@@ -27,7 +28,7 @@ function Reveal({ children, delay = 0, y = 28, className = '' }) {
   );
 }
 
-export default function ContactUs() {
+export default function ContactUsClient() {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -79,7 +80,7 @@ export default function ContactUs() {
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="breadcrumb">
-                <Link to="/">Home</Link>
+                <Link href="/">Home</Link>
                 <span className="breadcrumb-separator">/</span>
                 <span>Contact Us</span>
               </div>
@@ -205,8 +206,9 @@ export default function ContactUs() {
                   <form onSubmit={handleSubmit}>
                     <div className="disposal-form-grid">
                       <div className="form-group">
-                        <label className="form-label">Your Name</label>
+                        <label className="form-label" htmlFor="cnt-name">Your Name</label>
                         <input
+                          id="cnt-name"
                           type="text"
                           name="name"
                           placeholder="Full Name"
@@ -218,8 +220,9 @@ export default function ContactUs() {
                       </div>
 
                       <div className="form-group">
-                        <label className="form-label">Email Address</label>
+                        <label className="form-label" htmlFor="cnt-email">Email Address</label>
                         <input
+                          id="cnt-email"
                           type="email"
                           name="email"
                           placeholder="you@company.com"
@@ -231,8 +234,9 @@ export default function ContactUs() {
                       </div>
 
                       <div className="form-group">
-                        <label className="form-label">Phone Number</label>
+                        <label className="form-label" htmlFor="cnt-phone">Phone Number</label>
                         <input
+                          id="cnt-phone"
                           type="tel"
                           name="phone"
                           placeholder="+91-0000000000"
@@ -244,8 +248,9 @@ export default function ContactUs() {
                       </div>
 
                       <div className="form-group">
-                        <label className="form-label">Company / Organization</label>
+                        <label className="form-label" htmlFor="cnt-company">Company / Organization</label>
                         <input
+                          id="cnt-company"
                           type="text"
                           name="company"
                           placeholder="Organization Name"
@@ -256,8 +261,9 @@ export default function ContactUs() {
                       </div>
 
                       <div className="form-group full-width">
-                        <label className="form-label">Service of Interest</label>
+                        <label className="form-label" htmlFor="cnt-service">Service of Interest</label>
                         <select
+                          id="cnt-service"
                           name="serviceInterest"
                           value={formData.serviceInterest}
                           onChange={handleChange}
@@ -273,8 +279,9 @@ export default function ContactUs() {
                       </div>
 
                       <div className="form-group full-width">
-                        <label className="form-label">Subject</label>
+                        <label className="form-label" htmlFor="cnt-subject">Subject</label>
                         <input
+                          id="cnt-subject"
                           type="text"
                           name="subject"
                           placeholder="How can we assist you?"
@@ -286,8 +293,9 @@ export default function ContactUs() {
                       </div>
 
                       <div className="form-group full-width">
-                        <label className="form-label">Your Message</label>
+                        <label className="form-label" htmlFor="cnt-message">Your Message</label>
                         <textarea
+                          id="cnt-message"
                           name="message"
                           placeholder="Please provide details regarding your requirements, quantities, or regulatory deadlines."
                           value={formData.message}

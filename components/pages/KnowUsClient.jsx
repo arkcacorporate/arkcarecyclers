@@ -1,13 +1,13 @@
+'use client';
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
 import {
   Target, Eye, HeartHandshake, CheckCircle2, ShieldCheck, TrendingUp, ArrowRight, Factory,
 } from 'lucide-react';
-import '../inner-pages.css';
-import '../know-us-redesign.css';
 
-// Now forwards style, so the centred header and mosaic grid actually apply.
+// Forwards style, so the centred header and mosaic grid actually apply.
 function Reveal({ children, delay = 0, y = 28, x = 0, className = '', style }) {
   const reduce = useReducedMotion();
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
@@ -46,7 +46,7 @@ const mosaic = [
   { src: '/images/hero/oil.webp', alt: 'Oil distillation facility' },
 ];
 
-export default function KnowUs() {
+export default function KnowUsClient() {
   const reduce = useReducedMotion();
 
   return (
@@ -63,7 +63,7 @@ export default function KnowUs() {
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="breadcrumb">
-                <Link to="/">Home</Link>
+                <Link href="/">Home</Link>
                 <span className="breadcrumb-separator">/</span>
                 <span>Know Us</span>
               </div>
@@ -197,10 +197,10 @@ export default function KnowUs() {
               Speak with our senior environmental consultants to assess your industrial waste streams, calculate your EPR credits, and set up compliant collection operations today.
             </p>
             <div className="ku-cta-btns">
-              <Link to="/contact-us" className="btn-primary ku-btn">
+              <Link href="/contact-us" className="btn-primary ku-btn">
                 Contact Our Consultants <ArrowRight size={18} />
               </Link>
-              <Link to="/waste-collection" className="btn-outline ku-btn">Explore Waste Services</Link>
+              <Link href="/waste-collection" className="btn-outline ku-btn">Explore Waste Services</Link>
             </div>
           </Reveal>
         </div>

@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import {
   motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent,
   useReducedMotion, useInView, animate,
@@ -8,7 +10,6 @@ import {
   Trash2, Infinity as InfinityIcon, Leaf, Globe, Recycle, ShieldCheck,
   FileCheck2, Users, Factory, Cog, ArrowRight, CheckCircle, Megaphone, Briefcase,
 } from 'lucide-react';
-import '../home-redesign.css';
 
 /* ---------------- DATA (unchanged) ---------------- */
 const heroTabs = [
@@ -194,7 +195,7 @@ function Hero({ onCta }) {
 }
 
 /* ---------------- PAGE ---------------- */
-export default function Home() {
+export default function HomeClient() {
   const [faqOpen, setFaqOpen] = useState(0);
   const [tIdx, setTIdx] = useState(0);
   const [dir, setDir] = useState(1);
@@ -334,7 +335,7 @@ export default function Home() {
               <span className="badge-tag">FREQUENTLY ASKED QUESTIONS</span>
               <h2 className="faq-intro-title ax-h2">Have questions? <br />We have <span className="text-highlight">answers.</span></h2>
               <p className="faq-intro-desc">We have dedicated professional consultants to help you for complying with any query related to waste recycling by aligning with CPCB's waste recycling guidelines.</p>
-              <Link to="/contact-us" className="btn-primary ax-btn-solid">View ALL FAQs <ArrowRight size={16} /></Link>
+              <Link href="/contact-us" className="btn-primary ax-btn-solid">View ALL FAQs <ArrowRight size={16} /></Link>
             </Reveal>
             <div className="faq-accordion-list ax-faq-list">
               {faqs.map((faq, index) => {
@@ -411,7 +412,7 @@ export default function Home() {
             </Reveal>
             <Reveal delay={0.15} className="ax-head-right">
               <p style={{ color: '#526b64', marginBottom: '12px', maxWidth: '420px' }}>From compliance to collection, we help businesses across industries manage waste responsibly.</p>
-              <Link to="/waste-collection" className="blog-read-more-link ax-link">Explore All Services <ArrowRight size={16} /></Link>
+              <Link href="/waste-collection" className="blog-read-more-link ax-link">Explore All Services <ArrowRight size={16} /></Link>
             </Reveal>
           </div>
           <div className="ax-services">
@@ -508,7 +509,7 @@ export default function Home() {
             </Reveal>
             <Reveal delay={0.15} className="ax-head-right">
               <p style={{ color: '#526b64', marginBottom: '12px', maxWidth: '440px' }}>Glide Through our Blog section to know more about sustainable waste recycling mechanisms around us.</p>
-              <Link to="/know-us" className="btn-primary ax-btn-solid" style={{ padding: '8px 20px', fontSize: '0.88rem' }}>READ MORE <ArrowRight size={14} /></Link>
+              <Link href="/know-us" className="btn-primary ax-btn-solid" style={{ padding: '8px 20px', fontSize: '0.88rem' }}>READ MORE <ArrowRight size={14} /></Link>
             </Reveal>
           </div>
           <div className="blog-grid ax-blog">
@@ -520,7 +521,7 @@ export default function Home() {
                 <div className="featured-blog-content">
                   <h3 className="featured-blog-title">From Waste to Wealth: How Recycling Is Creating Value in the Circular Economy</h3>
                   <p className="featured-blog-snippet">1980s - Waste is the end of this product; it can't be reused. 2026 - This is not waste; we can regenerate value through technical disassembly and clean reprocessing...</p>
-                  <Link to="/know-us" className="blog-read-more-link ax-link">Read More »</Link>
+                  <Link href="/know-us" className="blog-read-more-link ax-link">Read More »</Link>
                 </div>
               </article>
             </Reveal>
@@ -537,7 +538,7 @@ export default function Home() {
                     <div className="side-blog-content">
                       <h4 className="side-blog-title">{b.t}</h4>
                       <span className="side-blog-date">September 24, 2026</span>
-                      <Link to="/know-us" className="blog-read-more-link ax-link">Read More »</Link>
+                      <Link href="/know-us" className="blog-read-more-link ax-link">Read More »</Link>
                     </div>
                   </article>
                 </Reveal>

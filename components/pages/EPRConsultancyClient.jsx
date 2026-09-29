@@ -1,9 +1,9 @@
+'use client';
+
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ShieldCheck, Calculator, Layers, CheckCircle, ArrowRight } from 'lucide-react';
-import '../inner-pages.css';
-import '../epr-consultancy-redesign.css';
 
 // Forwards style so inline layout passed to it applies.
 function Reveal({ children, delay = 0, y = 28, x = 0, className = '', style }) {
@@ -41,7 +41,7 @@ const who = [
 
 const emptyForm = { companyName: '', piboType: 'Brand Owner', wasteStream: 'Plastic Packaging', contactName: '', email: '', phone: '', annualTurnover: '', notes: '' };
 
-export default function EPRConsultancy() {
+export default function EPRConsultancyClient() {
   const [calcStream, setCalcStream] = useState('plastic-cat1');
   const [calcVolume, setCalcVolume] = useState('100');
   const [calcResult, setCalcResult] = useState(null);
@@ -96,7 +96,7 @@ export default function EPRConsultancy() {
           <div className="inner-hero-content ec-hero-content">
             <motion.div initial={reduce ? false : { opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
               <div className="breadcrumb">
-                <Link to="/">Home</Link>
+                <Link href="/">Home</Link>
                 <span className="breadcrumb-separator">/</span>
                 <span>EPR Consultancy</span>
               </div>

@@ -1,11 +1,11 @@
+'use client';
+
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import {
   Trash2, Cpu, BatteryCharging, Disc, Droplets, Cog, CheckCircle, Truck, PhoneCall, ArrowRight,
 } from 'lucide-react';
-import '../inner-pages.css';
-import '../waste-collection-redesign.css';
 
 // Forwards style so any inline layout passed to it applies.
 function Reveal({ children, delay = 0, y = 28, x = 0, className = '', style }) {
@@ -47,7 +47,7 @@ const contacts = [
 
 const emptyPickup = { businessName: '', contactPerson: '', phone: '', email: '', city: '', wasteType: 'Plastic Waste', approxWeight: '500 Kg - 2 Tonnes', preferredDate: '', specialNotes: '' };
 
-export default function WasteCollection() {
+export default function WasteCollectionClient() {
   const [selectedStream, setSelectedStream] = useState(wasteStreams[0]);
   const [pickupFormSubmitted, setPickupFormSubmitted] = useState(false);
   const [pickupData, setPickupData] = useState(emptyPickup);
@@ -86,7 +86,7 @@ export default function WasteCollection() {
           <div className="inner-hero-content wc-hero-content">
             <motion.div initial={reduce ? false : { opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
               <div className="breadcrumb">
-                <Link to="/">Home</Link>
+                <Link href="/">Home</Link>
                 <span className="breadcrumb-separator">/</span>
                 <span>Waste Collection</span>
               </div>
