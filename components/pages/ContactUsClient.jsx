@@ -7,7 +7,6 @@ import {
   MapPin,
   Phone,
   Mail,
-  Clock,
   Send,
   CheckCircle,
   ArrowRight
@@ -161,22 +160,6 @@ export default function ContactUsClient() {
                     <p className="ip-body ip-body-dark" style={{ fontSize: '0.92rem', lineHeight: '1.6' }}>
                       Inquiries: <a href="mailto:contact@arkcarecyclers.com" style={{ color: 'var(--ip-accent)', fontWeight: 600 }}>contact@arkcarecyclers.com</a> <br />
                       Compliance desk: <a href="mailto:epr@arkcarecyclers.com" style={{ color: 'var(--ip-accent)', fontWeight: 600 }}>epr@arkcarecyclers.com</a>
-                    </p>
-                  </div>
-                </div>
-
-                {/* Working Hours */}
-                <div className="ip-contact-card-item">
-                  <div className="ip-icon-circle" style={{ marginBottom: 0, flexShrink: 0 }}>
-                    <Clock size={22} />
-                  </div>
-                  <div>
-                    <h4 className="ip-h3" style={{ fontSize: '1.1rem', color: '#071C19', marginBottom: '4px' }}>
-                      Operating Hours
-                    </h4>
-                    <p className="ip-body ip-body-dark" style={{ fontSize: '0.92rem', lineHeight: '1.6' }}>
-                      Monday – Saturday: 9:30 AM – 6:30 PM IST <br />
-                      Emergency Hazardous Transport: 24/7 on call
                     </p>
                   </div>
                 </div>

@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
 import {
-  Target, Eye, HeartHandshake, CheckCircle2, ShieldCheck, TrendingUp, ArrowRight, Factory,
+  Target, Eye, CheckCircle2, ShieldCheck, TrendingUp, ArrowRight, Factory,
 } from 'lucide-react';
 
 // Forwards style, so the centred header and mosaic grid actually apply.
@@ -31,7 +31,6 @@ const checks = ['CPCB & SPCB Registered', 'ISO 14001:2015 Certified', 'Traceable
 const pillars = [
   { Icon: Target, t: 'Our Mission', d: "To lead India's transition to a closed-loop economy by delivering compliant, scientific waste recovery solutions that divert valuable materials away from landfills and into sustainable reuse." },
   { Icon: Eye, t: 'Our Vision', d: 'To become the most reliable pan-India environmental partner for enterprises, municipal councils, and grassroots waste pickers, setting gold standards for traceable EPR compliance.' },
-  { Icon: HeartHandshake, t: 'Inclusivity & CSR', d: 'Empowering frontline waste aggregators with fair wages, occupational health safety equipment, and integration into the formal digital recycling ecosystem.' },
 ];
 
 const features = [
