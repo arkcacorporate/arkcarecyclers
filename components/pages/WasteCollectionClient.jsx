@@ -5,7 +5,9 @@ import Link from 'next/link';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import {
   Trash2, Cpu, BatteryCharging, Disc, Droplets, Cog, CheckCircle, Truck, PhoneCall, ArrowRight,
+  AlertCircle, Loader2,
 } from 'lucide-react';
+import { sendEmail } from '@/lib/emailService';
 
 // Forwards style so any inline layout passed to it applies.
 function Reveal({ children, delay = 0, y = 28, x = 0, className = '', style }) {
@@ -53,14 +55,40 @@ const emptyPickup = { businessName: '', contactPerson: '', phone: '', email: '',
 export default function WasteCollectionClient() {
   const [selectedStream, setSelectedStream] = useState(wasteStreams[0]);
   const [pickupFormSubmitted, setPickupFormSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [honeypot, setHoneypot] = useState('');
   const [pickupData, setPickupData] = useState(emptyPickup);
   const reduce = useReducedMotion();
 
   const handleInputChange = (e) => setPickupData({ ...pickupData, [e.target.name]: e.target.value });
-  const handlePickupSubmit = (e) => {
+  const handlePickupSubmit = async (e) => {
     e.preventDefault();
-    setPickupFormSubmitted(true);
-    setTimeout(() => { setPickupFormSubmitted(false); setPickupData(emptyPickup); }, 5000);
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    setErrorMessage('');
+
+    const result = await sendEmail({
+      formType: 'pickup',
+      formName: 'Pickup Booking Request Form',
+      pageName: 'Waste Collection',
+      data: pickupData,
+      honeypot
+    });
+
+    setIsSubmitting(false);
+
+    if (result.success) {
+      setPickupFormSubmitted(true);
+      setPickupData(emptyPickup);
+      setHoneypot('');
+      setTimeout(() => {
+        setPickupFormSubmitted(false);
+      }, 6000);
+    } else {
+      setErrorMessage(result.error || 'Failed to submit pickup request. Please try again.');
+    }
   };
 
   const inp = (name, label, type, ph) => (
@@ -241,7 +269,47 @@ export default function WasteCollectionClient() {
                         <textarea id="p-specialNotes" name="specialNotes" placeholder="Any hazardous requirements, loading dock details, or timing preferences" value={pickupData.specialNotes} onChange={handleInputChange} className="form-textarea" rows={2} />
                       </div>
                     </div>
-                    <button type="submit" className="form-submit-btn wc-submit">Confirm Pickup Request</button>
+
+                    {/* Anti-spam honeypot (hidden from real users) */}
+                    <div style={{ display: 'none' }} aria-hidden="true">
+                      <input
+                        type="text"
+                        name="_wc_hp"
+                        value={honeypot}
+                        onChange={(e) => setHoneypot(e.target.value)}
+                        tabIndex={-1}
+                        autoComplete="off"
+                      />
+                    </div>
+
+                    {errorMessage && (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#ff8a8a', fontSize: '0.9rem', marginBottom: '14px', background: 'rgba(255, 75, 75, 0.12)', padding: '10px 14px', borderRadius: '10px', border: '1px solid rgba(255, 75, 75, 0.25)' }}>
+                        <AlertCircle size={18} style={{ flexShrink: 0 }} />
+                        <span>{errorMessage}</span>
+                      </div>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="form-submit-btn wc-submit"
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '8px',
+                        opacity: isSubmitting ? 0.75 : 1,
+                        cursor: isSubmitting ? 'not-allowed' : 'pointer'
+                      }}
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 size={18} style={{ animation: 'spin 1s linear infinite' }} /> Confirming...
+                        </>
+                      ) : (
+                        'Confirm Pickup Request'
+                      )}
+                    </button>
                   </form>
                 )}
               </div>

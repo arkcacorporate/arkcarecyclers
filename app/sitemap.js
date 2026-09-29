@@ -1,5 +1,7 @@
 import { getAllPosts } from '@/lib/blogData';
 
+export const dynamic = 'force-static';
+
 export default function sitemap() {
   const baseUrl = 'https://arkcarecyclers.com';
   const staticRoutes = [

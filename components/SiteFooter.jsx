@@ -10,20 +10,44 @@ import {
   Phone,
   Mail,
   CheckCircle,
+  AlertCircle,
+  Loader2,
 } from 'lucide-react';
+import { sendEmail } from '@/lib/emailService';
 
 export default function SiteFooter() {
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterSubscribed, setNewsletterSubscribed] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [honeypot, setHoneypot] = useState('');
 
-  const handleNewsletterSubmit = (e) => {
+  const handleNewsletterSubmit = async (e) => {
     e.preventDefault();
-    if (newsletterEmail) {
+    if (!newsletterEmail || isSubmitting) return;
+
+    setIsSubmitting(true);
+    setErrorMessage('');
+
+    const result = await sendEmail({
+      formType: 'newsletter',
+      formName: 'Newsletter Subscription Form',
+      pageName: 'Global Site Footer',
+      data: { email: newsletterEmail },
+      honeypot
+    });
+
+    setIsSubmitting(false);
+
+    if (result.success) {
       setNewsletterSubscribed(true);
+      setNewsletterEmail('');
+      setHoneypot('');
       setTimeout(() => {
         setNewsletterSubscribed(false);
-        setNewsletterEmail('');
-      }, 4000);
+      }, 5000);
+    } else {
+      setErrorMessage(result.error || 'Failed to subscribe. Please try again.');
     }
   };
 
@@ -131,6 +155,18 @@ export default function SiteFooter() {
               </div>
             ) : (
               <form onSubmit={handleNewsletterSubmit} className="footer-newsletter-form">
+                {/* Anti-spam honeypot (hidden from real users) */}
+                <div style={{ display: 'none' }} aria-hidden="true">
+                  <input
+                    type="text"
+                    name="_news_hp"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
+
                 <input
                   type="email"
                   placeholder="Email"
@@ -139,10 +175,32 @@ export default function SiteFooter() {
                   className="footer-newsletter-input"
                   required
                 />
-                <button type="submit" className="footer-newsletter-btn">
-                  Send
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="footer-newsletter-btn"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '4px',
+                    opacity: isSubmitting ? 0.75 : 1,
+                    cursor: isSubmitting ? 'not-allowed' : 'pointer'
+                  }}
+                >
+                  {isSubmitting ? (
+                    <Loader2 size={14} style={{ animation: 'spin 1s linear infinite' }} />
+                  ) : (
+                    'Send'
+                  )}
                 </button>
               </form>
+            )}
+            {errorMessage && (
+              <div style={{ color: '#ff8a8a', fontSize: '0.8rem', marginTop: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <AlertCircle size={14} style={{ flexShrink: 0 }} />
+                <span>{errorMessage}</span>
+              </div>
             )}
           </div>
         </div>

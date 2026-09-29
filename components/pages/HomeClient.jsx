@@ -9,11 +9,13 @@ import {
 import {
   Trash2, Infinity as InfinityIcon, Leaf, Globe, Recycle, ShieldCheck,
   FileCheck2, Users, Factory, Cog, ArrowRight, CheckCircle, Megaphone, Briefcase,
+  AlertCircle, Loader2,
 } from 'lucide-react';
+import { sendEmail } from '@/lib/emailService';
 
 /* ---------------- DATA (unchanged) ---------------- */
 const heroTabs = [
-  { id: 'plastic', name: 'PLASTIC', title: 'PLASTIC', desc: 'ARKCA Recyclers champions circular polymer economics. We provide certified collection, decontamination, shredding, and pelletizing of industrial and post-consumer plastics under CPCB Category I, II & III EPR guidelines.', bg: '/images/hero/plastic.webp' },
+  { id: 'plastic', name: 'PLASTIC', title: 'PLASTIC', desc: 'ARKCA Recyclers champions circular polymer economics. We provide certified collection, decontamination, shredding, and pelletizing of industrial and post-consumer plastics under CPCB Category I, II & III EPR guidelines.', bg: '/images/hero/plastics.webp' },
   { id: 'electronic', name: 'ELECTRONIC', title: 'ELECTRONIC', desc: 'Comprehensive authorized e-waste asset disposition and recycling. We recover precious rare metals and safely neutralize hazardous heavy materials in strict accordance with the E-Waste Management Rules 2022.', bg: '/images/hero/electronic.webp' },
   { id: 'battery', name: 'BATTERY', title: 'BATTERY', desc: 'Environmentally sound disposal and recycling of industrial lead-acid, lithium-ion, and EV batteries. We empower battery manufacturers and importers to fulfill their annual mandatory recycling obligations.', bg: '/images/hero/battery.webp' },
   { id: 'tyre', name: 'TYRE', title: 'TYRE', desc: 'Sustainable end-of-life tyre management. We turn waste rubber into valuable crumb rubber, reclaim rubber, and pyrolytic fuel oil, eliminating open dumping and burning while meeting EPR quotas.', bg: '/images/hero/tyre.webp' },
@@ -202,14 +204,40 @@ export default function HomeClient() {
   const [tIdx, setTIdx] = useState(0);
   const [dir, setDir] = useState(1);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [honeypot, setHoneypot] = useState('');
   const [formData, setFormData] = useState(emptyForm);
   const reduce = useReducedMotion();
 
   const handleFormChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    setFormSubmitted(true);
-    setTimeout(() => { setFormSubmitted(false); setFormData(emptyForm); }, 5000);
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    setErrorMessage('');
+
+    const result = await sendEmail({
+      formType: 'disposal',
+      formName: 'Responsible Disposal Request Form',
+      pageName: 'Home',
+      data: formData,
+      honeypot
+    });
+
+    setIsSubmitting(false);
+
+    if (result.success) {
+      setFormSubmitted(true);
+      setFormData(emptyForm);
+      setHoneypot('');
+      setTimeout(() => {
+        setFormSubmitted(false);
+      }, 6000);
+    } else {
+      setErrorMessage(result.error || 'Failed to submit disposal request. Please try again.');
+    }
   };
   const scrollToDisposal = () => {
     const el = document.getElementById('disposal-section');
@@ -320,7 +348,47 @@ export default function HomeClient() {
                       <textarea id="f-message" name="message" placeholder="Write Your Message" value={formData.message} onChange={handleFormChange} className="form-textarea" rows={3} />
                     </div>
                   </div>
-                  <button type="submit" className="form-submit-btn ax-btn-solid">Send</button>
+
+                  {/* Anti-spam honeypot (hidden from real users) */}
+                  <div style={{ display: 'none' }} aria-hidden="true">
+                    <input
+                      type="text"
+                      name="_home_hp"
+                      value={honeypot}
+                      onChange={(e) => setHoneypot(e.target.value)}
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+                  </div>
+
+                  {errorMessage && (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#ff8a8a', fontSize: '0.9rem', marginBottom: '14px', background: 'rgba(255, 75, 75, 0.12)', padding: '10px 14px', borderRadius: '10px', border: '1px solid rgba(255, 75, 75, 0.25)' }}>
+                      <AlertCircle size={18} style={{ flexShrink: 0 }} />
+                      <span>{errorMessage}</span>
+                    </div>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="form-submit-btn ax-btn-solid"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '8px',
+                      opacity: isSubmitting ? 0.75 : 1,
+                      cursor: isSubmitting ? 'not-allowed' : 'pointer'
+                    }}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 size={18} style={{ animation: 'spin 1s linear infinite' }} /> Sending...
+                      </>
+                    ) : (
+                      'Send'
+                    )}
+                  </button>
                 </form>
               )}
             </Reveal>

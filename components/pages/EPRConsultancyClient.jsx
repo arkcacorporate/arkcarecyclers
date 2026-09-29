@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ShieldCheck, Calculator, Layers, CheckCircle, ArrowRight } from 'lucide-react';
+import { ShieldCheck, Calculator, Layers, CheckCircle, ArrowRight, AlertCircle, Loader2 } from 'lucide-react';
+import { sendEmail } from '@/lib/emailService';
 
 // Forwards style so inline layout passed to it applies.
 function Reveal({ children, delay = 0, y = 28, x = 0, className = '', style }) {
@@ -49,6 +50,9 @@ export default function EPRConsultancyClient() {
   const [calcVolume, setCalcVolume] = useState('100');
   const [calcResult, setCalcResult] = useState(null);
   const [eprFormSubmitted, setEprFormSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [honeypot, setHoneypot] = useState('');
   const [eprForm, setEprForm] = useState(emptyForm);
   const reduce = useReducedMotion();
 
@@ -68,10 +72,33 @@ export default function EPRConsultancyClient() {
   };
 
   const handleFormChange = (e) => setEprForm({ ...eprForm, [e.target.name]: e.target.value });
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    setEprFormSubmitted(true);
-    setTimeout(() => { setEprFormSubmitted(false); setEprForm(emptyForm); }, 5000);
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    setErrorMessage('');
+
+    const result = await sendEmail({
+      formType: 'epr',
+      formName: 'EPR Advisory Consultation Form',
+      pageName: 'EPR Consultancy',
+      data: eprForm,
+      honeypot
+    });
+
+    setIsSubmitting(false);
+
+    if (result.success) {
+      setEprFormSubmitted(true);
+      setEprForm(emptyForm);
+      setHoneypot('');
+      setTimeout(() => {
+        setEprFormSubmitted(false);
+      }, 6000);
+    } else {
+      setErrorMessage(result.error || 'Failed to submit EPR assessment request. Please try again.');
+    }
   };
 
   const inp = (name, label, type, ph) => (
@@ -282,7 +309,47 @@ export default function EPRConsultancyClient() {
                         <textarea id="e-notes" name="notes" placeholder="Mention whether you need CPCB registration, target fulfillment credits, or annual return audit defense." value={eprForm.notes} onChange={handleFormChange} className="form-textarea" rows={2} />
                       </div>
                     </div>
-                    <button type="submit" className="form-submit-btn ec-submit">Schedule Free EPR Assessment</button>
+
+                    {/* Anti-spam honeypot (hidden from real users) */}
+                    <div style={{ display: 'none' }} aria-hidden="true">
+                      <input
+                        type="text"
+                        name="_epr_hp"
+                        value={honeypot}
+                        onChange={(e) => setHoneypot(e.target.value)}
+                        tabIndex={-1}
+                        autoComplete="off"
+                      />
+                    </div>
+
+                    {errorMessage && (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#ff8a8a', fontSize: '0.9rem', marginBottom: '14px', background: 'rgba(255, 75, 75, 0.12)', padding: '10px 14px', borderRadius: '10px', border: '1px solid rgba(255, 75, 75, 0.25)' }}>
+                        <AlertCircle size={18} style={{ flexShrink: 0 }} />
+                        <span>{errorMessage}</span>
+                      </div>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="form-submit-btn ec-submit"
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '8px',
+                        opacity: isSubmitting ? 0.75 : 1,
+                        cursor: isSubmitting ? 'not-allowed' : 'pointer'
+                      }}
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 size={18} style={{ animation: 'spin 1s linear infinite' }} /> Scheduling...
+                        </>
+                      ) : (
+                        'Schedule Free EPR Assessment'
+                      )}
+                    </button>
                   </form>
                 )}
               </div>

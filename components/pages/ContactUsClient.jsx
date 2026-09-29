@@ -9,8 +9,11 @@ import {
   Mail,
   Send,
   CheckCircle,
-  ArrowRight
+  ArrowRight,
+  AlertCircle,
+  Loader2
 } from 'lucide-react';
+import { sendEmail } from '@/lib/emailService';
 
 function Reveal({ children, delay = 0, y = 28, x = 0, className = '', style }) {
   const reduce = useReducedMotion();
@@ -31,17 +34,22 @@ function Reveal({ children, delay = 0, y = 28, x = 0, className = '', style }) {
   );
 }
 
+const emptyContactForm = {
+  name: '',
+  email: '',
+  phone: '',
+  company: '',
+  serviceInterest: 'Waste Collection',
+  subject: '',
+  message: ''
+};
+
 export default function ContactUsClient() {
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    company: '',
-    serviceInterest: 'Waste Collection',
-    subject: '',
-    message: ''
-  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [honeypot, setHoneypot] = useState('');
+  const [formData, setFormData] = useState(emptyContactForm);
 
   const reduce = useReducedMotion();
 
@@ -49,21 +57,33 @@ export default function ContactUsClient() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setFormSubmitted(true);
-    setTimeout(() => {
-      setFormSubmitted(false);
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        company: '',
-        serviceInterest: 'Waste Collection',
-        subject: '',
-        message: ''
-      });
-    }, 5000);
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    setErrorMessage('');
+
+    const result = await sendEmail({
+      formType: 'contact',
+      formName: 'Contact Us General Inquiry Form',
+      pageName: 'Contact Us',
+      data: formData,
+      honeypot
+    });
+
+    setIsSubmitting(false);
+
+    if (result.success) {
+      setFormSubmitted(true);
+      setFormData(emptyContactForm);
+      setHoneypot('');
+      setTimeout(() => {
+        setFormSubmitted(false);
+      }, 6000);
+    } else {
+      setErrorMessage(result.error || 'Failed to submit inquiry. Please try again.');
+    }
   };
 
   return (
@@ -294,8 +314,48 @@ export default function ContactUsClient() {
                       </div>
                     </div>
 
-                    <button type="submit" className="form-submit-btn" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-                      <Send size={18} /> Submit Inquiry
+                    {/* Anti-spam honeypot (hidden from real users) */}
+                    <div style={{ display: 'none' }} aria-hidden="true">
+                      <input
+                        type="text"
+                        name="_contact_hp"
+                        value={honeypot}
+                        onChange={(e) => setHoneypot(e.target.value)}
+                        tabIndex={-1}
+                        autoComplete="off"
+                      />
+                    </div>
+
+                    {errorMessage && (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#ff8a8a', fontSize: '0.9rem', marginTop: '16px', background: 'rgba(255, 75, 75, 0.12)', padding: '10px 14px', borderRadius: '10px', border: '1px solid rgba(255, 75, 75, 0.25)' }}>
+                        <AlertCircle size={18} style={{ flexShrink: 0 }} />
+                        <span>{errorMessage}</span>
+                      </div>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="form-submit-btn"
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '8px',
+                        opacity: isSubmitting ? 0.75 : 1,
+                        cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                        marginTop: errorMessage ? '12px' : '0'
+                      }}
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 size={18} style={{ animation: 'spin 1s linear infinite' }} /> Submitting...
+                        </>
+                      ) : (
+                        <>
+                          <Send size={18} /> Submit Inquiry
+                        </>
+                      )}
                     </button>
                   </form>
                 )}
@@ -338,11 +398,11 @@ export default function ContactUsClient() {
 
               <div style={{ position: 'relative', width: '100%', height: '360px', background: '#0b2521' }}>
                 <iframe
-                  title="ARKCA Recyclers Location"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.076801997084!2d88.46876187588327!3d22.576231932820546!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a02753381a1728d%3A0xbfa7a4c4e7ce2911!2sEcospace%20Business%20Park!5e0!3m2!1sen!2sin!4v1711200000000!5m2!1sen!2sin"
+                  title="ARKCA Recyclers Location - Block 4A, Ecospace Business Park, Kolkata"
+                  src="https://maps.google.com/maps?q=Block+4A,+Ecospace+Business+Park,+Action+Area+II,+Newtown,+Kolkata,+West+Bengal+700156&t=&z=16&ie=UTF8&iwloc=&output=embed"
                   width="100%"
                   height="100%"
-                  style={{ border: 0, filter: 'contrast(1.05) saturate(1.1)' }}
+                  style={{ border: 0 }}
                   allowFullScreen=""
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
