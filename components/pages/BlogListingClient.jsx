@@ -93,10 +93,10 @@ export default function BlogListingClient() {
                   cursor: 'pointer',
                   border: '1px solid',
                   transition: 'all 0.3s ease',
-                  backgroundColor: selectedCategory === cat ? 'var(--primary-green, #148C4A)' : '#FFFFFF',
-                  color: selectedCategory === cat ? '#FFFFFF' : 'var(--text-dark, #071C19)',
-                  borderColor: selectedCategory === cat ? 'var(--primary-green, #148C4A)' : '#dce8e0',
-                  boxShadow: selectedCategory === cat ? '0 6px 18px rgba(20, 140, 74, 0.3)' : 'none',
+                  backgroundColor: selectedCategory === cat ? 'var(--primary-green, #123228)' : '#FFFFFF',
+                  color: selectedCategory === cat ? '#FFFFFF' : 'var(--text-dark, #123228)',
+                  borderColor: selectedCategory === cat ? 'var(--primary-green, #123228)' : '#dce8e0',
+                  boxShadow: selectedCategory === cat ? '0 6px 18px rgba(18, 50, 40, 0.3)' : 'none',
                 }}
               >
                 {cat}

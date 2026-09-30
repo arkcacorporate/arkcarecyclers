@@ -66,7 +66,7 @@ export default function BlogPostClient({ post, relatedPosts }) {
               <span className="breadcrumb-separator">/</span>
               <Link href="/blog">Blog</Link>
               <span className="breadcrumb-separator">/</span>
-              <span style={{ color: 'var(--primary-green, #148C4A)', fontWeight: 600 }}>{post.category}</span>
+              <span style={{ color: 'var(--primary-green, #123228)', fontWeight: 600 }}>{post.category}</span>
             </nav>
 
             <div className="blog-header-badge-row">
@@ -101,7 +101,7 @@ export default function BlogPostClient({ post, relatedPosts }) {
                   <Calendar size={15} /> Published: {post.publishDateFormatted}
                 </span>
                 {post.modifiedDateFormatted && post.modifiedDateFormatted !== post.publishDateFormatted && (
-                  <span style={{ color: '#8daaa0', fontSize: '0.8rem' }}>
+                  <span style={{ color: '#D9E9DA', fontSize: '0.8rem' }}>
                     (Updated: {post.modifiedDateFormatted})
                   </span>
                 )}
@@ -159,7 +159,7 @@ export default function BlogPostClient({ post, relatedPosts }) {
                     return (
                       <div key={idx} className="blog-callout-card">
                         <div className="blog-callout-title">
-                          <Info size={18} color="#148C4A" /> {block.title}
+                          <Info size={18} color="#123228" /> {block.title}
                         </div>
                         <p>{block.text}</p>
                       </div>
@@ -180,7 +180,7 @@ export default function BlogPostClient({ post, relatedPosts }) {
                         <ul className="blog-checklist-list">
                           {block.items.map((item, itemIdx) => (
                             <li key={itemIdx}>
-                              <CheckCircle2 size={18} color="#148C4A" style={{ flexShrink: 0, marginTop: '3px' }} />
+                              <CheckCircle2 size={18} color="#123228" style={{ flexShrink: 0, marginTop: '3px' }} />
                               <span>{item}</span>
                             </li>
                           ))}
@@ -195,7 +195,7 @@ export default function BlogPostClient({ post, relatedPosts }) {
                 <div className="blog-footer-actions">
                   {/* Topic Tags */}
                   <div className="blog-tags-row">
-                    <span style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--dark-green, #071C19)' }}>
+                    <span style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--dark-green, #123228)' }}>
                       Tags:
                     </span>
                     {post.tags.map((tag) => (
@@ -240,9 +240,9 @@ export default function BlogPostClient({ post, relatedPosts }) {
                       onClick={handleCopyLink}
                       className="blog-share-btn"
                       style={{
-                        backgroundColor: copied ? '#148C4A' : '#FFFFFF',
+                        backgroundColor: copied ? '#123228' : '#FFFFFF',
                         color: copied ? '#FFFFFF' : 'inherit',
-                        borderColor: copied ? '#148C4A' : '#cfe0d6',
+                        borderColor: copied ? '#123228' : '#cfe0d6',
                       }}
                     >
                       {copied ? <Check size={16} /> : <Share2 size={16} />}

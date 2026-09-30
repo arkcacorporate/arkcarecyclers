@@ -326,10 +326,10 @@ export default function HomeClient() {
                 <p className="disposal-form-sub">Fill in your details and we'll handle the rest.</p>
               </div>
               {formSubmitted ? (
-                <div role="status" style={{ textAlign: 'center', padding: '30px 10px', color: '#48cf73' }}>
+                <div role="status" style={{ textAlign: 'center', padding: '30px 10px', color: '#D9E9DA' }}>
                   <CheckCircle size={48} style={{ margin: '0 auto 12px' }} />
                   <h4 style={{ color: '#fff', fontSize: '1.25rem', marginBottom: '8px' }}>Request Submitted Successfully!</h4>
-                  <p style={{ color: '#a6c5ba', fontSize: '0.95rem' }}>Our logistics and compliance officer will connect with you within 2 business hours.</p>
+                  <p style={{ color: '#D9E9DA', fontSize: '0.95rem' }}>Our logistics and compliance officer will connect with you within 2 business hours.</p>
                 </div>
               ) : (
                 <form onSubmit={handleFormSubmit}>
@@ -483,7 +483,7 @@ export default function HomeClient() {
               <h2 className="section-heading-dark ax-h2">Tailored solutions <br />for a <span className="text-highlight">sustainable future</span></h2>
             </Reveal>
             <Reveal delay={0.15} className="ax-head-right">
-              <p style={{ color: '#526b64', marginBottom: '12px', maxWidth: '420px' }}>From compliance to collection, we help businesses across industries manage waste responsibly.</p>
+              <p style={{ color: 'var(--text-muted, #2d4c42)', marginBottom: '12px', maxWidth: '420px' }}>From compliance to collection, we help businesses across industries manage waste responsibly.</p>
               <Link href="/waste-collection" className="blog-read-more-link ax-link">Explore All Services <ArrowRight size={16} /></Link>
             </Reveal>
           </div>
@@ -514,7 +514,7 @@ export default function HomeClient() {
               <h2 className="section-heading-light ax-h2" style={{ marginBottom: '20px' }}>
                 Trusted by <br />businesses that care
               </h2>
-              <p style={{ color: '#b9cfc7', fontSize: '1.05rem', lineHeight: '1.7', maxWidth: '440px' }}>
+              <p style={{ color: '#D9E9DA', fontSize: '1.05rem', lineHeight: '1.7', maxWidth: '440px' }}>
                 We're proud to partner with organisations that share our vision for a cleaner, greener and more sustainable tomorrow.
               </p>
             </Reveal>
@@ -580,7 +580,7 @@ export default function HomeClient() {
               <h2 className="blog-title-compound ax-h2">OUR <span className="text-highlight">BLOG</span></h2>
             </Reveal>
             <Reveal delay={0.15} className="ax-head-right">
-              <p style={{ color: '#526b64', marginBottom: '12px', maxWidth: '440px' }}>Glide Through our Blog section to know more about sustainable waste recycling mechanisms around us.</p>
+              <p style={{ color: 'var(--text-muted, #2d4c42)', marginBottom: '12px', maxWidth: '440px' }}>Glide Through our Blog section to know more about sustainable waste recycling mechanisms around us.</p>
               <Link href="/blog" className="btn-primary ax-btn-solid" style={{ padding: '8px 20px', fontSize: '0.88rem' }}>READ MORE <ArrowRight size={14} /></Link>
             </Reveal>
           </div>

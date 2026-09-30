@@ -1,16 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 64" fill="none">
   <defs>
     <linearGradient id="arkca-g1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#2BA84A" />
-      <stop offset="100%" stop-color="#148C4A" />
+      <stop offset="0%" stop-color="#173B30" />
+      <stop offset="100%" stop-color="#123228" />
     </linearGradient>
     <linearGradient id="arkca-g2" x1="0%" y1="100%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#148C4A" />
-      <stop offset="100%" stop-color="#0E5E32" />
+      <stop offset="0%" stop-color="#123228" />
+      <stop offset="100%" stop-color="#173B30" />
     </linearGradient>
     <linearGradient id="arkca-g3" x1="50%" y1="0%" x2="50%" y2="100%">
-      <stop offset="0%" stop-color="#3CD070" />
-      <stop offset="100%" stop-color="#148C4A" />
+      <stop offset="0%" stop-color="#D9E9DA" />
+      <stop offset="100%" stop-color="#173B30" />
     </linearGradient>
   </defs>
 
@@ -32,11 +32,11 @@
   <!-- Typography -->
   <g transform="translate(74, 10)">
     <!-- ARKCA -->
-    <text x="0" y="27" font-family="'Outfit', 'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="28" letter-spacing="1.5" fill="#148C4A">
+    <text x="0" y="27" font-family="'Outfit', 'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="28" letter-spacing="1.5" fill="#123228">
       ARKCA
     </text>
     <!-- RECYCLERS -->
-    <text x="1" y="44" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="12" letter-spacing="4.5" fill="#2BA84A">
+    <text x="1" y="44" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="12" letter-spacing="4.5" fill="#173B30">
       RECYCLERS
     </text>
   </g>

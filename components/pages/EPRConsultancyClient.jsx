@@ -155,8 +155,8 @@ export default function EPRConsultancyClient() {
               <ul className="ec-checks">
                 {checks.map((c) => (
                   <li key={c}>
-                    <CheckCircle color="#148C4A" size={20} />
-                    <span style={{ fontWeight: 600, color: '#071C19' }}>{c}</span>
+                    <CheckCircle color="#123228" size={20} />
+                    <span style={{ fontWeight: 600, color: '#123228' }}>{c}</span>
                   </li>
                 ))}
               </ul>
@@ -166,13 +166,13 @@ export default function EPRConsultancyClient() {
               <div className="ip-card ip-card-dark ec-who" style={{ borderRadius: '24px' }}>
                 <span className="ec-who-ring" aria-hidden="true" />
                 <div className="ec-who-head">
-                  <ShieldCheck size={32} color="#3cd070" />
+                  <ShieldCheck size={32} color="#D9E9DA" />
                   <h3 className="ip-h3" style={{ color: '#fff' }}>Who Needs EPR in India?</h3>
                 </div>
-                <ul className="ec-who-list" style={{ color: '#c7ded5', fontSize: '0.95rem' }}>
+                <ul className="ec-who-list" style={{ color: '#D9E9DA', fontSize: '0.95rem' }}>
                   {who.map(([b, t]) => (
                     <li key={b}>
-                      <span style={{ color: '#3cd070', fontWeight: 800 }}>•</span>
+                      <span style={{ color: '#D9E9DA', fontWeight: 800 }}>•</span>
                       <span><strong>{b}</strong>{t}</span>
                     </li>
                   ))}
@@ -200,10 +200,10 @@ export default function EPRConsultancyClient() {
                   <span className="ec-cat-ring" aria-hidden="true" />
                   <div className="ec-cat-main">
                     <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--ip-accent)', textTransform: 'uppercase', letterSpacing: '1px' }}>{cat.rule}</span>
-                    <h3 className="ip-h3" style={{ color: '#071C19', margin: '10px 0 12px' }}>{cat.title}</h3>
+                    <h3 className="ip-h3" style={{ color: '#123228', margin: '10px 0 12px' }}>{cat.title}</h3>
                     <p className="ip-body ip-body-dark" style={{ fontSize: '0.92rem', lineHeight: '1.65' }}>{cat.desc}</p>
                   </div>
-                  <div className="ec-cat-obl" style={{ background: '#F5F9F5', borderLeft: '3px solid var(--ip-accent)', fontSize: '0.85rem', color: '#2d433e', fontWeight: 600 }}>{cat.obligation}</div>
+                  <div className="ec-cat-obl" style={{ background: '#D9E9DA', borderLeft: '3px solid var(--ip-accent)', fontSize: '0.85rem', color: '#123228', fontWeight: 600 }}>{cat.obligation}</div>
                 </article>
               </Reveal>
             ))}
@@ -244,20 +244,20 @@ export default function EPRConsultancyClient() {
             <div className="ip-calc-result-box ec-result" aria-live="polite">
               {calcResult ? (
                 <div>
-                  <span style={{ fontSize: '0.85rem', color: '#8daaa0', textTransform: 'uppercase', letterSpacing: '1px' }}>Calculated Annual Target</span>
-                  <div style={{ fontSize: '3.6rem', fontWeight: 800, color: '#3cd070', margin: '12px 0' }}>
+                  <span style={{ fontSize: '0.85rem', color: '#D9E9DA', textTransform: 'uppercase', letterSpacing: '1px' }}>Calculated Annual Target</span>
+                  <div style={{ fontSize: '3.6rem', fontWeight: 800, color: '#D9E9DA', margin: '12px 0' }}>
                     {calcResult.credits} <span style={{ fontSize: '1.4rem', color: '#fff' }}>Tonnes</span>
                   </div>
-                  <p style={{ color: '#b9cfc7', fontSize: '0.95rem', marginBottom: '24px' }}>
+                  <p style={{ color: '#D9E9DA', fontSize: '0.95rem', marginBottom: '24px' }}>
                     Based on an applicable statutory obligation of <strong>{calcResult.targetPercent}%</strong> for your selected category.
                   </p>
                   <a href="#epr-inquiry-form" className="btn-primary ax-btn-solid" style={{ width: '100%' }}>Procure Traceable EPR Credits</a>
                 </div>
               ) : (
                 <div style={{ padding: '20px' }}>
-                  <Layers size={52} color="#148C4A" style={{ margin: '0 auto 16px' }} />
+                  <Layers size={52} color="#D9E9DA" style={{ margin: '0 auto 16px' }} />
                   <h4 style={{ color: '#fff', fontSize: '1.25rem', marginBottom: '8px', fontWeight: 700 }}>Instant Target Projection</h4>
-                  <p style={{ color: '#8daaa0', fontSize: '0.9rem', lineHeight: '1.6' }}>Input your annual production or import volume on the left to view required recycling credits and compliance roadmaps.</p>
+                  <p style={{ color: '#D9E9DA', fontSize: '0.9rem', lineHeight: '1.6' }}>Input your annual production or import volume on the left to view required recycling credits and compliance roadmaps.</p>
                 </div>
               )}
             </div>
@@ -276,8 +276,8 @@ export default function EPRConsultancyClient() {
               <ul className="ec-points">
                 {inquiryPoints.map((p) => (
                   <li key={p}>
-                    <CheckCircle color="#148C4A" size={20} />
-                    <span style={{ color: '#2d433e', fontWeight: 600 }}>{p}</span>
+                    <CheckCircle color="#123228" size={20} />
+                    <span style={{ color: '#2d4c42', fontWeight: 600 }}>{p}</span>
                   </li>
                 ))}
               </ul>
@@ -290,10 +290,10 @@ export default function EPRConsultancyClient() {
                   <p className="disposal-form-sub">Fill in your corporate details for an assessment report.</p>
                 </div>
                 {eprFormSubmitted ? (
-                  <div role="status" style={{ textAlign: 'center', padding: '30px 10px', color: '#48cf73' }}>
+                  <div role="status" style={{ textAlign: 'center', padding: '30px 10px', color: '#D9E9DA' }}>
                     <CheckCircle size={48} style={{ margin: '0 auto 12px' }} />
                     <h4 style={{ color: '#fff', fontSize: '1.25rem', marginBottom: '8px' }}>Audit Request Received!</h4>
-                    <p style={{ color: '#a6c5ba', fontSize: '0.95rem' }}>A Senior EPR Consultant will reach out with a detailed compliance roadmap within 4 business hours.</p>
+                    <p style={{ color: '#D9E9DA', fontSize: '0.95rem' }}>A Senior EPR Consultant will reach out with a detailed compliance roadmap within 4 business hours.</p>
                   </div>
                 ) : (
                   <form onSubmit={handleFormSubmit}>

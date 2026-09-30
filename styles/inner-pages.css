@@ -4,17 +4,17 @@
    ========================================================================== */
 
 :root {
-  --ip-accent: #148C4A;
-  --ip-accent-light: #2BA84A;
-  --ip-accent-glow: #48cf73;
-  --ip-dark: #071C19;
-  --ip-dark-card: #0B2521;
-  --ip-dark-surface: #0e302b;
-  --ip-light: #F5F9F5;
-  --ip-muted: #526b64;
-  --ip-muted-light: #9cb5ab;
-  --ip-border-light: rgba(11, 42, 33, 0.1);
-  --ip-border-dark: rgba(72, 207, 115, 0.22);
+  --ip-accent: #123228;
+  --ip-accent-light: #173B30;
+  --ip-accent-glow: #D9E9DA;
+  --ip-dark: #123228;
+  --ip-dark-card: #173B30;
+  --ip-dark-surface: #123228;
+  --ip-light: #D9E9DA;
+  --ip-muted: #2d4c42;
+  --ip-muted-light: #D9E9DA;
+  --ip-border-light: rgba(18, 50, 40, 0.12);
+  --ip-border-dark: rgba(217, 233, 218, 0.22);
   --ip-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --ip-radius-sm: 10px;
   --ip-radius-md: 16px;
@@ -40,8 +40,13 @@
   letter-spacing: -0.02em;
 }
 
-.ip-h2-dark { color: #071C19; }
-.ip-h2-light { color: #ffffff; }
+.ip-h2-dark {
+  color: #123228;
+}
+
+.ip-h2-light {
+  color: #ffffff;
+}
 
 .ip-h3 {
   font-family: var(--font-heading);
@@ -54,8 +59,14 @@
   font-size: 1rem;
   line-height: 1.75;
 }
-.ip-body-light { color: #b9cfc7; }
-.ip-body-dark { color: #4a635b; }
+
+.ip-body-light {
+  color: #D9E9DA;
+}
+
+.ip-body-dark {
+  color: #2d4c42;
+}
 
 /* ---------- INNER PAGE HERO SECTIONS ---------- */
 .inner-hero {
@@ -85,8 +96,8 @@
 .inner-hero-shade {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(7, 28, 25, 0.52) 0%, rgba(7, 28, 25, 0.60) 50%, rgba(7, 28, 25, 0.68) 100%),
-              linear-gradient(90deg, rgba(7, 28, 25, 0.58) 0%, rgba(7, 28, 25, 0.25) 100%);
+  background: linear-gradient(180deg, rgba(18, 50, 40, 0.52) 0%, rgba(18, 50, 40, 0.60) 50%, rgba(18, 50, 40, 0.68) 100%),
+    linear-gradient(90deg, rgba(18, 50, 40, 0.58) 0%, rgba(18, 50, 40, 0.25) 100%);
   pointer-events: none;
 }
 
@@ -101,8 +112,8 @@
   align-items: center;
   gap: 8px;
   font-size: 0.88rem;
-  color: #c7ded5;
-  background: rgba(7, 28, 25, 0.55);
+  color: #D9E9DA;
+  background: rgba(18, 50, 40, 0.55);
   padding: 6px 14px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.18);
@@ -126,7 +137,7 @@
 
 .inner-hero-desc {
   font-size: clamp(1.05rem, 1.3vw, 1.2rem);
-  color: #e3f2ec;
+  color: #D9E9DA;
   line-height: 1.7;
   margin-top: 16px;
   max-width: 68ch;
@@ -142,13 +153,13 @@
   padding: clamp(28px, 3.5vw, 40px);
   overflow: hidden;
   transition: transform 0.45s var(--ip-ease), border-color 0.4s, box-shadow 0.45s;
-  box-shadow: 0 8px 24px -10px rgba(11, 42, 33, 0.05);
+  box-shadow: 0 8px 24px -10px rgba(18, 50, 40, 0.05);
 }
 
 .ip-card:hover {
   transform: translateY(-6px);
   border-color: var(--ip-accent);
-  box-shadow: 0 24px 48px -18px rgba(11, 42, 33, 0.15);
+  box-shadow: 0 24px 48px -18px rgba(18, 50, 40, 0.15);
 }
 
 .ip-card-dark {
@@ -171,7 +182,7 @@
   width: 130px;
   height: 130px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(72, 207, 115, 0.12) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(217, 233, 218, 0.12) 0%, transparent 70%);
   pointer-events: none;
   transition: transform 0.6s var(--ip-ease);
 }
@@ -184,7 +195,7 @@
   width: 54px;
   height: 54px;
   border-radius: 14px;
-  background: rgba(20, 140, 74, 0.1);
+  background: rgba(18, 50, 40, 0.1);
   color: var(--ip-accent);
   display: grid;
   place-items: center;
@@ -199,7 +210,7 @@
 }
 
 .ip-card-dark .ip-icon-circle {
-  background: rgba(72, 207, 115, 0.15);
+  background: rgba(217, 233, 218, 0.15);
   color: var(--ip-accent-glow);
 }
 
@@ -231,18 +242,18 @@
 .ip-stream-card:hover {
   transform: translateY(-4px);
   border-color: var(--ip-accent);
-  box-shadow: 0 12px 30px -10px rgba(20, 140, 74, 0.15);
+  box-shadow: 0 12px 30px -10px rgba(18, 50, 40, 0.15);
 }
 
 .ip-stream-card.active {
-  background: #EAF4EE;
+  background: #D9E9DA;
   border: 2px solid var(--ip-accent);
-  box-shadow: 0 16px 36px -12px rgba(20, 140, 74, 0.22);
+  box-shadow: 0 16px 36px -12px rgba(18, 50, 40, 0.22);
 }
 
 .ip-stream-detail-box {
-  background: #F5F9F5;
-  border: 1px solid rgba(20, 140, 74, 0.25);
+  background: #D9E9DA;
+  border: 1px solid rgba(18, 50, 40, 0.25);
   border-radius: var(--ip-radius-lg);
   padding: clamp(32px, 4vw, 48px);
   display: grid;
@@ -290,7 +301,7 @@
 .ip-process-card:hover {
   transform: translateY(-6px);
   border-color: var(--ip-accent);
-  box-shadow: 0 16px 36px -12px rgba(11, 42, 33, 0.12);
+  box-shadow: 0 16px 36px -12px rgba(18, 50, 40, 0.12);
 }
 
 .ip-process-num {
@@ -304,7 +315,7 @@
 
 /* ---------- EPR CALCULATOR BOX ---------- */
 .ip-calc-container {
-  background: linear-gradient(145deg, #071C19 0%, #0c2b25 100%);
+  background: linear-gradient(145deg, #123228 0%, #173B30 100%);
   border: 1px solid var(--ip-border-dark);
   border-radius: var(--ip-radius-lg);
   padding: clamp(32px, 4.5vw, 52px);
@@ -318,7 +329,7 @@
 
 .ip-calc-result-box {
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(72, 207, 115, 0.28);
+  border: 1px solid rgba(217, 233, 218, 0.28);
   border-radius: var(--ip-radius-md);
   padding: 36px 30px;
   text-align: center;
@@ -337,7 +348,7 @@
   display: flex;
   gap: 20px;
   align-items: flex-start;
-  background: #F5F9F5;
+  background: #D9E9DA;
   padding: 24px;
   border-radius: var(--ip-radius-md);
   border: 1px solid var(--ip-border-light);
@@ -347,22 +358,50 @@
 .ip-contact-card-item:hover {
   transform: translateY(-3px);
   border-color: var(--ip-accent);
-  box-shadow: 0 12px 28px -10px rgba(20, 140, 74, 0.12);
+  box-shadow: 0 12px 28px -10px rgba(18, 50, 40, 0.12);
 }
 
 /* Responsive Breakpoints */
 @media (max-width: 1024px) {
-  .ip-stream-grid { grid-template-columns: repeat(2, 1fr); }
-  .ip-process-grid { grid-template-columns: repeat(2, 1fr); }
-  .ip-stream-detail-box { grid-template-columns: 1fr; }
-  .ip-stream-img-wrap { height: 280px; }
-  .ip-calc-container { grid-template-columns: 1fr; }
-  .ip-contact-grid { grid-template-columns: 1fr; }
+  .ip-stream-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ip-process-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ip-stream-detail-box {
+    grid-template-columns: 1fr;
+  }
+
+  .ip-stream-img-wrap {
+    height: 280px;
+  }
+
+  .ip-calc-container {
+    grid-template-columns: 1fr;
+  }
+
+  .ip-contact-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 767px) {
-  .ip-stream-grid { grid-template-columns: 1fr; }
-  .ip-process-grid { grid-template-columns: 1fr; }
-  .ip-card { padding: 24px 20px; }
-  .ip-contact-card-item { padding: 18px; }
+  .ip-stream-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ip-process-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ip-card {
+    padding: 24px 20px;
+  }
+
+  .ip-contact-card-item {
+    padding: 18px;
+  }
 }

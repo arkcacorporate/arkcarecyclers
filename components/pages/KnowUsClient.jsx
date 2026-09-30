@@ -101,8 +101,8 @@ export default function KnowUsClient() {
               <ul className="ku-checks">
                 {checks.map((c) => (
                   <li key={c}>
-                    <CheckCircle2 color="#148C4A" size={22} />
-                    <span style={{ fontWeight: 600, color: '#071C19' }}>{c}</span>
+                    <CheckCircle2 color="#123228" size={22} />
+                    <span style={{ fontWeight: 600, color: '#123228' }}>{c}</span>
                   </li>
                 ))}
               </ul>
@@ -114,10 +114,10 @@ export default function KnowUsClient() {
                 <img src="/images/recycling/waste-pickers.webp" alt="ARKCA Recyclers community impact" loading="lazy" decoding="async" />
               </div>
               <div className="ku-stat">
-                <TrendingUp size={36} color="#3cd070" />
+                <TrendingUp size={36} color="#D9E9DA" />
                 <div>
                   <div style={{ fontSize: '1.6rem', fontWeight: 800 }}>10+ Years</div>
-                  <div style={{ fontSize: '0.85rem', color: '#9cb5ab' }}>Environmental Dedication</div>
+                  <div style={{ fontSize: '0.85rem', color: '#D9E9DA' }}>Environmental Dedication</div>
                 </div>
               </div>
             </Reveal>
@@ -143,7 +143,7 @@ export default function KnowUsClient() {
                   <span className="ku-pillar-num" aria-hidden="true">0{i + 1}</span>
                   <span className="ku-pillar-ring" aria-hidden="true" />
                   <div className="ku-pillar-icon"><Icon size={26} /></div>
-                  <h3 className="ip-h3" style={{ color: '#071C19' }}>{t}</h3>
+                  <h3 className="ip-h3" style={{ color: '#123228' }}>{t}</h3>
                   <p className="ip-body ip-body-dark">{d}</p>
                 </article>
               </Reveal>
@@ -168,7 +168,7 @@ export default function KnowUsClient() {
                     <div className="ku-feature-icon"><Icon size={24} /></div>
                     <div>
                       <h4 style={{ color: '#fff', fontSize: '1.1rem', fontWeight: 700, marginBottom: '4px' }}>{t}</h4>
-                      <p style={{ color: '#9cb5ab', fontSize: '0.9rem' }}>{d}</p>
+                      <p style={{ color: '#D9E9DA', fontSize: '0.9rem' }}>{d}</p>
                     </div>
                   </div>
                 ))}

@@ -147,7 +147,7 @@ export default function ContactUsClient() {
                     <MapPin size={22} />
                   </div>
                   <div>
-                    <h4 className="ip-h3" style={{ fontSize: '1.1rem', color: '#071C19', marginBottom: '4px' }}>
+                    <h4 className="ip-h3" style={{ fontSize: '1.1rem', color: '#123228', marginBottom: '4px' }}>
                       Registered Headquarters
                     </h4>
                     <p className="ip-body ip-body-dark" style={{ fontSize: '0.92rem', lineHeight: '1.6' }}>
@@ -162,7 +162,7 @@ export default function ContactUsClient() {
                     <Phone size={22} />
                   </div>
                   <div>
-                    <h4 className="ip-h3" style={{ fontSize: '1.1rem', color: '#071C19', marginBottom: '4px' }}>
+                    <h4 className="ip-h3" style={{ fontSize: '1.1rem', color: '#123228', marginBottom: '4px' }}>
                       Helpline & Inquiries
                     </h4>
                     <p className="ip-body ip-body-dark" style={{ fontSize: '0.92rem', lineHeight: '1.6' }}>
@@ -178,7 +178,7 @@ export default function ContactUsClient() {
                     <Mail size={22} />
                   </div>
                   <div>
-                    <h4 className="ip-h3" style={{ fontSize: '1.1rem', color: '#071C19', marginBottom: '4px' }}>
+                    <h4 className="ip-h3" style={{ fontSize: '1.1rem', color: '#123228', marginBottom: '4px' }}>
                       Official Email
                     </h4>
                     <p className="ip-body ip-body-dark" style={{ fontSize: '0.92rem', lineHeight: '1.6' }}>
@@ -192,7 +192,7 @@ export default function ContactUsClient() {
 
             {/* Right: Message Form */}
             <Reveal delay={0.12} x={35} y={0}>
-              <div className="disposal-form-card" style={{ background: '#071C19', borderRadius: '24px', border: '1px solid rgba(72,207,115,0.25)' }}>
+              <div className="disposal-form-card" style={{ background: '#123228', borderRadius: '24px', border: '1px solid rgba(217, 233, 218, 0.25)' }}>
                 <div className="disposal-form-header">
                   <span className="badge-tag light-theme">DIRECT MESSAGE</span>
                   <h3 className="disposal-form-title">Send Us a Message</h3>
@@ -200,12 +200,12 @@ export default function ContactUsClient() {
                 </div>
 
                 {formSubmitted ? (
-                  <div style={{ textAlign: 'center', padding: '40px 10px', color: '#48cf73' }}>
+                  <div style={{ textAlign: 'center', padding: '40px 10px', color: '#D9E9DA' }}>
                     <CheckCircle size={52} style={{ margin: '0 auto 16px' }} />
                     <h4 style={{ color: '#fff', fontSize: '1.3rem', marginBottom: '8px' }}>
                       Message Sent Successfully!
                     </h4>
-                    <p style={{ color: '#a6c5ba', fontSize: '0.95rem' }}>
+                    <p style={{ color: '#D9E9DA', fontSize: '0.95rem' }}>
                       Thank you for reaching out. An ARKCA representative has received your request and will contact you shortly.
                     </p>
                   </div>
@@ -374,12 +374,12 @@ export default function ContactUsClient() {
               borderRadius: '24px',
               border: '1px solid var(--ip-border-light)',
               overflow: 'hidden',
-              boxShadow: '0 12px 36px -10px rgba(7, 28, 25, 0.08)'
+              boxShadow: '0 12px 36px -10px rgba(18, 50, 40, 0.08)'
             }}>
               <div style={{ padding: '36px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e5ece8', flexWrap: 'wrap', gap: '20px' }}>
                 <div>
                   <span className="badge-tag">VISIT OUR STRATEGIC HUB</span>
-                  <h3 className="ip-h3" style={{ fontSize: '1.6rem', color: '#071C19' }}>
+                  <h3 className="ip-h3" style={{ fontSize: '1.6rem', color: '#123228' }}>
                     Kolkata Ecospace Facility & Corporate Office
                   </h3>
                   <p className="ip-body ip-body-dark" style={{ fontSize: '0.95rem' }}>
@@ -396,7 +396,7 @@ export default function ContactUsClient() {
                 </a>
               </div>
 
-              <div style={{ position: 'relative', width: '100%', height: '360px', background: '#0b2521' }}>
+              <div style={{ position: 'relative', width: '100%', height: '360px', background: '#123228' }}>
                 <iframe
                   title="ARKCA Recyclers Location - Block 4A, Ecospace Business Park, Kolkata"
                   src="https://maps.google.com/maps?q=Block+4A,+Ecospace+Business+Park,+Action+Area+II,+Newtown,+Kolkata,+West+Bengal+700156&t=&z=16&ie=UTF8&iwloc=&output=embed"

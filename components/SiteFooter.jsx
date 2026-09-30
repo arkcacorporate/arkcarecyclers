@@ -150,7 +150,7 @@ export default function SiteFooter() {
             <h4 className="footer-heading">STAY UPDATED</h4>
             <p>Stay up to date with our latest news and events</p>
             {newsletterSubscribed ? (
-              <div style={{ color: '#48cf73', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem' }}>
+              <div style={{ color: '#D9E9DA', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem' }}>
                 <CheckCircle size={18} /> Thank you for subscribing!
               </div>
             ) : (

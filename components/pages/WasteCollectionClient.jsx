@@ -150,7 +150,7 @@ export default function WasteCollectionClient() {
                     <button type="button" role="tab" aria-selected={on} onClick={() => setSelectedStream(stream)} className={`wc-item ${on ? 'on' : ''}`}>
                       <span className="wc-item-icon"><Icon size={22} /></span>
                       <span className="wc-item-body">
-                        <span className="ip-h3 wc-item-title" style={{ fontSize: '1.15rem', color: '#071C19' }}>{stream.title}</span>
+                        <span className="ip-h3 wc-item-title" style={{ fontSize: '1.15rem', color: '#123228' }}>{stream.title}</span>
                         <span style={{ fontSize: '0.8rem', color: 'var(--ip-accent)', fontWeight: 700 }}>{stream.category}</span>
                         <span className="ip-body ip-body-dark wc-item-desc" style={{ fontSize: '0.92rem', lineHeight: '1.6' }}>{stream.desc.slice(0, 95)}...</span>
                       </span>
@@ -177,12 +177,12 @@ export default function WasteCollectionClient() {
                     <span className="badge-tag">{Sel.category}</span>
                     <h3 className="ip-h2 ip-h2-dark" style={{ fontSize: '2rem', marginBottom: '12px' }}>{Sel.title}</h3>
                     <p className="ip-body ip-body-dark" style={{ marginBottom: '20px' }}>{Sel.desc}</p>
-                    <h4 style={{ fontSize: '1rem', fontWeight: 700, color: '#071C19', marginBottom: '6px' }}>Key Operational Highlights:</h4>
+                    <h4 style={{ fontSize: '1rem', fontWeight: 700, color: '#123228', marginBottom: '6px' }}>Key Operational Highlights:</h4>
                     <ul className="wc-points">
                       {Sel.details.map((point) => (
                         <li key={point}>
-                          <CheckCircle size={18} color="#148C4A" />
-                          <span style={{ fontSize: '0.95rem', color: '#2d433e', fontWeight: 500 }}>{point}</span>
+                          <CheckCircle size={18} color="#123228" />
+                          <span style={{ fontSize: '0.95rem', color: '#2d4c42', fontWeight: 500 }}>{point}</span>
                         </li>
                       ))}
                     </ul>
@@ -211,7 +211,7 @@ export default function WasteCollectionClient() {
                 <li>
                   <span className="wc-step-num ip-process-num">0{i + 1}</span>
                   <span className="wc-step-dot" aria-hidden="true" />
-                  <h3 className="ip-h3" style={{ color: '#071C19', marginBottom: '8px' }}>{s.t}</h3>
+                  <h3 className="ip-h3" style={{ color: '#123228', marginBottom: '8px' }}>{s.t}</h3>
                   <p className="ip-body ip-body-dark" style={{ fontSize: '0.92rem' }}>{s.d}</p>
                 </li>
               </Reveal>
@@ -231,10 +231,10 @@ export default function WasteCollectionClient() {
               <div className="wc-contacts">
                 {contacts.map(({ Icon, t, d }) => (
                   <div className="wc-contact" key={t}>
-                    <div className="ip-icon-circle wc-contact-icon" style={{ marginBottom: 0, background: 'rgba(43, 168, 74, 0.2)', color: '#3cd070' }}><Icon size={24} /></div>
+                    <div className="ip-icon-circle wc-contact-icon" style={{ marginBottom: 0, background: 'rgba(217, 233, 218, 0.18)', color: '#D9E9DA' }}><Icon size={24} /></div>
                     <div>
                       <h4 style={{ color: '#fff', fontSize: '1.05rem', fontWeight: 700 }}>{t}</h4>
-                      <p style={{ color: '#8daaa0', fontSize: '0.88rem' }}>{d}</p>
+                      <p style={{ color: '#D9E9DA', fontSize: '0.88rem' }}>{d}</p>
                     </div>
                   </div>
                 ))}
@@ -248,10 +248,10 @@ export default function WasteCollectionClient() {
                   <p className="disposal-form-sub">Provide your location & waste volume for instant vehicle dispatch.</p>
                 </div>
                 {pickupFormSubmitted ? (
-                  <div role="status" style={{ textAlign: 'center', padding: '30px 10px', color: '#48cf73' }}>
+                  <div role="status" style={{ textAlign: 'center', padding: '30px 10px', color: '#D9E9DA' }}>
                     <CheckCircle size={48} style={{ margin: '0 auto 12px' }} />
                     <h4 style={{ color: '#fff', fontSize: '1.25rem', marginBottom: '8px' }}>Pickup Request Confirmed!</h4>
-                    <p style={{ color: '#a6c5ba', fontSize: '0.95rem' }}>A logistics supervisor has been assigned to schedule vehicle allocation.</p>
+                    <p style={{ color: '#D9E9DA', fontSize: '0.95rem' }}>A logistics supervisor has been assigned to schedule vehicle allocation.</p>
                   </div>
                 ) : (
                   <form onSubmit={handlePickupSubmit}>
