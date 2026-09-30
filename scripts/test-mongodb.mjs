@@ -35,13 +35,11 @@ console.log('----------------------------------------------------');
 if (!uri || uri.includes('<I WILL ENTER THE REAL VALUE LOCALLY>')) {
   console.error('\n❌ MONGODB_URI is not set in .env.local.');
   console.error('Please open .env.local and paste your real MongoDB connection string.');
-  console.error('Example: MONGODB_URI=mongodb+srv://arkca_admin:YourPassword@arkca-cluster.xxxxx.mongodb.net/arkca_recyclers?retryWrites=true&w=majority\n');
+  console.error('Example: MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/dbname?retryWrites=true&w=majority\n');
   process.exit(1);
 }
 
-// Display safe masked URI for user reassurance
-const maskedUri = uri.replace(/\/\/(.*?):(.*?)@/, '//$1:******@');
-console.log(`Connecting to: ${maskedUri}`);
+console.log('Connecting to MongoDB Atlas...');
 console.log(`Target Database: ${dbName}`);
 
 const client = new MongoClient(uri, {
