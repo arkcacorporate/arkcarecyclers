@@ -5,15 +5,19 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:mongo": "node scripts/test-mongodb.mjs",
+    "test:api": "node scripts/test-api-and-forms.mjs",
+    "test:email": "node scripts/test-email.mjs"
   },
   "dependencies": {
-    "@emailjs/browser": "^4.4.1",
     "framer-motion": "^13.4.4",
     "lucide-react": "^0.441.0",
+    "mongodb": "^7.7.0",
     "next": "^16.3.6",
+    "nodemailer": "^10.0.13",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   }

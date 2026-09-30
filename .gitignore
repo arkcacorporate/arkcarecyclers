@@ -15,6 +15,7 @@ dist-ssr
 *.local
 .env
 .env.*
+!.env.example
 reference-screenshot.png
 
 # Editor directories and files
