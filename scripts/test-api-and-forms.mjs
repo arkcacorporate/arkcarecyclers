@@ -285,21 +285,21 @@ async function runVerification() {
 
   // Test 10: Verify Recipient Email Configuration
   console.log('\n[10/12] Verifying Recipient Email Addresses in Server Configuration...');
-  const receiverEmail = process.env.ENQUIRY_RECEIVER_EMAIL || '';
-  const recipients = receiverEmail.split(',').map((s) => s.trim().toLowerCase());
+  const receiverEmail = process.env.ENQUIRY_RECEIVER_EMAIL || process.env.ENQUIRY_RECEIVER_EMAILS || '';
+  const recipients = receiverEmail.split(',').map((s) => s.trim().toLowerCase().replace(/^["']|["']$/g, ''));
 
   console.log(`  Configured ENQUIRY_RECEIVER_EMAIL: "${receiverEmail}"`);
-  const hasCorporate = recipients.includes('corporate@arkcarecyclers.com');
+  const hasContact = recipients.includes('contact@arkcarecyclers.com');
+  const hasCorporateGmail = recipients.includes('corporatearkca@gmail.com');
   const hasCertificate = recipients.includes('certificate@arkcacorporate.com');
   const hasAnkita = recipients.includes('ankitaarkca@gmail.com');
-  const hasContact = recipients.includes('contact@arkcarecyclers.com');
 
-  if (hasCorporate && hasCertificate && hasAnkita && !hasContact) {
-    console.log('  ✅ Recipients verified:');
-    console.log('     - corporate@arkcarecyclers.com (PRESENT)');
+  if (hasContact && hasCorporateGmail && hasCertificate && hasAnkita) {
+    console.log('  ✅ All 4 recipients verified:');
+    console.log('     - contact@arkcarecyclers.com (PRESENT)');
+    console.log('     - corporatearkca@gmail.com (PRESENT)');
     console.log('     - certificate@arkcacorporate.com (PRESENT)');
     console.log('     - ankitaarkca@gmail.com (PRESENT)');
-    console.log('     - contact@arkcarecyclers.com (REMOVED / NOT PRESENT)');
   } else {
     console.error('  ❌ Recipient verification failed: unexpected recipient list:', recipients);
     process.exit(1);
