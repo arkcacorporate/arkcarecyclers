@@ -13,8 +13,8 @@
   --ip-light: #D9E9DA;
   --ip-muted: #2d4c42;
   --ip-muted-light: #D9E9DA;
-  --ip-border-light: rgba(18, 50, 40, 0.12);
-  --ip-border-dark: rgba(217, 233, 218, 0.22);
+  --ip-border-light: rgba(18, 50, 40, 0.16);
+  --ip-border-dark: rgba(217, 233, 218, 0.28);
   --ip-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --ip-radius-sm: 10px;
   --ip-radius-md: 16px;
@@ -153,13 +153,13 @@
   padding: clamp(28px, 3.5vw, 40px);
   overflow: hidden;
   transition: transform 0.45s var(--ip-ease), border-color 0.4s, box-shadow 0.45s;
-  box-shadow: 0 8px 24px -10px rgba(18, 50, 40, 0.05);
+  box-shadow: 0 8px 24px -10px rgba(18, 50, 40, 0.08);
 }
 
 .ip-card:hover {
   transform: translateY(-6px);
   border-color: var(--ip-accent);
-  box-shadow: 0 24px 48px -18px rgba(18, 50, 40, 0.15);
+  box-shadow: 0 24px 48px -18px rgba(18, 50, 40, 0.18);
 }
 
 .ip-card-dark {
@@ -182,9 +182,15 @@
   width: 130px;
   height: 130px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(217, 233, 218, 0.12) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(18, 50, 40, 0.1) 0%, transparent 70%);
+  border: 1px solid rgba(18, 50, 40, 0.08);
   pointer-events: none;
   transition: transform 0.6s var(--ip-ease);
+}
+
+.ip-card-dark .ip-card-motif {
+  background: radial-gradient(circle, rgba(217, 233, 218, 0.18) 0%, transparent 70%);
+  border: 1px solid rgba(217, 233, 218, 0.15);
 }
 
 .ip-card:hover .ip-card-motif {
@@ -195,7 +201,8 @@
   width: 54px;
   height: 54px;
   border-radius: 14px;
-  background: rgba(18, 50, 40, 0.1);
+  background: rgba(18, 50, 40, 0.08);
+  border: 1px solid rgba(18, 50, 40, 0.14);
   color: var(--ip-accent);
   display: grid;
   place-items: center;
@@ -206,16 +213,19 @@
 .ip-card:hover .ip-icon-circle {
   transform: scale(1.08) translateY(-2px);
   background: var(--ip-accent);
+  border-color: var(--ip-accent);
   color: #ffffff;
 }
 
 .ip-card-dark .ip-icon-circle {
-  background: rgba(217, 233, 218, 0.15);
+  background: rgba(217, 233, 218, 0.16);
+  border: 1px solid rgba(217, 233, 218, 0.28);
   color: var(--ip-accent-glow);
 }
 
 .ip-card-dark:hover .ip-icon-circle {
   background: var(--ip-accent-glow);
+  border-color: var(--ip-accent-glow);
   color: var(--ip-dark);
 }
 

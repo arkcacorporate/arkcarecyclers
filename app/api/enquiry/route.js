@@ -179,6 +179,8 @@ export async function POST(request) {
     }
 
     // 6. Send Professional HTML Email via SMTP
+    let emailSent = false;
+    let emailMessageId = null;
     try {
       const emailResult = await sendEnquiryEmail({
         user_name,
@@ -193,34 +195,24 @@ export async function POST(request) {
         enquiryId: backupRecord.id,
       });
 
-      if (!emailResult.success) {
-        console.error('[API /api/enquiry] SMTP Delivery Failed:', emailResult.error);
-        // Note: The JSON backup record in data/enquiries.json is preserved
-        return NextResponse.json(
-          {
-            success: false,
-            message: 'Unable to submit enquiry at this moment. Please try again.',
-          },
-          { status: 500 }
-        );
+      if (emailResult.success) {
+        emailSent = true;
+        emailMessageId = emailResult.messageId;
+      } else {
+        console.warn('[API /api/enquiry] SMTP Delivery Warning (enquiry preserved in JSON backup):', emailResult.error);
       }
     } catch (smtpErr) {
-      console.error('[API /api/enquiry] SMTP Send Exception:', smtpErr);
-      // Note: The JSON backup record in data/enquiries.json is preserved
-      return NextResponse.json(
-        {
-          success: false,
-          message: 'Unable to submit enquiry at this moment. Please try again.',
-        },
-        { status: 500 }
-      );
+      console.warn('[API /api/enquiry] SMTP Send Exception (enquiry preserved in JSON backup):', smtpErr);
     }
 
-    // 7. Return Success Response Only After Confirmed SMTP Dispatch
+    // 7. Return Success Response
+    // The enquiry has been safely recorded in data/enquiries.json with tracking ID
     return NextResponse.json(
       {
         success: true,
         message: 'Enquiry submitted successfully.',
+        enquiryId: backupRecord.id,
+        emailSent,
       },
       { status: 200 }
     );
