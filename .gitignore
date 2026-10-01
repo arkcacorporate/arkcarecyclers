@@ -31,3 +31,4 @@ data/
 *.sw?
 AGENTS.md
 CLAUDE.md
+.agents/

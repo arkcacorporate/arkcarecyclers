@@ -177,6 +177,19 @@
 .ax-svc-desc { position:relative; margin:0; max-width:46ch; line-height:1.6; color:#2d4c42; }
 .ax-svc-arrow { position:absolute; right:32px; bottom:32px; color:var(--ax-dark); background:rgba(18,50,40,.06); border:1px solid rgba(18,50,40,.14); width:36px; height:36px; border-radius:50%; display:grid; place-items:center; transition:transform .45s var(--ax-ease), background .3s, color .3s; }
 .ax-svc article:hover .ax-svc-arrow { transform:translateX(6px); background:var(--ax-dark); color:#ffffff; }
+
+/* Desktop-only: Card 03 (Corporate social responsibility) heading compactness & arrow spacing */
+@media (min-width: 901px) {
+  .ax-svc-2 .ax-svc-title {
+    line-height: 1.15;
+    margin: 40px 0 12px;
+  }
+  .ax-svc-2 .ax-svc-desc {
+    max-width: 32ch;
+    padding-right: 48px;
+  }
+}
+
 @media (max-width:900px) { .ax-services { grid-template-columns:1fr; } .ax-svc, .ax-svc-0,.ax-svc-1,.ax-svc-2,.ax-svc-3,.ax-svc-4,.ax-svc-5 { grid-column:auto; } .ax-svc article { min-height:260px; padding:28px; } .ax-svc-desc { padding-right:40px; } }
 
 /* ---------- TESTIMONIALS ---------- */
