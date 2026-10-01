@@ -17,6 +17,7 @@ dist-ssr
 .env.*
 !.env.example
 reference-screenshot.png
+data/
 
 # Editor directories and files
 .vscode/*
@@ -28,3 +29,5 @@ reference-screenshot.png
 *.njsproj
 *.sln
 *.sw?
+AGENTS.md
+CLAUDE.md

@@ -1,63 +1,174 @@
 import { NextResponse } from 'next/server';
-import { createEnquiry, validateEnquiry, buildEnquiryDocument } from '@/lib/models/enquiry';
-import { sendEnquiryNotification } from '@/lib/serverEmail';
+import { sendEnquiryEmail } from '@/lib/serverEmail';
 
 /**
- * ARKCA Recyclers - Server-Side Enquiry API Route
- * 
- * Handles enquiry submissions from all 5 website forms:
- * 1. Contact Us
- * 2. Responsible Disposal Request (Home)
- * 3. Pickup Booking (Waste Collection)
- * 4. EPR Advisory Consultation
- * 5. Newsletter Subscription
+ * ARKCA Corporate - Server-Side Enquiry API Route (Email-Only System)
  * 
  * Flow:
- * Client Form -> POST /api/enquiry -> Anti-Spam Check -> MongoDB Atlas -> Email Notification -> JSON Response
+ * Client Form -> POST /api/enquiry -> Validate JSON -> Validate Fields -> Send HTML Email via SMTP -> HTTP Response
+ * 
+ * Strictly zero database dependencies.
  */
 
 export async function POST(request) {
+  // 1. Safely parse JSON with robust error handling for malformed payloads
+  let body;
   try {
-    const body = await request.json();
-    const { formType = 'contact', formName = '', pageName = '', data = {}, honeypot = '' } = body;
-
-    // 1. Anti-spam: Honeypot check (bots fill hidden honeypot fields)
-    if (honeypot && String(honeypot).trim() !== '') {
-      console.warn('[API /api/enquiry] Spam detected and blocked via honeypot.');
-      return NextResponse.json({
-        success: true,
-        message: 'Enquiry submitted successfully',
-      });
-    }
-
-    // 2. Normalize and validate payload
-    const rawEnquiry = {
-      ...data,
-      formType,
-      formName,
-      pageName,
-    };
-
-    const doc = buildEnquiryDocument(rawEnquiry);
-    const validation = validateEnquiry(doc);
-
-    if (!validation.valid) {
+    const rawText = await request.text();
+    if (!rawText || !rawText.trim()) {
       return NextResponse.json(
         {
           success: false,
-          message: validation.errors[0] || 'Invalid form submission.',
-          errors: validation.errors,
+          message: 'Request body cannot be empty.',
+        },
+        { status: 400 }
+      );
+    }
+    body = JSON.parse(rawText);
+  } catch (jsonErr) {
+    console.error('[API /api/enquiry] JSON SyntaxError:', jsonErr.message);
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Malformed JSON payload. Please provide valid JSON.',
+      },
+      { status: 400 }
+    );
+  }
+
+  try {
+    // 2. Anti-spam Honeypot Check
+    const honeypot = body.honeypot || (body.data && body.data.honeypot) || '';
+    if (honeypot && String(honeypot).trim() !== '') {
+      console.warn('[API /api/enquiry] Bot submission intercepted via honeypot.');
+      return NextResponse.json(
+        {
+          success: true,
+          message: 'Enquiry submitted successfully.',
+        },
+        { status: 200 }
+      );
+    }
+
+    // 3. Extract & Normalize Form Fields
+    // Seamlessly supports both flat payloads ({ user_name, phone_no, ... }) and nested payloads ({ data: { ... } })
+    const data = (body.data && typeof body.data === 'object') ? body.data : {};
+
+    const user_name = (
+      body.user_name ||
+      data.user_name ||
+      data.name ||
+      body.name ||
+      data.contactPerson ||
+      data.contactName ||
+      ''
+    ).toString().trim();
+
+    const phone_no = (
+      body.phone_no ||
+      data.phone_no ||
+      data.phone ||
+      body.phone ||
+      ''
+    ).toString().trim();
+
+    const user_email = (
+      body.user_email ||
+      data.user_email ||
+      data.email ||
+      body.email ||
+      ''
+    ).toString().trim().toLowerCase();
+
+    const company = (
+      body.company ||
+      data.company ||
+      data.companyName ||
+      data.businessName ||
+      body.companyName ||
+      ''
+    ).toString().trim();
+
+    const purpose = (
+      body.purpose ||
+      data.purpose ||
+      data.serviceInterest ||
+      data.service ||
+      data.wasteCategory ||
+      data.wasteType ||
+      data.wasteStream ||
+      data.subject ||
+      body.formName ||
+      data.formName ||
+      body.formType ||
+      'General Enquiry'
+    ).toString().trim();
+
+    const message = (
+      body.message ||
+      data.message ||
+      data.notes ||
+      data.specialNotes ||
+      ''
+    ).toString().trim();
+
+    // 4. Validate Required Form Fields
+    if (!user_email && !phone_no) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'At least an email address or phone number is required.',
         },
         { status: 400 }
       );
     }
 
-    // 3. Save to MongoDB Atlas (Single source of truth)
-    let savedResult;
-    try {
-      savedResult = await createEnquiry(rawEnquiry);
-    } catch (dbErr) {
-      console.error('[API /api/enquiry] MongoDB insertion failure:', dbErr);
+    if (user_email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(user_email)) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: 'Please enter a valid email address.',
+          },
+          { status: 400 }
+        );
+      }
+    }
+
+    // Capture any form-specific additional attributes (pincode, weight, date, city, etc.)
+    const extraFields = {};
+    const standardKeys = new Set([
+      'user_name', 'name', 'contactPerson', 'contactName',
+      'phone_no', 'phone',
+      'user_email', 'email',
+      'company', 'companyName', 'businessName',
+      'purpose', 'serviceInterest', 'service', 'wasteCategory', 'wasteType', 'wasteStream', 'subject',
+      'message', 'notes', 'specialNotes',
+      'honeypot', 'formType', 'formName', 'pageName', 'data'
+    ]);
+
+    for (const [key, val] of Object.entries({ ...data, ...body })) {
+      if (!standardKeys.has(key) && val !== undefined && val !== null && String(val).trim() !== '') {
+        extraFields[key] = String(val).trim();
+      }
+    }
+
+    // 5. Send Professional HTML Email via SMTP
+    const emailResult = await sendEnquiryEmail({
+      user_name,
+      phone_no,
+      user_email,
+      company,
+      purpose,
+      message,
+      extraFields,
+      formName: body.formName || data.formName || 'Website Enquiry',
+      pageName: body.pageName || data.pageName || 'Website',
+    });
+
+    if (!emailResult.success) {
+      console.error('[API /api/enquiry] SMTP Delivery Failed:', emailResult.error);
       return NextResponse.json(
         {
           success: false,
@@ -67,38 +178,20 @@ export async function POST(request) {
       );
     }
 
-    // 4. Trigger Email Notification (Fail-safe: failure never deletes or invalidates the saved enquiry)
-    try {
-      const emailResult = await sendEnquiryNotification({
-        ...savedResult.document,
-        _id: savedResult.insertedId,
-      });
-
-      if (!emailResult.success) {
-        console.warn(
-          `[API /api/enquiry] Notice: Enquiry ${savedResult.insertedId} saved to database, but notification email was not dispatched. Reason: ${emailResult.reason || 'unknown'}`
-        );
-      }
-    } catch (emailErr) {
-      // Log for server-side debugging without breaking customer success experience
-      console.error('[API /api/enquiry] Background email notification exception:', emailErr);
-    }
-
-    // 5. Clean success response
+    // 6. Return Success Response Only After Confirmed SMTP Dispatch
     return NextResponse.json(
       {
         success: true,
-        message: 'Enquiry submitted successfully',
-        id: savedResult.insertedId,
+        message: 'Enquiry submitted successfully.',
       },
       { status: 200 }
     );
   } catch (err) {
-    console.error('[API /api/enquiry] Unhandled request error:', err);
+    console.error('[API /api/enquiry] Unhandled Request Processing Error:', err);
     return NextResponse.json(
       {
         success: false,
-        message: 'An unexpected error occurred while processing your request.',
+        message: 'Unable to submit enquiry at this moment. Please try again.',
       },
       { status: 500 }
     );
@@ -111,7 +204,7 @@ export async function POST(request) {
 export async function GET() {
   return NextResponse.json({
     status: 'online',
-    service: 'ARKCA Enquiry API',
+    service: 'ARKCA Corporate Enquiry API (Email Only)',
     endpoint: '/api/enquiry',
   });
 }

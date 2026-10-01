@@ -30,31 +30,30 @@ console.log('   ARKCA Recyclers - Server-Side SMTP Email Test    ');
 console.log('====================================================\n');
 
 const host = process.env.SMTP_HOST;
-const port = parseInt(process.env.SMTP_PORT || '465', 10);
+const port = parseInt(process.env.SMTP_PORT || '587', 10);
 const secure = process.env.SMTP_SECURE === 'true' || port === 465;
 const user = process.env.SMTP_USER;
-const pass = process.env.SMTP_PASS;
-const from = process.env.SMTP_FROM || (user ? `"ARKCA Recyclers" <${user}>` : undefined);
+const pass = process.env.SMTP_PASSWORD || process.env.SMTP_PASS;
+const from = process.env.SMTP_FROM || (user ? `"ARKCA Corporate" <${user}>` : undefined);
 
-const recipients = [
-  process.env.EMAIL_TO_1,
-  process.env.EMAIL_TO_2,
-  process.env.EMAIL_TO_3,
-].filter(Boolean);
+const recipients = process.env.ENQUIRY_RECEIVER_EMAIL
+  ? process.env.ENQUIRY_RECEIVER_EMAIL.split(',').map((s) => s.trim()).filter(Boolean)
+  : [
+      process.env.EMAIL_TO_1,
+      process.env.EMAIL_TO_2,
+      process.env.EMAIL_TO_3,
+    ].filter(Boolean);
 
 if (!host || !user || !pass) {
   console.log('⚠️  SMTP credentials are not yet configured in environment.');
   console.log('\nTo configure, set the following environment variables:');
   console.log('----------------------------------------------------');
   console.log('SMTP_HOST=smtp.example.com');
-  console.log('SMTP_PORT=465 (or 587)');
-  console.log('SMTP_SECURE=true');
+  console.log('SMTP_PORT=587');
   console.log('SMTP_USER=user@example.com');
-  console.log('SMTP_PASS=your-password');
-  console.log('SMTP_FROM="ARKCA Recyclers" <noreply@example.com>');
-  console.log('EMAIL_TO_1=recipient1@example.com');
-  console.log('EMAIL_TO_2=recipient2@example.com');
-  console.log('EMAIL_TO_3=recipient3@example.com');
+  console.log('SMTP_PASSWORD=your-password');
+  console.log('SMTP_FROM="ARKCA Corporate" <noreply@example.com>');
+  console.log('ENQUIRY_RECEIVER_EMAIL=recipient@example.com');
   console.log('----------------------------------------------------\n');
   process.exit(0);
 }
