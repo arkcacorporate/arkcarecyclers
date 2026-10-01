@@ -1,13 +1,14 @@
 import { NextResponse } from 'next/server';
 import { sendEnquiryEmail } from '@/lib/serverEmail';
+import { appendEnquiryBackup } from '@/lib/enquiryBackup';
 
 /**
- * ARKCA Corporate - Server-Side Enquiry API Route (Email-Only System)
+ * ARKCA Corporate - Server-Side Enquiry API Route
  * 
  * Flow:
- * Client Form -> POST /api/enquiry -> Validate JSON -> Validate Fields -> Send HTML Email via SMTP -> HTTP Response
+ * Client Form -> POST /api/enquiry -> Validate JSON -> Honeypot Check -> Validate Fields -> Create JSON Backup -> Send SMTP Email -> Success Response
  * 
- * Strictly zero database dependencies.
+ * Database-free with local JSON audit backup in data/enquiries.json.
  */
 
 export async function POST(request) {
@@ -37,7 +38,7 @@ export async function POST(request) {
   }
 
   try {
-    // 2. Anti-spam Honeypot Check
+    // 2. Anti-spam Honeypot Check (Do not store, do not send email)
     const honeypot = body.honeypot || (body.data && body.data.honeypot) || '';
     if (honeypot && String(honeypot).trim() !== '') {
       console.warn('[API /api/enquiry] Bot submission intercepted via honeypot.');
@@ -136,7 +137,7 @@ export async function POST(request) {
       }
     }
 
-    // Capture any form-specific additional attributes (pincode, weight, date, city, etc.)
+    // Capture extra fields for both JSON backup and email table
     const extraFields = {};
     const standardKeys = new Set([
       'user_name', 'name', 'contactPerson', 'contactName',
@@ -154,21 +155,20 @@ export async function POST(request) {
       }
     }
 
-    // 5. Send Professional HTML Email via SMTP
-    const emailResult = await sendEnquiryEmail({
-      user_name,
-      phone_no,
-      user_email,
-      company,
-      purpose,
-      message,
-      extraFields,
-      formName: body.formName || data.formName || 'Website Enquiry',
-      pageName: body.pageName || data.pageName || 'Website',
-    });
-
-    if (!emailResult.success) {
-      console.error('[API /api/enquiry] SMTP Delivery Failed:', emailResult.error);
+    // 5. Create Server-Side JSON Backup (data/enquiries.json)
+    let backupRecord;
+    try {
+      backupRecord = await appendEnquiryBackup({
+        user_name,
+        phone_no,
+        user_email,
+        company,
+        purpose,
+        message,
+        allFields: { ...data, ...body },
+      });
+    } catch (backupErr) {
+      console.error('[API /api/enquiry] JSON Backup Failure:', backupErr);
       return NextResponse.json(
         {
           success: false,
@@ -178,7 +178,45 @@ export async function POST(request) {
       );
     }
 
-    // 6. Return Success Response Only After Confirmed SMTP Dispatch
+    // 6. Send Professional HTML Email via SMTP
+    try {
+      const emailResult = await sendEnquiryEmail({
+        user_name,
+        phone_no,
+        user_email,
+        company,
+        purpose,
+        message,
+        extraFields,
+        formName: body.formName || data.formName || 'Website Enquiry',
+        pageName: body.pageName || data.pageName || 'Website',
+        enquiryId: backupRecord.id,
+      });
+
+      if (!emailResult.success) {
+        console.error('[API /api/enquiry] SMTP Delivery Failed:', emailResult.error);
+        // Note: The JSON backup record in data/enquiries.json is preserved
+        return NextResponse.json(
+          {
+            success: false,
+            message: 'Unable to submit enquiry at this moment. Please try again.',
+          },
+          { status: 500 }
+        );
+      }
+    } catch (smtpErr) {
+      console.error('[API /api/enquiry] SMTP Send Exception:', smtpErr);
+      // Note: The JSON backup record in data/enquiries.json is preserved
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Unable to submit enquiry at this moment. Please try again.',
+        },
+        { status: 500 }
+      );
+    }
+
+    // 7. Return Success Response Only After Confirmed SMTP Dispatch
     return NextResponse.json(
       {
         success: true,
@@ -204,7 +242,7 @@ export async function POST(request) {
 export async function GET() {
   return NextResponse.json({
     status: 'online',
-    service: 'ARKCA Corporate Enquiry API (Email Only)',
+    service: 'ARKCA Corporate Enquiry API (Email Only with JSON Backup)',
     endpoint: '/api/enquiry',
   });
 }

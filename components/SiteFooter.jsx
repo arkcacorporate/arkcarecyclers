@@ -140,7 +140,7 @@ export default function SiteFooter() {
               </div>
               <div className="footer-contact-item">
                 <Mail size={18} />
-                <span>contact@arkcarecyclers.com</span>
+                <span>corporate@arkcarecyclers.com</span>
               </div>
             </div>
           </div>

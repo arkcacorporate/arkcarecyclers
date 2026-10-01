@@ -182,7 +182,7 @@ export default function ContactUsClient() {
                       Official Email
                     </h4>
                     <p className="ip-body ip-body-dark" style={{ fontSize: '0.92rem', lineHeight: '1.6' }}>
-                      Inquiries: <a href="mailto:contact@arkcarecyclers.com" style={{ color: 'var(--ip-accent)', fontWeight: 600 }}>contact@arkcarecyclers.com</a> <br />
+                      Inquiries: <a href="mailto:corporate@arkcarecyclers.com" style={{ color: 'var(--ip-accent)', fontWeight: 600 }}>contact@arkcarecyclers.com</a> <br />
                       Compliance desk: <a href="mailto:epr@arkcarecyclers.com" style={{ color: 'var(--ip-accent)', fontWeight: 600 }}>epr@arkcarecyclers.com</a>
                     </p>
                   </div>
